@@ -1,4 +1,20 @@
-# nbdev template
+# sql_formatter
+> A SQL formatter
 
-Use this template to more easily create your nbdev project.
+
+## Install
+
+`pip install sql_formatter`
+
+## How to use
+
+```python
+say_hello("Pablo")
+```
+
+
+
+
+    'Hello Pablo!'
+
 
