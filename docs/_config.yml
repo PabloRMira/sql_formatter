@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 repository: PabloRMira/sql_formatter
 output: web
 topnav_title: sql_formatter
@@ -62,6 +61,3 @@ sidebars:
 
 theme: jekyll-theme-cayman
 baseurl: /sql_formatter/
-=======
-theme: jekyll-theme-cayman
->>>>>>> b53cc5d17831416fbb2dc21561e4db1ae12ac2a8
