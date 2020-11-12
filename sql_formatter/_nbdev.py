@@ -2,7 +2,15 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"say_hello": "00_core.ipynb"}
+index = {"MAIN_STATEMENTS": "00_core.ipynb",
+         "capitalize_statements": "00_core.ipynb",
+         "remove_newlines": "00_core.ipynb",
+         "breakline_statement": "00_core.ipynb",
+         "OPERATORS": "00_core.ipynb",
+         "lower_operators": "00_core.ipynb",
+         "validate_select": "00_core.ipynb",
+         "format_select": "00_core.ipynb",
+         "format_from": "00_core.ipynb"}
 
 modules = ["core.py"]
 

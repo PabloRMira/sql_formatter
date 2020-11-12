@@ -33,6 +33,178 @@ nb_path: "00_core.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="General-formatting">General formatting<a class="anchor-link" href="#General-formatting"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Basic formatting for SQL queries. Let's use an example throughout the basics module.</p>
+<p>This is how an input could look like</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ex_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">seLecT a.asdf, b.qwer,</span>
+<span class="s2">b.asdf2 frOm table1 as a</span>
+<span class="s2">leFt join table2 as b</span>
+<span class="s2">    on a.asdf = b.asdf</span>
+<span class="s2">whEre a.asdf = 1</span>
+<span class="s2">anD b.qwer = 2</span>
+<span class="s2">groUp by a.asdf</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+seLecT a.asdf, b.qwer,
+b.asdf2 frOm table1 as a
+leFt join table2 as b
+    on a.asdf = b.asdf
+whEre a.asdf = 1
+anD b.qwer = 2
+groUp by a.asdf
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and this is how we would like to format it</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT a.asdf, </span>
+<span class="s2">       b.qwer,</span>
+<span class="s2">       b.asdf2</span>
+<span class="s2">FROM   table1 AS a</span>
+<span class="s2">    LEFT JOIN table2 AS b</span>
+<span class="s2">        ON a.asdf = b.asdf</span>
+<span class="s2">WHERE  a.asdf = 1</span>
+<span class="s2">   and b.qwer = 2</span>
+<span class="s2">GROUP BY a.asdf</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+SELECT a.asdf, 
+       b.qwer,
+       b.asdf2
+FROM   table1 AS a
+    LEFT JOIN table2 AS b
+        ON a.asdf = b.asdf
+WHERE  a.asdf = 1
+   and b.qwer = 2
+GROUP BY a.asdf
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's start by defining the main statements. The main statements all also require a new line</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We also would like to capitalize the AS operator</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CAPITAL_STATEMENTS</span> <span class="o">=</span> <span class="n">MAIN_STATEMENTS</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;as&quot;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We need first to capitalize the main statements</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -40,9 +212,9 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="say_hello" class="doc_header"><code>say_hello</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L6" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>say_hello</code>(<strong><code>to</code></strong>)</p>
+<h4 id="capitalize_statements" class="doc_header"><code>capitalize_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>capitalize_statements</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
 </blockquote>
-<p>Say hello to somebody</p>
+<p>Capitalize SQL statements <code>statements</code> in string <code>s</code></p>
 
 </div>
 
@@ -68,7 +240,7 @@ nb_path: "00_core.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Sylvain&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">capitalize_statements</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">,</span> <span class="n">CAPITAL_STATEMENTS</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -80,12 +252,18 @@ nb_path: "00_core.ipynb"
 
 <div class="output_area">
 
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+SELECT a.asdf, b.qwer,
+b.asdf2 FROM table1 AS a
+LEFT JOIN table2 AS b
+    ON a.asdf = b.asdf
+WHERE a.asdf = 1
+anD b.qwer = 2
+GROUP BY a.asdf
 
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;Hello Sylvain!&#39;</pre>
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -101,10 +279,564 @@ nb_path: "00_core.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Pablo&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Hello Pablo!&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="p">(</span>
+    <span class="n">capitalize_statements</span><span class="p">(</span>
+        <span class="s2">&quot;seLecT asdf, qwer FrOM table1&quot;</span><span class="p">,</span> 
+        <span class="n">CAPITAL_STATEMENTS</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;SELECT asdf, qwer FROM table1&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We need also to remove newlines because the may be arbitrary</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="remove_newlines" class="doc_header"><code>remove_newlines</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_newlines</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Remove newline characters</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">remove_newlines</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> seLecT a.asdf, b.qwer, b.asdf2 frOm table1 as a leFt join table2 as b     on a.asdf = b.asdf whEre a.asdf = 1 anD b.qwer = 2 groUp by a.asdf 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next we would like to have each main statement in a separate line</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="breakline_statement" class="doc_header"><code>breakline_statement</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>breakline_statement</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
+</blockquote>
+<p>Write a newline in <code>s</code> for all <code>statements</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">breakline_statement</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+select a.asdf, b.qwer,
+b.asdf2
+from table1 as a
+left join table2 as b
+on a.asdf = b.asdf
+where a.asdf = 1
+anD b.qwer = 2
+group by a.asdf
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In combination with removing newlines</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">breakline_statement</span><span class="p">(</span><span class="n">remove_newlines</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">),</span> <span class="n">MAIN_STATEMENTS</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+select a.asdf, b.qwer, b.asdf2
+from table1 as a
+left join table2 as b
+on a.asdf = b.asdf
+where a.asdf = 1 anD b.qwer = 2
+group by a.asdf 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We would also like to lowercase simple operators like and, or</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="lower_operators" class="doc_header"><code>lower_operators</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lower_operators</code>(<strong><code>s</code></strong>, <strong><code>operators</code></strong>)</p>
+</blockquote>
+<p>Lowercase <code>operators</code> in <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lower_operators</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">,</span> <span class="n">OPERATORS</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+seLecT a.asdf, b.qwer,
+b.asdf2 frOm table1 as a
+leFt join table2 as b
+    on a.asdf = b.asdf
+whEre a.asdf = 1
+and b.qwer = 2
+groUp by a.asdf
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="p">(</span>
+    <span class="n">lower_operators</span><span class="p">(</span>
+        <span class="s2">&quot;select asdf frOm table1 Where asdf &gt;= 1 aNd asdf &lt; 5&quot;</span><span class="p">,</span> 
+        <span class="n">OPERATORS</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;select asdf frOm table1 Where asdf &gt;= 1 and asdf &lt; 5&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Specific-formatting-and-validation">Specific formatting and validation<a class="anchor-link" href="#Specific-formatting-and-validation"> </a></h2><p>Now we will format (and validate) each statement individually</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="SELECT">SELECT<a class="anchor-link" href="#SELECT"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="validate_select" class="doc_header"><code>validate_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validate_select</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Validate SELECT statement line <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">validate_select</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">validate_select</span><span class="p">(</span><span class="s2">&quot;select   asdf, qwer,  asdf   &quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">validate_select</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer,&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">validate_select</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer,    &quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L68" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Format SELECT statement line <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select aSdf, qweR,  Asdf,</span><span class="se">\n</span><span class="s2">qwer1,   asdf&quot;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       qwer,
+       asdf,
+       qwer1,
+       asdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="FROM">FROM<a class="anchor-link" href="#FROM"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L81" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Format FROM statement line <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_from</span><span class="p">(</span><span class="s2">&quot;from table1&quot;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>from    table1
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
