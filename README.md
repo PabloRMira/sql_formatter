@@ -8,13 +8,4 @@
 
 ## How to use
 
-```python
-say_hello("Pablo")
-```
-
-
-
-
-    'Hello Pablo!'
-
-
+Still in progress...
