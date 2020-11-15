@@ -56,19 +56,21 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ex_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">seLecT a.asdf, b.qwer,</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">create or replace table mytable as -- mytable example</span>
+<span class="s2">seLecT a.asdf, b.qwer, -- some comment here</span>
+<span class="s2">c.asdf, -- some comment there</span>
 <span class="s2">b.asdf2 frOm table1 as a leFt join </span>
-<span class="s2">table2 as b</span>
-<span class="s2">    on a.asdf = b.asdf  inner join table3 as c</span>
+<span class="s2">table2 as b -- and here a comment</span>
+<span class="s2">    on a.asdf = b.asdf  -- join this way</span>
+<span class="s2">    inner join table3 as c</span>
 <span class="s2">on a.asdf=c.asdf</span>
-<span class="s2">whEre a.asdf= 1</span>
-<span class="s2">anD b.qwer =2</span>
-<span class="s2">and a.asdf&lt;=1</span>
+<span class="s2">whEre a.asdf= 1 -- comment this</span>
+<span class="s2">anD b.qwer =2 and a.asdf&lt;=1 --comment that</span>
 <span class="s2">or b.qwer&gt;=5</span>
 <span class="s2">groUp by a.asdf</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example_sql</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -82,14 +84,16 @@ nb_path: "index.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-seLecT a.asdf, b.qwer,
+create or replace table mytable as -- mytable example
+seLecT a.asdf, b.qwer, -- some comment here
+c.asdf, -- some comment there
 b.asdf2 frOm table1 as a leFt join 
-table2 as b
-    on a.asdf = b.asdf  inner join table3 as c
+table2 as b -- and here a comment
+    on a.asdf = b.asdf  -- join this way
+    inner join table3 as c
 on a.asdf=c.asdf
-whEre a.asdf= 1
-anD b.qwer =2
-and a.asdf&lt;=1
+whEre a.asdf= 1 -- comment this
+anD b.qwer =2 and a.asdf&lt;=1 --comment that
 or b.qwer&gt;=5
 groUp by a.asdf
 
@@ -117,7 +121,8 @@ groUp by a.asdf
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sql_formatter.core</span> <span class="kn">import</span> <span class="n">format_sql</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">example_sql</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -130,20 +135,21 @@ groUp by a.asdf
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
+<pre>CREATE OR REPLACE TABLE mytable AS -- mytable example
 SELECT a.asdf,
-       b.qwer,
+       b.qwer, -- some comment here
+       c.asdf, -- some comment there
        b.asdf2
 FROM   table1 AS a
-    LEFT JOIN table2 AS b
-        ON a.asdf = b.asdf
+    LEFT JOIN table2 AS b -- and here a comment
+        ON a.asdf = b.asdf -- join this way
     INNER JOIN table3 AS c
         ON a.asdf = c.asdf
-WHERE  a.asdf = 1
+WHERE  a.asdf = 1 -- comment this
    and b.qwer = 2
-   and a.asdf &lt;= 1
+   and a.asdf &lt;= 1 --comment that
     or b.qwer &gt;= 5
-GROUP BY a.asdf
+GROUP BY a.asdf;
 </pre>
 </div>
 </div>
