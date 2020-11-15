@@ -44,11 +44,116 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="How-to-use">How to use<a class="anchor-link" href="#How-to-use"> </a></h2><p>Still in progress...</p>
+<h2 id="How-to-use">How to use<a class="anchor-link" href="#How-to-use"> </a></h2><p>Let's say you have a SQL query like this</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ex_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">seLecT a.asdf, b.qwer,</span>
+<span class="s2">b.asdf2 frOm table1 as a leFt join </span>
+<span class="s2">table2 as b</span>
+<span class="s2">    on a.asdf = b.asdf  inner join table3 as c</span>
+<span class="s2">on a.asdf=c.asdf</span>
+<span class="s2">whEre a.asdf= 1</span>
+<span class="s2">anD b.qwer =2</span>
+<span class="s2">and a.asdf&lt;=1</span>
+<span class="s2">or b.qwer&gt;=5</span>
+<span class="s2">groUp by a.asdf</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+seLecT a.asdf, b.qwer,
+b.asdf2 frOm table1 as a leFt join 
+table2 as b
+    on a.asdf = b.asdf  inner join table3 as c
+on a.asdf=c.asdf
+whEre a.asdf= 1
+anD b.qwer =2
+and a.asdf&lt;=1
+or b.qwer&gt;=5
+groUp by a.asdf
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then you can use this package to format it so that it is better readable</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">ex_sql</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+SELECT a.asdf,
+       b.qwer,
+       b.asdf2
+FROM   table1 AS a
+    LEFT JOIN table2 AS b
+        ON a.asdf = b.asdf
+    INNER JOIN table3 AS c
+        ON a.asdf = c.asdf
+WHERE  a.asdf = 1
+   and b.qwer = 2
+   and a.asdf &lt;= 1
+    or b.qwer &gt;= 5
+GROUP BY a.asdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
