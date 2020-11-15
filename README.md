@@ -67,3 +67,9 @@ print(format_sql(example_sql))
         or b.qwer >= 5
     GROUP BY a.asdf;
 
+
+## Acknowledgements
+
+Thank you very much to Jeremy Howard and all the [nbdev](https://github.com/fastai/nbdev) team for enabling the *fast* and delightful development of this library via the `nbdev` framework.
+
+For more details on `nbdev`, see its official [tutorial](https://nbdev.fast.ai/tutorial.html)
