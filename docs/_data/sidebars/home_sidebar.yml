@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: sql_formatter
+      title: core
       url: core.html
     output: web
     title: sql_formatter

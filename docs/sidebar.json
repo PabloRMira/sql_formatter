@@ -1,6 +1,6 @@
 {
   "sql_formatter": {
     "Overview": "/",
-    "sql_formatter": "core.html"
+    "core": "core.html"
   }
 }

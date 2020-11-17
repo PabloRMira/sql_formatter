@@ -3,7 +3,7 @@
 __all__ = ['assert_and_print', 'MAIN_STATEMENTS', 'CAPITAL_STATEMENTS', 'capitalize_statements',
            'remove_newlines_mspaces', 'breakline_statement', 'format_select', 'format_from', 'format_join',
            'add_whitespaces_between_symbols', 'format_on', 'format_where', 'format_statement_line', 'format_statements',
-           'add_ending_semicolon', 'format_sql']
+           'add_ending_semicolon', 'format_simple_sql', 'format_subquery', 'format_sql']
 
 # Cell
 import re
@@ -11,7 +11,16 @@ import re
 # Cell
 def assert_and_print(s_in, s_expected):
     "Assert equality of `s_in` and `s_expected` and print the result of `s_in` if the assertion worked"
-    assert s_in == s_expected
+    try:
+        assert s_in == s_expected
+    except:
+        print("Assertion failed\n")
+        print("Input:\n")
+        print(s_in)
+        print("\n")
+        print("Expected:\n")
+        print(s_expected)
+        assert s_in == s_expected
     print(s_in)
     return None
 
@@ -52,12 +61,14 @@ def remove_newlines_mspaces(s):
     """
     s = s.strip()  # strip sentence
     s = re.sub(r"\s{2,}", " ", s)  # remove too many whitespaces
-    split_s = re.findall(r"(.*)(select .*)(from.*)", s, flags=re.I | re.DOTALL)[0]
-    before_select = split_s[0]  # get lines before select
-    select_lines = split_s[1]  # get select lines
-    after_select = split_s[2]  # get lines after select
-    select_lines = re.sub(r"(--.*)(\n)", r"\1[EOC]", select_lines)  # add special token for end of comment
-    s = before_select + select_lines + after_select
+    split_s = re.split(r"(select .*?)(from)", s, flags=re.I | re.DOTALL)  # split to get individual select lines
+    split_s = [
+        re.sub(r"(--.*?)(\n)", r"\1[EOC]", line)  # add special token for select lines
+        if re.match("select", line, flags=re.I)  # for select statements
+        else line  # else no special token
+        for line in split_s
+    ]
+    s = "".join(split_s)  # join all the lines
     s = re.sub("\n", " ", s)  # remove newlines
     return s
 
@@ -98,9 +109,9 @@ def format_join(s):
 # Cell
 def add_whitespaces_between_symbols(s):
     "Add whitespaces between symbols in line `s`"
-    s = re.sub(r"([^\s])([=!<>]+)", r"\1 \2", s, flags=re.I)  # no space left
-    s = re.sub(r"([=!<>]+)([^\s])", r"\1 \2", s, flags=re.I)  # no space right
-    s = re.sub(r"([^\s])([=!<>]+)([^\s])", r"\1 \2 \3", s, flags=re.I)  # no space left and right
+    s = re.sub(r"([^\s=!<>])([=!<>]+)", r"\1 \2", s, flags=re.I)  # no space left
+    s = re.sub(r"([=!<>]+)([^\s=!<>])", r"\1 \2", s, flags=re.I)  # no space right
+    s = re.sub(r"([^\s=!<>])([=!<>]+)([^\s=!<>])", r"\1 \2 \3", s, flags=re.I)  # no space left and right
     return s
 
 # Cell
@@ -156,12 +167,40 @@ def add_ending_semicolon(s):
     return s
 
 # Cell
-def format_sql(s):
-    "Format a SQL query `s`"
+def format_simple_sql(s):
+    "Format a simple SQL query without subqueries `s`"
     s = s.lower()  # everything lowercased
     s = remove_newlines_mspaces(s)  # remove newlines and multiple spaces
     s = breakline_statement(s, MAIN_STATEMENTS)  # add breaklines for the main statements
     s = capitalize_statements(s, CAPITAL_STATEMENTS)  # capitalize capital statements
     s = format_statements(s)  # format statements
     s = add_ending_semicolon(s)  # add ending semicolon if not there yet
+    return s
+
+# Cell
+def format_subquery(s, previous_s):
+    "Format subquery in line `s` based on indentation on `previous_s`"
+    s = re.sub(r"\(\nSELECT", "(SELECT", s)  # remove newline between parenthesis and SELECT
+    indentation = len(previous_s.split("\n")[-1]) + 1  # get indentation level
+    split_s = s.split("\n")
+    indented_s = [
+        " " * indentation + line
+        for line in split_s[1:]
+    ]
+    formatted_split = [split_s[0]] + indented_s
+    formatted_s = "\n".join(formatted_split)
+    return formatted_s
+
+# Cell
+def format_sql(s):
+    "Format SQL query with subqueries"
+    s = format_simple_sql(s)  # format query
+    split_s = re.split(r"(\(.SELECT.*?\))", s, flags=re.DOTALL)  # split on (SELECT ...)
+    split_s = [
+        format_subquery(split_s[i], split_s[i-1])
+        if re.match(r"\(.SELECT.*\)", split_s[i], flags=re.DOTALL)
+        else split_s[i]
+        for i in range(len(split_s))
+    ]
+    s = "".join(split_s)
     return s

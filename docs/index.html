@@ -162,6 +162,114 @@ GROUP BY a.asdf;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>It can even deal with subqueries</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_with_subqueries</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">select asdf, cast(qwer as numeric), -- some comment</span>
+<span class="s2">qwer1</span>
+<span class="s2">from </span>
+<span class="s2">(select asdf, qwer, from table1 where asdf = 1) as a</span>
+<span class="s2">left </span>
+<span class="s2">join (select asdf, qwer2 from table2 where qwer2 = 1) as b</span>
+<span class="s2">on a.asdf = b.asdf</span>
+<span class="s2">where qwer1 &gt;= 0</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example_with_subqueries</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+select asdf, cast(qwer as numeric), -- some comment
+qwer1
+from 
+(select asdf, qwer, from table1 where asdf = 1) as a
+left 
+join (select asdf, qwer2 from table2 where qwer2 = 1) as b
+on a.asdf = b.asdf
+where qwer1 &gt;= 0
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">example_with_subqueries</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Correcting mistake: Comma at the end of SELECT statement
+SELECT asdf,
+       cast(qwer AS numeric), -- some comment
+       qwer1
+FROM   (SELECT asdf,
+               qwer
+        FROM   table1
+        WHERE  asdf = 1) AS a
+    LEFT JOIN (SELECT asdf,
+                      qwer2
+               FROM   table2
+               WHERE  qwer2 = 1) AS b
+        ON a.asdf = b.asdf
+WHERE  qwer1 &gt;= 0;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As noted in the example above, it also corrects simple careless mistakes (like comma at the end of SELECT statement before FROM) for you on the flow :-)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Acknowledgements">Acknowledgements<a class="anchor-link" href="#Acknowledgements"> </a></h2>
 </div>
 </div>

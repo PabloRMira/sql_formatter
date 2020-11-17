@@ -68,6 +68,56 @@ print(format_sql(example_sql))
     GROUP BY a.asdf;
 
 
+It can even deal with subqueries
+
+```python
+example_with_subqueries = """
+select asdf, cast(qwer as numeric), -- some comment
+qwer1
+from 
+(select asdf, qwer, from table1 where asdf = 1) as a
+left 
+join (select asdf, qwer2 from table2 where qwer2 = 1) as b
+on a.asdf = b.asdf
+where qwer1 >= 0
+"""
+print(example_with_subqueries)
+```
+
+    
+    select asdf, cast(qwer as numeric), -- some comment
+    qwer1
+    from 
+    (select asdf, qwer, from table1 where asdf = 1) as a
+    left 
+    join (select asdf, qwer2 from table2 where qwer2 = 1) as b
+    on a.asdf = b.asdf
+    where qwer1 >= 0
+    
+
+
+```python
+print(format_sql(example_with_subqueries))
+```
+
+    Correcting mistake: Comma at the end of SELECT statement
+    SELECT asdf,
+           cast(qwer AS numeric), -- some comment
+           qwer1
+    FROM   (SELECT asdf,
+                   qwer
+            FROM   table1
+            WHERE  asdf = 1) AS a
+        LEFT JOIN (SELECT asdf,
+                          qwer2
+                   FROM   table2
+                   WHERE  qwer2 = 1) AS b
+            ON a.asdf = b.asdf
+    WHERE  qwer1 >= 0;
+
+
+As noted in the example above, it also corrects simple careless mistakes (like comma at the end of SELECT statement before FROM) for you on the flow :-)
+
 ## Acknowledgements
 
 Thank you very much to Jeremy Howard and all the [nbdev](https://github.com/fastai/nbdev) team for enabling the *fast* and delightful development of this library via the `nbdev` framework.
