@@ -1,10 +1,6 @@
-# sql_formatter
+# sql_formatter (WIP)
 > A SQL formatter
 
-
-## Install
-
-`pip install sql_formatter`
 
 ## How to use
 
