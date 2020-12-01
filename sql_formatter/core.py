@@ -3,7 +3,7 @@
 __all__ = ['assert_and_print', 'MAIN_STATEMENTS', 'CAPITAL_STATEMENTS', 'capitalize_statements',
            'remove_newlines_mspaces', 'breakline_statement', 'format_select', 'format_from', 'format_join',
            'add_whitespaces_between_symbols', 'format_on', 'format_where', 'format_statement_line', 'format_statements',
-           'add_ending_semicolon', 'format_simple_sql', 'format_subquery', 'format_sql']
+           'add_ending_semicolon', 'format_simple_sql', 'extract_outer_subquery', 'format_subquery', 'format_sql']
 
 # Cell
 import re
@@ -178,29 +178,76 @@ def format_simple_sql(s):
     return s
 
 # Cell
+def extract_outer_subquery(s):
+    "Extract outer subquery in query `s`"
+    # initialize container for subquery positions
+    # in string `s`
+    subquery_pos = []
+    # auxiliar indicator to get the subquery right
+    ind = True
+    # counter for parenthesis
+    k = 0
+    # loop over string characters
+    for i, c in enumerate(s):
+        if s[i:(i+8)] == "(\nSELECT" and ind: # query start
+            subquery_pos.append(i)
+            k = 0  # set the parenthesis counter to 0
+            # turn off the indicator for the program to know
+            # that we already hit the subquery start
+            ind = False
+        elif c == "(": # if there is a parenthesis not involving a subquery
+            k += 1
+        elif c == ")" and k == 0 and not ind: # end position for subquery
+            subquery_pos.append(i)
+            return subquery_pos
+        elif c == ")":
+            k -= 1
+
+# Cell
 def format_subquery(s, previous_s):
     "Format subquery in line `s` based on indentation on `previous_s`"
-    s = re.sub(r"\(\nSELECT", "(SELECT", s)  # remove newline between parenthesis and SELECT
-    indentation = len(previous_s.split("\n")[-1]) + 1  # get indentation level
-    split_s = s.split("\n")
+    s = re.sub(r"^\(\nSELECT", "(SELECT", s)  # remove newline between parenthesis and SELECT
+    # get reference line for the indentation level
+    # and remove whitespaces from the left
+    ref_line = previous_s.split("\n")[-1].lstrip()
+    # if the line contains a JOIN statement then indent with
+    # 4 whitespaces
+    if re.match(r"\w+ join", ref_line, flags=re.I):
+        ref_line = "    " + ref_line
+    indentation = len(ref_line) + 1  # get indentation level
+    split_s = s.split("\n")  # get lines in subquery
     indented_s = [
-        " " * indentation + line
+        " " * indentation + line  # indent all lines the same
+        if not re.match(r"SELECT", line)
+        else line
         for line in split_s[1:]
     ]
+    # SELECT line + indented lines afterwards
     formatted_split = [split_s[0]] + indented_s
+    # concatenate with newline character
     formatted_s = "\n".join(formatted_split)
     return formatted_s
 
 # Cell
 def format_sql(s):
     "Format SQL query with subqueries"
-    s = format_simple_sql(s)  # format query
-    split_s = re.split(r"(\(.SELECT.*?\))", s, flags=re.DOTALL)  # split on (SELECT ...)
-    split_s = [
-        format_subquery(split_s[i], split_s[i-1])
-        if re.match(r"\(.SELECT.*\)", split_s[i], flags=re.DOTALL)
-        else split_s[i]
-        for i in range(len(split_s))
-    ]
-    s = "".join(split_s)
+    s = format_simple_sql(s)  # basic query formatting
+    # get first outer subquery positions
+    subquery_pos = extract_outer_subquery(s)
+    # loop over subqueries
+    while subquery_pos is not None:
+        # get split
+        split_s = [
+            s[0:subquery_pos[0]],
+            s[subquery_pos[0]:(subquery_pos[1]+1)],
+            s[(subquery_pos[1]+1):]
+        ]
+        # format subquery (= split_s[1])
+        split_s[1] = format_subquery(split_s[1], split_s[0])
+        # join main part and subquery
+        s = "".join(split_s)
+        # get first outer subquery positions
+        subquery_pos = extract_outer_subquery(s)
+    # remove whitespace between word and parenthesis
+    s = re.sub(r"\s\)", ")", s)
     return s

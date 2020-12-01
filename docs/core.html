@@ -1788,7 +1788,7 @@ WHERE  qwer1 &gt;= 0;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Helper-function-to-handle-subqueries">Helper function to handle subqueries<a class="anchor-link" href="#Helper-function-to-handle-subqueries"> </a></h3>
+<h3 id="Helper-functions-to-handle-subqueries">Helper functions to handle subqueries<a class="anchor-link" href="#Helper-functions-to-handle-subqueries"> </a></h3>
 </div>
 </div>
 </div>
@@ -1803,7 +1803,60 @@ WHERE  qwer1 &gt;= 0;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L181" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
+<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L181" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Extract outer subquery in query <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="p">(</span>
+    <span class="n">extract_outer_subquery</span><span class="p">(</span>
+        <span class="s2">&quot;() () (</span><span class="se">\n</span><span class="s2">SELECT () (</span><span class="se">\n</span><span class="s2">SELECT ())) ()&quot;</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L207" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
 </blockquote>
 <p>Format subquery in line <code>s</code> based on indentation on <code>previous_s</code></p>
 
@@ -1841,7 +1894,7 @@ WHERE  qwer1 &gt;= 0;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L195" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format SQL query with subqueries</p>
 
@@ -1954,6 +2007,209 @@ WHERE  a.asdf = 1 -- comment this
    and a.asdf &lt;= 1 --comment that
     or b.qwer &gt;= 5
 GROUP BY a.asdf;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Nested-subqueries">Nested subqueries<a class="anchor-link" href="#Nested-subqueries"> </a></h2><p>The function is also robust against nested subqueries</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_nested_subqueries</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">select asdf, qwer</span>
+<span class="s2">from (select a.asdf</span>
+<span class="s2">    from (select asdf, qwer from table2) as a</span>
+<span class="s2">        inner join (select asdf, qwer from table3) as b</span>
+<span class="s2">            on a.qwer = b.qwer</span>
+<span class="s2">)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_nested</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT asdf,</span>
+<span class="s2">       qwer</span>
+<span class="s2">FROM   (SELECT a.asdf</span>
+<span class="s2">        FROM   (SELECT asdf,</span>
+<span class="s2">                       qwer</span>
+<span class="s2">                FROM   table2) AS a</span>
+<span class="s2">            INNER JOIN (SELECT asdf,</span>
+<span class="s2">                               qwer</span>
+<span class="s2">                        FROM   table3) AS b</span>
+<span class="s2">                ON a.qwer = b.qwer);&quot;&quot;&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_sql</span><span class="p">(</span><span class="n">example_nested_subqueries</span><span class="p">),</span>
+    <span class="n">expected_nested</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf,
+       qwer
+FROM   (SELECT a.asdf
+        FROM   (SELECT asdf,
+                       qwer
+                FROM   table2) AS a
+            INNER JOIN (SELECT asdf,
+                               qwer
+                        FROM   table3) AS b
+                ON a.qwer = b.qwer);
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="More-convoluted-nested-subquery">More convoluted nested subquery<a class="anchor-link" href="#More-convoluted-nested-subquery"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_convoluted</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">select asdf</span>
+<span class="s2">from (</span>
+<span class="s2">    select asdf, qwer</span>
+<span class="s2">    from (select a.asdf, b.qwer </span>
+<span class="s2">          from (select asdf </span>
+<span class="s2">                from table1) as a </span>
+<span class="s2">            right join (select qwer </span>
+<span class="s2">                        from table2) as b</span>
+<span class="s2">                on a.asdf = b.asdf)</span>
+<span class="s2">)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_convoluted</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT asdf</span>
+<span class="s2">FROM   (SELECT asdf,</span>
+<span class="s2">               qwer</span>
+<span class="s2">        FROM   (SELECT a.asdf,</span>
+<span class="s2">                       b.qwer</span>
+<span class="s2">                FROM   (SELECT asdf</span>
+<span class="s2">                        FROM   table1) AS a</span>
+<span class="s2">                    RIGHT JOIN (SELECT qwer</span>
+<span class="s2">                                FROM   table2) AS b</span>
+<span class="s2">                        ON a.asdf = b.asdf));&quot;&quot;&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_sql</span><span class="p">(</span><span class="n">example_convoluted</span><span class="p">),</span>
+    <span class="n">expected_convoluted</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf
+FROM   (SELECT asdf,
+               qwer
+        FROM   (SELECT a.asdf,
+                       b.qwer
+                FROM   (SELECT asdf
+                        FROM   table1) AS a
+                    RIGHT JOIN (SELECT qwer
+                                FROM   table2) AS b
+                        ON a.asdf = b.asdf));
 </pre>
 </div>
 </div>

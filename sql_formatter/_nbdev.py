@@ -18,6 +18,7 @@ index = {"assert_and_print": "00_core.ipynb",
          "format_statements": "00_core.ipynb",
          "add_ending_semicolon": "00_core.ipynb",
          "format_simple_sql": "00_core.ipynb",
+         "extract_outer_subquery": "00_core.ipynb",
          "format_subquery": "00_core.ipynb",
          "format_sql": "00_core.ipynb"}
 
