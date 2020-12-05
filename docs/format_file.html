@@ -146,7 +146,7 @@ group by car_id;
 <span class="s2">       avg(price) AS avg_price</span>
 <span class="s2">FROM   first_view</span>
 <span class="s2">GROUP BY car_id;</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">expected_sql_file</span><span class="p">)</span>
 </pre></div>
@@ -183,6 +183,7 @@ SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
 </pre>
 </div>
 </div>
@@ -421,6 +422,7 @@ SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
 </pre>
 </div>
 </div>
@@ -523,6 +525,7 @@ SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
 </pre>
 </div>
 </div>
