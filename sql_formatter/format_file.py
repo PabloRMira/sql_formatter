@@ -17,13 +17,17 @@ def check_sql_query(s):
 def format_sql_commands(s):
     "Format SQL commands in `s`"
     split_s = s.split(";")  # split by semicolon
+    # format only SQL queries, let everything else unchanged
     formatted_split_s = [
         "\n\n" + format_sql(sp, add_semicolon=False)
         if check_sql_query(sp)
         else sp
         for sp in split_s
     ]
+    # join by semicolon
     formatted_s = ";".join(formatted_split_s)
+    # add newline at the end of file
+    formatted_s = formatted_s + "\n"
     return formatted_s
 
 # Cell
