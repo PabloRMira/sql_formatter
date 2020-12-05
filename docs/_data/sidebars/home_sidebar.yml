@@ -13,8 +13,8 @@ entries:
       title: core
       url: core.html
     - output: web,pdf
-      title: sql_file_formatter
-      url: sql_file_formatter.html
+      title: format_file
+      url: format_file.html
     output: web
     title: sql_formatter
   output: web
