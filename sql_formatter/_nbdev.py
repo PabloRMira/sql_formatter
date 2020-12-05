@@ -20,9 +20,13 @@ index = {"assert_and_print": "00_core.ipynb",
          "format_simple_sql": "00_core.ipynb",
          "extract_outer_subquery": "00_core.ipynb",
          "format_subquery": "00_core.ipynb",
-         "format_sql": "00_core.ipynb"}
+         "format_sql": "00_core.ipynb",
+         "check_sql_query": "01_sql_file_formatter.ipynb",
+         "format_sql_commands": "01_sql_file_formatter.ipynb",
+         "format_sql_file": "01_sql_file_formatter.ipynb"}
 
-modules = ["core.py"]
+modules = ["core.py",
+           "sql_file_formatter.py"]
 
 doc_url = "https://PabloRMira.github.io/sql_formatter/"
 
