@@ -167,14 +167,17 @@ def add_ending_semicolon(s):
     return s
 
 # Cell
-def format_simple_sql(s):
-    "Format a simple SQL query without subqueries `s`"
+def format_simple_sql(s, add_semicolon=True):
+    """Format a simple SQL query without subqueries `s`.
+    If `add_semicolon` is True, then add a semicolon at the end
+    """
     s = s.lower()  # everything lowercased
     s = remove_newlines_mspaces(s)  # remove newlines and multiple spaces
     s = breakline_statement(s, MAIN_STATEMENTS)  # add breaklines for the main statements
     s = capitalize_statements(s, CAPITAL_STATEMENTS)  # capitalize capital statements
     s = format_statements(s)  # format statements
-    s = add_ending_semicolon(s)  # add ending semicolon if not there yet
+    if add_semicolon:
+        s = add_ending_semicolon(s)  # add ending semicolon if not there yet
     return s
 
 # Cell
@@ -229,9 +232,9 @@ def format_subquery(s, previous_s):
     return formatted_s
 
 # Cell
-def format_sql(s):
-    "Format SQL query with subqueries"
-    s = format_simple_sql(s)  # basic query formatting
+def format_sql(s, add_semicolon=True):
+    "Format SQL query with subqueries. If `add_semicolon` is True then add a semicolon at the end"
+    s = format_simple_sql(s, add_semicolon)  # basic query formatting
     # get first outer subquery positions
     subquery_pos = extract_outer_subquery(s)
     # loop over subqueries
