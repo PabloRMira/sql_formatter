@@ -2,6 +2,6 @@
   "sql_formatter": {
     "Overview": "/",
     "core": "core.html",
-    "sql_file_formatter": "sql_file_formatter.html"
+    "format_file": "format_file.html"
   }
 }

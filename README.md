@@ -4,7 +4,11 @@
 
 ## How to use
 
-Let's say you have a SQL query like this
+Format you SQL files via the command line
+
+`sql-formatter file.sql`
+
+To exemplify the formatting let's say you have a SQL query like this
 
 ```python
 example_sql = """
@@ -21,24 +25,7 @@ anD b.qwer =2 and a.asdf<=1 --comment that
 or b.qwer>=5
 groUp by a.asdf
 """
-print(example_sql)
 ```
-
-    
-    create or replace table mytable as -- mytable example
-    seLecT a.asdf, b.qwer, -- some comment here
-    c.asdf, -- some comment there
-    b.asdf2 frOm table1 as a leFt join 
-    table2 as b -- and here a comment
-        on a.asdf = b.asdf  -- join this way
-        inner join table3 as c
-    on a.asdf=c.asdf
-    whEre a.asdf= 1 -- comment this
-    anD b.qwer =2 and a.asdf<=1 --comment that
-    or b.qwer>=5
-    groUp by a.asdf
-    
-
 
 Then you can use this package to format it so that it is better readable
 
@@ -92,6 +79,8 @@ print(example_with_subqueries)
     
 
 
+and it will correct simple careless mistakes (like my favourite one: comma at the end of SELECT statement before of FROM) for you on the flow :-)
+
 ```python
 print(format_sql(example_with_subqueries))
 ```
@@ -111,8 +100,6 @@ print(format_sql(example_with_subqueries))
             ON a.asdf = b.asdf
     WHERE  qwer1 >= 0;
 
-
-As noted in the example above, it also corrects simple careless mistakes (like comma at the end of SELECT statement before FROM) for you on the flow :-)
 
 ## Acknowledgements
 
