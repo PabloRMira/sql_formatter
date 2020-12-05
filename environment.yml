@@ -7,5 +7,6 @@ dependencies:
   - notebook
   - jupyter_contrib_nbextensions
   - pip
+  - click
   - pip:
       - nbdev
