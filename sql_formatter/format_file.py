@@ -16,6 +16,7 @@ def check_sql_query(s):
 # Cell
 def format_sql_commands(s):
     "Format SQL commands in `s`"
+    s = s.strip()  # strip file contents
     split_s = s.split(";")  # split by semicolon
     # format only SQL queries, let everything else unchanged
     formatted_split_s = [
@@ -48,12 +49,12 @@ def format_sql_file(f):
 # Cell
 @call_parse
 def format_sql_files(
-    files: Param(help="Path to SQL files", type=list, nargs="+")
+    files: Param(help="Path to SQL files", type=str, nargs="+")
 ):
     "Format SQL `files`"
     exit_codes = []
     for file in files:
-        exit_code.append(format_sql_file(file))
+        exit_codes.append(format_sql_file(file))
     if sum(exit_codes) == 0:
         print("Nothing to format, everything is fine!")
     else:

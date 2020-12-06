@@ -397,10 +397,7 @@ GROUP BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Correcting mistake: Comma at the end of SELECT statement
-Correcting mistake: Comma at the end of SELECT statement
-Correcting mistake: Comma at the end of SELECT statement
-use database my_database;
+<pre>use database my_database;
 use schema my_schema;
 
 
@@ -450,7 +447,7 @@ GROUP BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>)</p>
+<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>)</p>
 </blockquote>
 <p>Format file <code>f</code> with SQL commands and overwrite the file.
 Return 0 for no change and 1 for formatting adjustments</p>
@@ -501,10 +498,7 @@ Return 0 for no change and 1 for formatting adjustments</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Correcting mistake: Comma at the end of SELECT statement
-Correcting mistake: Comma at the end of SELECT statement
-Correcting mistake: Comma at the end of SELECT statement
-use database my_database;
+<pre>use database my_database;
 use schema my_schema;
 
 
@@ -554,7 +548,7 @@ GROUP BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"Path to SQL files")</p>
+<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L50" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"Path to SQL files")</p>
 </blockquote>
 <p>Format SQL <code>files</code></p>
 
@@ -571,6 +565,101 @@ GROUP BY car_id;
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
+<span class="n">format_sql_files</span><span class="p">([</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">])</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">formatted_file</span><span class="p">,</span>
+    <span class="n">expected_sql_file</span>
+<span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">formatted_file</span><span class="p">,</span>
+    <span class="n">expected_sql_file</span>
+<span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>All done!
+use database my_database;
+use schema my_schema;
+
+
+CREATE OR REPLACE VIEW first_view AS -- my first view
+SELECT a.car_id,
+       b.car_name,
+       a.price
+FROM   sales AS a
+    LEFT JOIN (SELECT car_id,
+                      car_name
+               FROM   cars) AS b
+        ON a.car_id = b.car_id
+WHERE  car_id &gt; 1
+   and car_id &lt;= 100;
+
+
+CREATE OR REPLACE TABLE first_table AS -- my first table
+SELECT car_id,
+       avg(price) AS avg_price
+FROM   first_view
+GROUP BY car_id;
+
+use database my_database;
+use schema my_schema;
+
+
+CREATE OR REPLACE VIEW first_view AS -- my first view
+SELECT a.car_id,
+       b.car_name,
+       a.price
+FROM   sales AS a
+    LEFT JOIN (SELECT car_id,
+                      car_name
+               FROM   cars) AS b
+        ON a.car_id = b.car_id
+WHERE  car_id &gt; 1
+   and car_id &lt;= 100;
+
+
+CREATE OR REPLACE TABLE first_table AS -- my first table
+SELECT car_id,
+       avg(price) AS avg_price
+FROM   first_view
+GROUP BY car_id;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}
