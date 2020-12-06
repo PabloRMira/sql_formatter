@@ -83,7 +83,6 @@ def breakline_statement(s, statements):
 def format_select(s):
     "Format SELECT statement line `s`"
     if re.match(r".*,\s*$", s, flags=re.I):
-        print("Correcting mistake: Comma at the end of SELECT statement")
         s = re.sub("(.*)(,+)(\s*)$", r"\1", s, flags=re.I)
     s = re.sub(r"(,)(\s*)([\w\d]+)", r"\1\n       \3", s)  # add newline after each comma (no comments) and indentation
     s = re.sub(r"\[EOC\]", "\n       ", s)  # replace [EOC] by newline

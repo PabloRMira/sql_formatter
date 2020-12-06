@@ -23,7 +23,8 @@ index = {"assert_and_print": "00_core.ipynb",
          "format_sql": "00_core.ipynb",
          "check_sql_query": "01_format_file.ipynb",
          "format_sql_commands": "01_format_file.ipynb",
-         "format_sql_file": "01_format_file.ipynb"}
+         "format_sql_file": "01_format_file.ipynb",
+         "format_sql_files": "01_format_file.ipynb"}
 
 modules = ["core.py",
            "format_file.py"]
