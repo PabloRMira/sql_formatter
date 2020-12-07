@@ -4,13 +4,33 @@
 
 ## How to use
 
-Format you SQL files via the command line
+Format your SQL files via the command line
 
-`sql-formatter file.sql`
+`sql-formatter sql_file.sql sql_file2.sql`
+
+### Usage with `pre-commit`
+
+[pre-commit](https://pre-commit.com) is a nice development tool to automatize the binding of pre-commit hooks. After installation and configuration `pre-commit` will run your hooks before you commit any change. 
+
+To add `sql-formatter` as a hook to your `pre-commit` configuration to format your SQL files before commit, just add the following lines to your `.pre-commit-config.yaml`:
+
+```yaml
+repos:
+  - repo: local
+    hooks:
+    - id: sql_formatter
+      name: SQL formatter
+      language: system
+      entry: sql-formatter
+      files: \.sql$
+
+```
+
+### Usage in Python
 
 To exemplify the formatting let's say you have a SQL query like this
 
-```
+```python
 example_sql = """
 create or replace table mytable as -- mytable example
 seLecT a.asdf, b.qwer, -- some comment here
@@ -29,7 +49,7 @@ groUp by a.asdf
 
 Then you can use this package to format it so that it is better readable
 
-```
+```python
 from sql_formatter.core import format_sql
 print(format_sql(example_sql))
 ```
@@ -53,7 +73,7 @@ print(format_sql(example_sql))
 
 It can even deal with subqueries
 
-```
+```python
 example_with_subqueries = """
 select asdf, cast(qwer as numeric), -- some comment
 qwer1
@@ -81,11 +101,10 @@ print(example_with_subqueries)
 
 and it will correct simple careless mistakes (like my favourite one: comma at the end of SELECT statement before of FROM) for you on the flow :-)
 
-```
+```python
 print(format_sql(example_with_subqueries))
 ```
 
-    Correcting mistake: Comma at the end of SELECT statement
     SELECT asdf,
            cast(qwer AS numeric), -- some comment
            qwer1
