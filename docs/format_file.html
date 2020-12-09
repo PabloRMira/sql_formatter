@@ -52,9 +52,11 @@ nb_path: "nbs/01_format_file.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sql_file</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">--- Views for some nice data mart ---</span>
 <span class="s2">use database my_database;</span>
 <span class="s2">use schema my_schema;</span>
 
+<span class="s2">--- View number 1 ---</span>
 <span class="s2">create or replace view first_view as -- my first view</span>
 <span class="s2">select a.car_id,</span>
 <span class="s2">       b.car_name,</span>
@@ -63,11 +65,14 @@ nb_path: "nbs/01_format_file.ipynb"
 <span class="s2">on a.car_id = b.car_id</span>
 <span class="s2">where car_id&gt;1 and car_id&lt;=100;</span>
 
+<span class="s2">-- Table no. 1 --</span>
 <span class="s2">create or replace table first_table as -- my first table</span>
 <span class="s2">select car_id,</span>
 <span class="s2">       avg(price) as avg_price,</span>
 <span class="s2">from first_view</span>
 <span class="s2">group by car_id;</span>
+
+<span class="s2">--- End of file ---</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
@@ -83,9 +88,11 @@ nb_path: "nbs/01_format_file.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>use database my_database;
+<pre>--- Views for some nice data mart ---
+use database my_database;
 use schema my_schema;
 
+--- View number 1 ---
 create or replace view first_view as -- my first view
 select a.car_id,
        b.car_name,
@@ -94,11 +101,14 @@ from sales as a left join (select car_id, car_name, from cars) as b
 on a.car_id = b.car_id
 where car_id&gt;1 and car_id&lt;=100;
 
+-- Table no. 1 --
 create or replace table first_table as -- my first table
 select car_id,
        avg(price) as avg_price,
 from first_view
 group by car_id;
+
+--- End of file ---
 </pre>
 </div>
 </div>
@@ -124,10 +134,12 @@ group by car_id;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_sql_file</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">--- Views for some nice data mart ---</span>
 <span class="s2">use database my_database;</span>
 <span class="s2">use schema my_schema;</span>
 
 
+<span class="s2">--- View number 1 ---</span>
 <span class="s2">CREATE OR REPLACE VIEW first_view AS -- my first view</span>
 <span class="s2">SELECT a.car_id,</span>
 <span class="s2">       b.car_name,</span>
@@ -141,11 +153,14 @@ group by car_id;
 <span class="s2">   and car_id &lt;= 100;</span>
 
 
+<span class="s2">-- Table no. 1 --</span>
 <span class="s2">CREATE OR REPLACE TABLE first_table AS -- my first table</span>
 <span class="s2">SELECT car_id,</span>
 <span class="s2">       avg(price) AS avg_price</span>
 <span class="s2">FROM   first_view</span>
 <span class="s2">GROUP BY car_id;</span>
+
+<span class="s2">--- End of file ---</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">expected_sql_file</span><span class="p">)</span>
@@ -161,10 +176,12 @@ group by car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>use database my_database;
+<pre>--- Views for some nice data mart ---
+use database my_database;
 use schema my_schema;
 
 
+--- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
@@ -178,11 +195,14 @@ WHERE  car_id &gt; 1
    and car_id &lt;= 100;
 
 
+-- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
+--- End of file ---
 
 </pre>
 </div>
@@ -266,11 +286,12 @@ GROUP BY car_id;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">check_sql_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">--- Table 1---</span>
 <span class="s2">creaTe or replace table my_table as</span>
 <span class="s2">select asdf</span>
 <span class="s2">from table</span>
 <span class="s2">where asdf = 1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -397,10 +418,12 @@ GROUP BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>use database my_database;
+<pre>--- Views for some nice data mart ---
+use database my_database;
 use schema my_schema;
 
 
+--- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
@@ -414,11 +437,14 @@ WHERE  car_id &gt; 1
    and car_id &lt;= 100;
 
 
+-- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
+--- End of file ---
 
 </pre>
 </div>
@@ -498,10 +524,12 @@ Return 0 for no change and 1 for formatting adjustments</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>use database my_database;
+<pre>--- Views for some nice data mart ---
+use database my_database;
 use schema my_schema;
 
 
+--- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
@@ -515,11 +543,14 @@ WHERE  car_id &gt; 1
    and car_id &lt;= 100;
 
 
+-- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
+--- End of file ---
 
 </pre>
 </div>
@@ -608,10 +639,12 @@ GROUP BY car_id;
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>All done!
+--- Views for some nice data mart ---
 use database my_database;
 use schema my_schema;
 
 
+--- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
@@ -625,16 +658,21 @@ WHERE  car_id &gt; 1
    and car_id &lt;= 100;
 
 
+-- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
 
+--- End of file ---
+
+--- Views for some nice data mart ---
 use database my_database;
 use schema my_schema;
 
 
+--- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
@@ -648,11 +686,14 @@ WHERE  car_id &gt; 1
    and car_id &lt;= 100;
 
 
+-- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
        avg(price) AS avg_price
 FROM   first_view
 GROUP BY car_id;
+
+--- End of file ---
 
 </pre>
 </div>

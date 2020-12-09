@@ -53,7 +53,7 @@ nb_path: "nbs/00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L12" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
+<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
 </blockquote>
 <p>Assert equality of <code>s_in</code> and <code>s_expected</code> and print the result of <code>s_in</code> if the assertion worked</p>
 
@@ -128,9 +128,11 @@ from table1
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">create or replace table mytable as -- mytable example</span>
+<span class="s2">create or replace table mytable as -- Mytable example</span>
 <span class="s2">seLecT a.asdf, b.qwer, -- some comment here</span>
-<span class="s2">c.asdf, -- some comment there</span>
+<span class="s2">c.asdf, -- some commenT there</span>
+<span class="s2">case when a.asdf= 1 then &#39;b&#39; -- here a case comment</span>
+<span class="s2">when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment</span>
 <span class="s2">b.asdf2 frOm table1 as a leFt join </span>
 <span class="s2">table2 as b -- and here a comment</span>
 <span class="s2">    on a.asdf = b.asdf  -- join this way</span>
@@ -164,10 +166,13 @@ from table1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;CREATE OR REPLACE TABLE mytable AS -- mytable example</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;CREATE OR REPLACE TABLE mytable AS -- Mytable example</span>
 <span class="s2">SELECT a.asdf,</span>
 <span class="s2">       b.qwer, -- some comment here</span>
-<span class="s2">       c.asdf, -- some comment there</span>
+<span class="s2">       c.asdf, -- some commenT there</span>
+<span class="s2">       case when a.asdf = 1 then &#39;b&#39; -- here a case comment</span>
+<span class="s2">            when b.qwer = 2 then &#39;c&#39;</span>
+<span class="s2">            else &#39;d&#39; end AS new_field, -- Some comment</span>
 <span class="s2">       b.asdf2</span>
 <span class="s2">FROM   table1 AS a</span>
 <span class="s2">    LEFT JOIN table2 AS b -- and here a comment</span>
@@ -234,7 +239,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="capitalize_statements" class="doc_header"><code>capitalize_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>capitalize_statements</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
+<h4 id="capitalize_statements" class="doc_header"><code>capitalize_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>capitalize_statements</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
 </blockquote>
 <p>Capitalize SQL statements <code>statements</code> in string <code>s</code></p>
 
@@ -276,9 +281,11 @@ from table1
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-CREATE OR REPLACE TABLE mytable AS -- mytable example
+CREATE OR REPLACE TABLE mytable AS -- Mytable example
 SELECT a.asdf, b.qwer, -- some comment here
-c.asdf, -- some comment there
+c.asdf, -- some commenT there
+case when a.asdf= 1 then &#39;b&#39; -- here a case comment
+when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end AS new_field, -- Some comment
 b.asdf2 FROM table1 AS a LEFT JOIN 
 table2 AS b -- and here a comment
     ON a.asdf = b.asdf  -- join this way
@@ -353,7 +360,7 @@ GROUP BY a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_newlines_mspaces" class="doc_header"><code>remove_newlines_mspaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L55" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_newlines_mspaces</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_newlines_mspaces" class="doc_header"><code>remove_newlines_mspaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L56" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_newlines_mspaces</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Remove newline and too many spaces characters.
 Newline characters in SELECT statement with comments
@@ -398,7 +405,7 @@ with comments properly</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>create or replace table mytable as -- mytable example seLecT a.asdf, b.qwer, -- some comment here[EOC]c.asdf, -- some comment there[EOC]b.asdf2 frOm table1 as a leFt join table2 as b -- and here a comment on a.asdf = b.asdf -- join this way inner join table3 as c on a.asdf=c.asdf whEre a.asdf= 1 -- comment this anD b.qwer =2 and a.asdf&lt;=1 --comment that or b.qwer&gt;=5 groUp by a.asdf
+<pre>create or replace table mytable as -- Mytable example seLecT a.asdf, b.qwer, -- some comment here[EOC]c.asdf, -- some commenT there[EOC]case when a.asdf= 1 then &#39;b&#39; -- here a case comment[EOC]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[EOC]b.asdf2 frOm table1 as a leFt join table2 as b -- and here a comment on a.asdf = b.asdf -- join this way inner join table3 as c on a.asdf=c.asdf whEre a.asdf= 1 -- comment this anD b.qwer =2 and a.asdf&lt;=1 --comment that or b.qwer&gt;=5 groUp by a.asdf
 </pre>
 </div>
 </div>
@@ -504,7 +511,7 @@ with comments properly</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="breakline_statement" class="doc_header"><code>breakline_statement</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L78" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>breakline_statement</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
+<h4 id="breakline_statement" class="doc_header"><code>breakline_statement</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L79" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>breakline_statement</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
 </blockquote>
 <p>Write a newline in <code>s</code> for all <code>statements</code></p>
 
@@ -546,9 +553,11 @@ with comments properly</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-create or replace table mytable as -- mytable example
+create or replace table mytable as -- Mytable example
 select a.asdf, b.qwer, -- some comment here
-c.asdf, -- some comment there
+c.asdf, -- some commenT there
+case when a.asdf= 1 then &#39;b&#39; -- here a case comment
+when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment
 b.asdf2
 from table1 as a
 left join 
@@ -599,8 +608,8 @@ group by a.asdf
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-create or replace table mytable as -- mytable example
-select a.asdf, b.qwer, -- some comment here[EOC]c.asdf, -- some comment there[EOC]b.asdf2
+create or replace table mytable as -- Mytable example
+select a.asdf, b.qwer, -- some comment here[EOC]c.asdf, -- some commenT there[EOC]case when a.asdf= 1 then &#39;b&#39; -- here a case comment[EOC]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[EOC]b.asdf2
 from table1 as a
 left join table2 as b -- and here a comment
 on a.asdf = b.asdf -- join this way
@@ -608,6 +617,100 @@ inner join table3 as c
 on a.asdf=c.asdf
 where a.asdf= 1 -- comment this anD b.qwer =2 and a.asdf&lt;=1 --comment that or b.qwer&gt;=5
 group by a.asdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We would like to have every non capital statement lower cased but let comments untouched</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="lowercase_query" class="doc_header"><code>lowercase_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L86" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lowercase_query</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Lowercase query but let comments untouched</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">lowercase_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">--- My nice view 1 --</span>
+<span class="s2">Create or Replace VieW view_1 as</span>
+<span class="s2">seLect asdf, -- Some Comment</span>
+<span class="s2">qwER,</span>
+<span class="s2">qwerTy, -- Some other comment</span>
+<span class="s2">FROM table1</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">--- My nice view 1 --</span>
+<span class="sd">create or replace view view_1 as</span>
+<span class="sd">select asdf, -- Some Comment</span>
+<span class="sd">qwer,</span>
+<span class="sd">qwerty, -- Some other comment</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+--- My nice view 1 --
+create or replace view view_1 as
+select asdf, -- Some Comment
+qwer,
+qwerty, -- Some other comment
+from table1
+
 </pre>
 </div>
 </div>
@@ -642,7 +745,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L85" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L101" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Add whitespaces between symbols in line <code>s</code></p>
 
@@ -715,7 +818,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L93" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format SELECT statement line <code>s</code></p>
 
@@ -1035,7 +1138,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L112" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L128" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format FROM statement line <code>s</code></p>
 
@@ -1070,6 +1173,20 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>from   table1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1090,7 +1207,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L123" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L139" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format JOIN statement line <code>s</code></p>
 
@@ -1125,6 +1242,20 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>    inner join table1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1145,7 +1276,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L129" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L145" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format ON statement line <code>s</code></p>
 
@@ -1180,6 +1311,20 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>        on a.asdf = b.asdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1200,7 +1345,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L152" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format WHERE statement line <code>s</code></p>
 
@@ -1239,6 +1384,22 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>WHERE  asdf = 1
+   and qwer = 1
+    or blabla = &#39;asdf&#39;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1259,7 +1420,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L145" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L161" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statement line <code>s</code></p>
 
@@ -1294,6 +1455,21 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       qwer
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1308,6 +1484,20 @@ group by a.asdf
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>    left join table1 as abc
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -1328,6 +1518,23 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>where  asdf = 1
+   and qwer = &#39;things&#39;
+   and blabla = 0
+    or stuff = -1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1342,7 +1549,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L163" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L179" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statements lines <code>s</code></p>
 
@@ -1377,6 +1584,22 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       qwer
+from   table1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1397,7 +1620,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L173" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L189" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Add ending semicolon for SQL query <code>s</code></p>
 
@@ -1442,6 +1665,20 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf from table1;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1466,6 +1703,22 @@ group by a.asdf
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf
+from table1
+where asdf = 1;
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -1496,6 +1749,22 @@ group by a.asdf
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf
+from table1
+where asdf = 1;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1517,7 +1786,7 @@ group by a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L181" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L197" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Format a simple SQL query without subqueries <code>s</code>.
 If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
@@ -1553,6 +1822,37 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE mytable AS -- Mytable example
+SELECT a.asdf,
+       b.qwer, -- some comment here
+       c.asdf, -- some commenT there
+       case when a.asdf = 1 then &#39;b&#39; -- here a case comment
+            when b.qwer = 2 then &#39;c&#39;
+            else &#39;d&#39; end AS new_field, -- Some comment
+       b.asdf2
+FROM   table1 AS a
+    LEFT JOIN table2 AS b -- and here a comment
+        ON a.asdf = b.asdf -- join this way
+    INNER JOIN table3 AS c
+        ON a.asdf = c.asdf
+WHERE  a.asdf = 1 -- comment this
+   and b.qwer = 2
+   and a.asdf &lt;= 1 --comment that
+    or b.qwer &gt;= 5
+GROUP BY a.asdf;
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -1596,6 +1896,29 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+select asdf, cast(qwer as numeric), -- some comment
+qwer1
+from 
+(select asdf, qwer, from table1 where asdf = 1) as a
+left 
+join (select asdf, qwer2 from table2 where qwer2 = 1) as b
+on a.asdf = b.asdf
+where qwer1 &gt;= 0
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1635,6 +1958,32 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf,
+       cast(qwer AS numeric), -- some comment
+       qwer1
+FROM   (SELECT asdf,
+               qwer
+        FROM   table1
+        WHERE  asdf = 1) AS a
+    LEFT JOIN (SELECT asdf,
+                      qwer2
+               FROM   table2
+               WHERE  qwer2 = 1) AS b
+        ON a.asdf = b.asdf
+WHERE  qwer1 &gt;= 0;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1655,7 +2004,7 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L195" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
+<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L211" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Extract outer subquery in query <code>s</code></p>
 
@@ -1708,7 +2057,7 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L221" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
+<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L237" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
 </blockquote>
 <p>Format subquery in line <code>s</code> based on indentation on <code>previous_s</code></p>
 
@@ -1746,7 +2095,7 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L246" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L262" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Format SQL query with subqueries. If <code>add_semicolon</code> is True then add a semicolon at the end</p>
 
@@ -1784,6 +2133,32 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf,
+       cast(qwer AS numeric), -- some comment
+       qwer1
+FROM   (SELECT asdf,
+               qwer
+        FROM   table1
+        WHERE  asdf = 1) AS a
+    LEFT JOIN (SELECT asdf,
+                      qwer2
+               FROM   table2
+               WHERE  qwer2 = 1) AS b
+        ON a.asdf = b.asdf
+WHERE  qwer1 &gt;= 0;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1808,6 +2183,37 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE mytable AS -- Mytable example
+SELECT a.asdf,
+       b.qwer, -- some comment here
+       c.asdf, -- some commenT there
+       case when a.asdf = 1 then &#39;b&#39; -- here a case comment
+            when b.qwer = 2 then &#39;c&#39;
+            else &#39;d&#39; end AS new_field, -- Some comment
+       b.asdf2
+FROM   table1 AS a
+    LEFT JOIN table2 AS b -- and here a comment
+        ON a.asdf = b.asdf -- join this way
+    INNER JOIN table3 AS c
+        ON a.asdf = c.asdf
+WHERE  a.asdf = 1 -- comment this
+   and b.qwer = 2
+   and a.asdf &lt;= 1 --comment that
+    or b.qwer &gt;= 5
+GROUP BY a.asdf;
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -1888,6 +2294,29 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf,
+       qwer
+FROM   (SELECT a.asdf
+        FROM   (SELECT asdf,
+                       qwer
+                FROM   table2) AS a
+            INNER JOIN (SELECT asdf,
+                               qwer
+                        FROM   table3) AS b
+                ON a.qwer = b.qwer);
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1965,6 +2394,29 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf
+FROM   (SELECT asdf,
+               qwer
+        FROM   (SELECT a.asdf,
+                       b.qwer
+                FROM   (SELECT asdf
+                        FROM   table1) AS a
+                    RIGHT JOIN (SELECT qwer
+                                FROM   table2) AS b
+                        ON a.asdf = b.asdf));
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
