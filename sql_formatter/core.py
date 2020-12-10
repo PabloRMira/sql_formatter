@@ -65,14 +65,24 @@ def remove_newlines_mspaces(s):
     s = re.sub(r"\n[\r\t\f\v ]+", r"\n", s)  # remove whitespaces after newline
     s = re.sub(r"[\r\t\f\v ]+\n", r"\n", s)  # remove whitespaces before newline
     split_s = re.split(r"(select .*?)(from)", s, flags=re.I | re.DOTALL)  # split to get individual select lines
+    # add special token [EOC] = End of comment for -- comments
     split_s = [
-        re.sub(r"(--.*?)(\n)", r"\1[EOC]", line)  # add special token for select lines
+        re.sub(r"(--.*?)(\n)", r"\1[EOC]", line)  # add special token for end of comment in select lines
+        if re.match("select", line, flags=re.I)  # for select statements
+        else line  # else no special token
+        for line in split_s
+    ]
+    # add special token [EOC] = End of comment for /*  */ comments
+    split_s = [
+        re.sub(r"(\/\*.*\*\/)", r"\1[EOC]", line)  # add special token for select lines
         if re.match("select", line, flags=re.I)  # for select statements
         else line  # else no special token
         for line in split_s
     ]
     s = "".join(split_s)  # join all the lines
     s = re.sub("\n", " ", s)  # remove newlines
+    s = re.sub(r"\[EOC\][\r\t\f\v ]+", "[EOC]", s)  # remove whitespaces after [EOC]
+    s = re.sub(r"[\r\t\f\v ]+\[EOC\]", "[EOC]", s)  # remove whitespaces before [EOC]
     return s
 
 # Cell
@@ -108,9 +118,16 @@ def add_whitespaces_between_symbols(s):
 # Cell
 def format_select(s):
     "Format SELECT statement line `s`"
+    # remove [EOC] at end of SELECT
+    if re.search(r"\[EOC\]$", s):
+        s = re.sub(r"\[EOC\]$", "", s)
     # if comma is found at the end of select statement then remove comma
-    if re.match(r".*,\s*$", s, flags=re.I):
-        s = re.sub("(.*)(,+)(\s*)$", r"\1", s, flags=re.I)
+    if re.search(r"[\w\d]+,\s*$", s, flags=re.I):
+        s = re.sub(r"([\w\d]+)(,+)(\s*)$", r"\1", s, flags=re.I)
+    elif re.search(r"[\w\d]+,\s*--[\w\d\s]*$", s, flags=re.I):
+        s = re.sub(r"([\w\d]+)(,+)(\s*)(--.*)$", r"\1 \4", s, flags=re.I)
+    elif re.search(r"[\w\d]+,\s*\/\*.*\*\/$", s, flags=re.I):
+        s = re.sub(r"([\w\d]+)(,+)(\s*)(\/\*.*\*\/)$", r"\1 \4", s, flags=re.I)
     s = add_whitespaces_between_symbols(s)  # add whitespaces between symbols
     s = re.sub(r"(,)(\s*)([\w\d]+)", r"\1\n       \3", s)  # add newline after each comma (no comments) and indentation
     s = re.sub(r"\[EOC\]", "\n       ", s)  # replace [EOC] by newline
@@ -122,6 +139,7 @@ def format_select(s):
         for line in split_s
     ]
     s = "\n".join(split_s)
+    s = s.strip()
     return s
 
 # Cell
