@@ -11,7 +11,7 @@ from .core import format_sql, assert_and_print
 # Cell
 def check_sql_query(s):
     "Checks whether `s` is a SQL query"
-    return bool(re.match(pattern=r"^\n*(?:select|create)", string=s, flags=re.I))
+    return bool(re.match(pattern=r".*(?:select|create).*", string=s, flags=re.I | re.DOTALL))
 
 # Cell
 def format_sql_commands(s):
@@ -20,7 +20,7 @@ def format_sql_commands(s):
     split_s = s.split(";")  # split by semicolon
     # format only SQL queries, let everything else unchanged
     formatted_split_s = [
-        "\n\n" + format_sql(sp, add_semicolon=False)
+        "\n\n\n" + format_sql(sp, add_semicolon=False)
         if check_sql_query(sp)
         else sp
         for sp in split_s
