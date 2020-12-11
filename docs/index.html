@@ -136,10 +136,10 @@ SELECT a.asdf,
        b.qwer, -- some comment here
        c.asdf, -- some comment there
        b.asdf2
-FROM   table1 AS a
-    LEFT JOIN table2 AS b -- and here a comment
+FROM   table1 as a
+    LEFT JOIN table2 as b -- and here a comment
         ON a.asdf = b.asdf -- join this way
-    INNER JOIN table3 AS c
+    INNER JOIN table3 as c
         ON a.asdf = c.asdf
 WHERE  a.asdf = 1 -- comment this
    and b.qwer = 2
@@ -180,33 +180,9 @@ GROUP BY a.asdf;
 <span class="s2">on a.asdf = b.asdf</span>
 <span class="s2">where qwer1 &gt;= 0</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">example_with_subqueries</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-select asdf, cast(qwer as numeric), -- some comment
-qwer1
-from 
-(select asdf, qwer, from table1 where asdf = 1) as a
-left 
-join (select asdf, qwer2 from table2 where qwer2 = 1) as b
-on a.asdf = b.asdf
-where qwer1 &gt;= 0
-
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -241,16 +217,16 @@ where qwer1 &gt;= 0
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>SELECT asdf,
-       cast(qwer AS numeric), -- some comment
+       cast(qwer as numeric), -- some comment
        qwer1
 FROM   (SELECT asdf,
                qwer
         FROM   table1
-        WHERE  asdf = 1) AS a
+        WHERE  asdf = 1) as a
     LEFT JOIN (SELECT asdf,
                       qwer2
                FROM   table2
-               WHERE  qwer2 = 1) AS b
+               WHERE  qwer2 = 1) as b
         ON a.asdf = b.asdf
 WHERE  qwer1 &gt;= 0;
 </pre>

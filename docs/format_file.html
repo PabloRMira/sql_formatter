@@ -56,7 +56,6 @@ nb_path: "nbs/01_format_file.ipynb"
 <span class="s2">use database my_database;</span>
 <span class="s2">use schema my_schema;</span>
 
-<span class="s2">--- View number 1 ---</span>
 <span class="s2">create or replace view first_view as -- my first view</span>
 <span class="s2">select a.car_id,</span>
 <span class="s2">       b.car_name,</span>
@@ -74,45 +73,9 @@ nb_path: "nbs/01_format_file.ipynb"
 
 <span class="s2">--- End of file ---</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>--- Views for some nice data mart ---
-use database my_database;
-use schema my_schema;
-
---- View number 1 ---
-create or replace view first_view as -- my first view
-select a.car_id,
-       b.car_name,
-       a.price,
-from sales as a left join (select car_id, car_name, from cars) as b 
-on a.car_id = b.car_id
-where car_id&gt;1 and car_id&lt;=100;
-
--- Table no. 1 --
-create or replace table first_table as -- my first table
-select car_id,
-       avg(price) as avg_price,
-from first_view
-group by car_id;
-
---- End of file ---
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -139,15 +102,14 @@ group by car_id;
 <span class="s2">use schema my_schema;</span>
 
 
-<span class="s2">--- View number 1 ---</span>
 <span class="s2">CREATE OR REPLACE VIEW first_view AS -- my first view</span>
 <span class="s2">SELECT a.car_id,</span>
 <span class="s2">       b.car_name,</span>
 <span class="s2">       a.price</span>
-<span class="s2">FROM   sales AS a</span>
+<span class="s2">FROM   sales as a</span>
 <span class="s2">    LEFT JOIN (SELECT car_id,</span>
 <span class="s2">                      car_name</span>
-<span class="s2">               FROM   cars) AS b</span>
+<span class="s2">               FROM   cars) as b</span>
 <span class="s2">        ON a.car_id = b.car_id</span>
 <span class="s2">WHERE  car_id &gt; 1</span>
 <span class="s2">   and car_id &lt;= 100;</span>
@@ -156,58 +118,15 @@ group by car_id;
 <span class="s2">-- Table no. 1 --</span>
 <span class="s2">CREATE OR REPLACE TABLE first_table AS -- my first table</span>
 <span class="s2">SELECT car_id,</span>
-<span class="s2">       avg(price) AS avg_price</span>
+<span class="s2">       avg(price) as avg_price</span>
 <span class="s2">FROM   first_view</span>
 <span class="s2">GROUP BY car_id;</span>
 
 <span class="s2">--- End of file ---</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">expected_sql_file</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>--- Views for some nice data mart ---
-use database my_database;
-use schema my_schema;
-
-
---- View number 1 ---
-CREATE OR REPLACE VIEW first_view AS -- my first view
-SELECT a.car_id,
-       b.car_name,
-       a.price
-FROM   sales AS a
-    LEFT JOIN (SELECT car_id,
-                      car_name
-               FROM   cars) AS b
-        ON a.car_id = b.car_id
-WHERE  car_id &gt; 1
-   and car_id &lt;= 100;
-
-
--- Table no. 1 --
-CREATE OR REPLACE TABLE first_table AS -- my first table
-SELECT car_id,
-       avg(price) AS avg_price
-FROM   first_view
-GROUP BY car_id;
-
---- End of file ---
-
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -423,15 +342,14 @@ use database my_database;
 use schema my_schema;
 
 
---- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
        a.price
-FROM   sales AS a
+FROM   sales as a
     LEFT JOIN (SELECT car_id,
                       car_name
-               FROM   cars) AS b
+               FROM   cars) as b
         ON a.car_id = b.car_id
 WHERE  car_id &gt; 1
    and car_id &lt;= 100;
@@ -440,7 +358,7 @@ WHERE  car_id &gt; 1
 -- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
-       avg(price) AS avg_price
+       avg(price) as avg_price
 FROM   first_view
 GROUP BY car_id;
 
@@ -529,15 +447,14 @@ use database my_database;
 use schema my_schema;
 
 
---- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
        a.price
-FROM   sales AS a
+FROM   sales as a
     LEFT JOIN (SELECT car_id,
                       car_name
-               FROM   cars) AS b
+               FROM   cars) as b
         ON a.car_id = b.car_id
 WHERE  car_id &gt; 1
    and car_id &lt;= 100;
@@ -546,7 +463,7 @@ WHERE  car_id &gt; 1
 -- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
-       avg(price) AS avg_price
+       avg(price) as avg_price
 FROM   first_view
 GROUP BY car_id;
 
@@ -644,15 +561,14 @@ use database my_database;
 use schema my_schema;
 
 
---- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
        a.price
-FROM   sales AS a
+FROM   sales as a
     LEFT JOIN (SELECT car_id,
                       car_name
-               FROM   cars) AS b
+               FROM   cars) as b
         ON a.car_id = b.car_id
 WHERE  car_id &gt; 1
    and car_id &lt;= 100;
@@ -661,7 +577,7 @@ WHERE  car_id &gt; 1
 -- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
-       avg(price) AS avg_price
+       avg(price) as avg_price
 FROM   first_view
 GROUP BY car_id;
 
@@ -672,15 +588,14 @@ use database my_database;
 use schema my_schema;
 
 
---- View number 1 ---
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
        a.price
-FROM   sales AS a
+FROM   sales as a
     LEFT JOIN (SELECT car_id,
                       car_name
-               FROM   cars) AS b
+               FROM   cars) as b
         ON a.car_id = b.car_id
 WHERE  car_id &gt; 1
    and car_id &lt;= 100;
@@ -689,7 +604,7 @@ WHERE  car_id &gt; 1
 -- Table no. 1 --
 CREATE OR REPLACE TABLE first_table AS -- my first table
 SELECT car_id,
-       avg(price) AS avg_price
+       avg(price) as avg_price
 FROM   first_view
 GROUP BY car_id;
 

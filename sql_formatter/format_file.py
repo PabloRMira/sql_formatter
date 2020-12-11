@@ -20,7 +20,7 @@ def format_sql_commands(s):
     split_s = s.split(";")  # split by semicolon
     # format only SQL queries, let everything else unchanged
     formatted_split_s = [
-        "\n\n\n" + format_sql(sp, add_semicolon=False)
+        "\n\n\n" + format_sql(sp, add_semicolon=False).strip()
         if check_sql_query(sp)
         else sp
         for sp in split_s
