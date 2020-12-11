@@ -30,7 +30,7 @@ repos:
 
 To exemplify the formatting let's say you have a SQL query like this
 
-```
+```python
 example_sql = """
 create or replace table mytable as -- mytable example
 seLecT a.asdf, b.qwer, -- some comment here
@@ -49,7 +49,7 @@ groUp by a.asdf
 
 Then you can use this package to format it so that it is better readable
 
-```
+```python
 from sql_formatter.core import format_sql
 print(format_sql(example_sql))
 ```
@@ -59,10 +59,10 @@ print(format_sql(example_sql))
            b.qwer, -- some comment here
            c.asdf, -- some comment there
            b.asdf2
-    FROM   table1 AS a
-        LEFT JOIN table2 AS b -- and here a comment
+    FROM   table1 as a
+        LEFT JOIN table2 as b -- and here a comment
             ON a.asdf = b.asdf -- join this way
-        INNER JOIN table3 AS c
+        INNER JOIN table3 as c
             ON a.asdf = c.asdf
     WHERE  a.asdf = 1 -- comment this
        and b.qwer = 2
@@ -73,7 +73,7 @@ print(format_sql(example_sql))
 
 It can even deal with subqueries
 
-```
+```python
 example_with_subqueries = """
 select asdf, cast(qwer as numeric), -- some comment
 qwer1
@@ -84,38 +84,25 @@ join (select asdf, qwer2 from table2 where qwer2 = 1) as b
 on a.asdf = b.asdf
 where qwer1 >= 0
 """
-print(example_with_subqueries)
 ```
-
-    
-    select asdf, cast(qwer as numeric), -- some comment
-    qwer1
-    from 
-    (select asdf, qwer, from table1 where asdf = 1) as a
-    left 
-    join (select asdf, qwer2 from table2 where qwer2 = 1) as b
-    on a.asdf = b.asdf
-    where qwer1 >= 0
-    
-
 
 and it will correct simple careless mistakes (like my favourite one: comma at the end of SELECT statement before of FROM) for you on the flow :-)
 
-```
+```python
 print(format_sql(example_with_subqueries))
 ```
 
     SELECT asdf,
-           cast(qwer AS numeric), -- some comment
+           cast(qwer as numeric), -- some comment
            qwer1
     FROM   (SELECT asdf,
                    qwer
             FROM   table1
-            WHERE  asdf = 1) AS a
+            WHERE  asdf = 1) as a
         LEFT JOIN (SELECT asdf,
                           qwer2
                    FROM   table2
-                   WHERE  qwer2 = 1) AS b
+                   WHERE  qwer2 = 1) as b
             ON a.asdf = b.asdf
     WHERE  qwer1 >= 0;
 

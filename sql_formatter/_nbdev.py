@@ -4,10 +4,8 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"assert_and_print": "00_core.ipynb",
          "MAIN_STATEMENTS": "00_core.ipynb",
-         "CAPITAL_STATEMENTS": "00_core.ipynb",
-         "capitalize_statements": "00_core.ipynb",
          "remove_newlines_mspaces": "00_core.ipynb",
-         "breakline_statement": "00_core.ipynb",
+         "preformat_statement": "00_core.ipynb",
          "lowercase_query": "00_core.ipynb",
          "add_whitespaces_between_symbols": "00_core.ipynb",
          "format_select": "00_core.ipynb",
