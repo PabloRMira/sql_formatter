@@ -30,7 +30,7 @@ repos:
 
 To exemplify the formatting let's say you have a SQL query like this
 
-```python
+```
 example_sql = """
 create or replace table mytable as -- mytable example
 seLecT a.asdf, b.qwer, -- some comment here
@@ -49,7 +49,7 @@ groUp by a.asdf
 
 Then you can use this package to format it so that it is better readable
 
-```python
+```
 from sql_formatter.core import format_sql
 print(format_sql(example_sql))
 ```
@@ -73,7 +73,7 @@ print(format_sql(example_sql))
 
 It can even deal with subqueries
 
-```python
+```
 example_with_subqueries = """
 select asdf, cast(qwer as numeric), -- some comment
 qwer1
@@ -88,7 +88,7 @@ where qwer1 >= 0
 
 and it will correct simple careless mistakes (like my favourite one: comma at the end of SELECT statement before of FROM) for you on the flow :-)
 
-```python
+```
 print(format_sql(example_with_subqueries))
 ```
 
