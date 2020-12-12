@@ -90,7 +90,7 @@ def preformat_statement(s, statements):
                 ]
             else:
                 split_rec = [  # update list
-                    re.sub(rf"\s*({statement})\b", "\n" + statement.upper(), line, flags=re.I)
+                    re.sub(rf"\s*\b({statement})\b", "\n" + statement.upper(), line, flags=re.I)
                     if not re.search("(?:--.*|\/\*.*\*\/)", line)
                     else line
                     for line in split_rec
