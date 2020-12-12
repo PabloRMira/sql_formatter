@@ -32,6 +32,8 @@ def format_sql_commands(s):
     ]
     # join by semicolon
     formatted_s = ";".join(formatted_split_s)
+    # remove starting and ending newlines
+    formatted_s = formatted_s.strip()
     # add newline at the end of file
     formatted_s = formatted_s + "\n"
     return formatted_s
