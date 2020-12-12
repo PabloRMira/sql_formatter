@@ -1,4 +1,4 @@
-# sql_formatter (WIP)
+# sql_formatter
 > A SQL formatter
 
 
@@ -30,7 +30,7 @@ repos:
 
 To exemplify the formatting let's say you have a SQL query like this
 
-```
+```python
 example_sql = """
 create or replace table mytable as -- mytable example
 seLecT a.asdf, b.qwer, -- some comment here
@@ -49,7 +49,7 @@ groUp by a.asdf
 
 Then you can use this package to format it so that it is better readable
 
-```
+```python
 from sql_formatter.core import format_sql
 print(format_sql(example_sql))
 ```
@@ -71,10 +71,10 @@ print(format_sql(example_sql))
     GROUP BY a.asdf;
 
 
-It can even deal with subqueries
+It can even deal with subqueries and it will correct my favourite simple careless mistake (comma at the end of SELECT statement before of FROM) for you on the flow :-)
 
-```
-example_with_subqueries = """
+```python
+print(format_sql("""
 select asdf, cast(qwer as numeric), -- some comment
 qwer1
 from 
@@ -83,13 +83,7 @@ left
 join (select asdf, qwer2 from table2 where qwer2 = 1) as b
 on a.asdf = b.asdf
 where qwer1 >= 0
-"""
-```
-
-and it will correct simple careless mistakes (like my favourite one: comma at the end of SELECT statement before of FROM) for you on the flow :-)
-
-```
-print(format_sql(example_with_subqueries))
+"""))
 ```
 
     SELECT asdf,
@@ -106,6 +100,79 @@ print(format_sql(example_with_subqueries))
             ON a.asdf = b.asdf
     WHERE  qwer1 >= 0;
 
+
+The formatter is also robust against nested subqueries
+
+```python
+print(format_sql("""
+select field1, field2 from (select field1, 
+field2 from (select field1, field2, 
+field3 from table1 where a=1 and b>=100))
+"""))
+```
+
+    SELECT field1,
+           field2
+    FROM   (SELECT field1,
+                   field2
+            FROM   (SELECT field1,
+                           field2,
+                           field3
+                    FROM   table1
+                    WHERE  a = 1
+                       and b >= 100));
+
+
+If you do not want to get some query formatted in your SQL file then you can use the marker `/*skip-formatter*/` in your query to disable formatting for just the corresponding query
+
+```python
+from sql_formatter.format_file import format_sql_commands
+print(format_sql_commands(
+"""
+use database my_database;
+
+-- My first view --
+create or repLace view my_view as
+select asdf, qwer from table1
+where asdf <= 10;
+
+
+/*skip-formatter*/
+create oR rePlace tabLe my_table as
+select asdf
+From my_view;
+"""
+))
+```
+
+    use database my_database;
+    
+    
+    -- My first view --
+    CREATE OR REPLACE VIEW my_view AS
+    SELECT asdf,
+           qwer
+    FROM   table1
+    WHERE  asdf <= 10;
+    
+    
+    /*skip-formatter*/
+    create oR rePlace tabLe my_table as
+    select asdf
+    From my_view;
+    
+
+
+### A note of caution
+
+For the SQL-formatter to work properly you should meticulously end each of your SQL statements with semicolon (;)
+
+### What `sql_formatter` does not do
+
+This package is just a SQL formatter and therefore
+
+* cannot parse your SQL queries into e.g. dictionaries
+* cannot validate your SQL queries before formatting
 
 ## Acknowledgements
 

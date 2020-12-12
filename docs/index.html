@@ -1,6 +1,6 @@
 ---
 
-title: sql_formatter (WIP)
+title: sql_formatter
 
 
 keywords: fastai
@@ -158,7 +158,7 @@ GROUP BY a.asdf;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It can even deal with subqueries</p>
+<p>It can even deal with subqueries and it will correct my favourite simple careless mistake (comma at the end of SELECT statement before of FROM) for you on the flow :-)</p>
 
 </div>
 </div>
@@ -170,7 +170,7 @@ GROUP BY a.asdf;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_with_subqueries</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">select asdf, cast(qwer as numeric), -- some comment</span>
 <span class="s2">qwer1</span>
 <span class="s2">from </span>
@@ -179,31 +179,7 @@ GROUP BY a.asdf;
 <span class="s2">join (select asdf, qwer2 from table2 where qwer2 = 1) as b</span>
 <span class="s2">on a.asdf = b.asdf</span>
 <span class="s2">where qwer1 &gt;= 0</span>
-<span class="s2">&quot;&quot;&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>and it will correct simple careless mistakes (like my favourite one: comma at the end of SELECT statement before of FROM) for you on the flow :-)</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">example_with_subqueries</span><span class="p">))</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -239,6 +215,144 @@ WHERE  qwer1 &gt;= 0;
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The formatter is also robust against nested subqueries</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">select field1, field2 from (select field1, </span>
+<span class="s2">field2 from (select field1, field2, </span>
+<span class="s2">field3 from table1 where a=1 and b&gt;=100))</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT field1,
+       field2
+FROM   (SELECT field1,
+               field2
+        FROM   (SELECT field1,
+                       field2,
+                       field3
+                FROM   table1
+                WHERE  a = 1
+                   and b &gt;= 100));
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you do not want to get some query formatted in your SQL file then you can use the marker <code>/*skip-formatter*/</code> in your query to disable formatting for just the corresponding query</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sql_formatter.format_file</span> <span class="kn">import</span> <span class="n">format_sql_commands</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">format_sql_commands</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">use database my_database;</span>
+
+<span class="sd">-- My first view --</span>
+<span class="sd">create or repLace view my_view as</span>
+<span class="sd">select asdf, qwer from table1</span>
+<span class="sd">where asdf &lt;= 10;</span>
+
+
+<span class="sd">/*skip-formatter*/</span>
+<span class="sd">create oR rePlace tabLe my_table as</span>
+<span class="sd">select asdf</span>
+<span class="sd">From my_view;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>use database my_database;
+
+
+-- My first view --
+CREATE OR REPLACE VIEW my_view AS
+SELECT asdf,
+       qwer
+FROM   table1
+WHERE  asdf &lt;= 10;
+
+
+/*skip-formatter*/
+create oR rePlace tabLe my_table as
+select asdf
+From my_view;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="A-note-of-caution">A note of caution<a class="anchor-link" href="#A-note-of-caution"> </a></h3><p>For the SQL-formatter to work properly you should meticulously end each of your SQL statements with semicolon (;)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-sql_formatter-does-not-do">What <code>sql_formatter</code> does not do<a class="anchor-link" href="#What-sql_formatter-does-not-do"> </a></h3><p>This package is just a SQL formatter and therefore</p>
+<ul>
+<li>cannot parse your SQL queries into e.g. dictionaries</li>
+<li>cannot validate your SQL queries before formatting</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Acknowledgements">Acknowledgements<a class="anchor-link" href="#Acknowledgements"> </a></h2>
