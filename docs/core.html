@@ -580,6 +580,49 @@ WHERE asdf = 1
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">create or replace view my_view as</span>
+<span class="s2">seLect asdf,</span>
+<span class="s2">       qwer_function,</span>
+<span class="s2">       qwer</span>
+<span class="s2">From   table1 where  asdf = 1</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CREATE OR REPLACE VIEW my_view AS</span><span class="se">\n</span><span class="s2">SELECT asdf, qwer_function, qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+CREATE OR REPLACE VIEW my_view AS
+SELECT asdf, qwer_function, qwer
+FROM table1
+WHERE asdf = 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="n">example_sql</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">))</span>
 </pre></div>
 
