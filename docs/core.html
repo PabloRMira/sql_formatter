@@ -38,76 +38,6 @@ nb_path: "nbs/00_core.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="General-helper-functions">General helper functions<a class="anchor-link" href="#General-helper-functions"> </a></h2>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L12" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
-</blockquote>
-<p>Assert equality of <code>s_in</code> and <code>s_expected</code> and print the result of <code>s_in</code> if the assertion worked</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="s2">&quot;select asdf</span><span class="se">\n</span><span class="s2">from table1&quot;</span><span class="p">,</span> <span class="s2">&quot;select asdf</span><span class="se">\n</span><span class="s2">from table1&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>select asdf
-from table1
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="General-formatting">General formatting<a class="anchor-link" href="#General-formatting"> </a></h2>
 </div>
 </div>
@@ -131,7 +61,8 @@ from table1
 <span class="s2">create or replace table mytable as -- Mytable example</span>
 <span class="s2">seLecT a.asdf, b.qwer, -- some comment here</span>
 <span class="s2">/* and here is a line comment inside select */</span>
-<span class="s2">c.asdf, -- some commenT there</span>
+<span class="s2">substr(c.asdf, 1, 2) as substr_asdf, </span>
+<span class="s2">/* some commenT there */</span>
 <span class="s2">case when a.asdf= 1 then &#39;b&#39; /* here a case comment */</span>
 <span class="s2">when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment</span>
 <span class="s2">b.asdf2 frOm table1 as a leFt join </span>
@@ -171,7 +102,8 @@ from table1
 <span class="s2">SELECT a.asdf,</span>
 <span class="s2">       b.qwer, -- some comment here</span>
 <span class="s2">       /* and here is a line comment inside select */</span>
-<span class="s2">       c.asdf, -- some commenT there</span>
+<span class="s2">       substr(c.asdf, 1, 2) as substr_asdf,</span>
+<span class="s2">       /* some commenT there */</span>
 <span class="s2">       case when a.asdf = 1 then &#39;b&#39; /* here a case comment */</span>
 <span class="s2">            when b.qwer = 2 then &#39;c&#39;</span>
 <span class="s2">            else &#39;d&#39; end as new_field, -- Some comment</span>
@@ -219,7 +151,9 @@ from table1
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We need to remove newlines and multiple spaces because the may be arbitrary</p>
+<p>We need to remove newlines and multiple spaces because the may be arbitrary.</p>
+<p>Before removing newlines we also need to mark the end of coments because we would not know where they end</p>
+<p>We also mark the begin of comments /<em> </em>/ if they are in a newline</p>
 
 </div>
 </div>
@@ -235,13 +169,9 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_newlines_mspaces" class="doc_header"><code>remove_newlines_mspaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_newlines_mspaces</code>(<strong><code>s</code></strong>)</p>
+<h4 id="clean_query" class="doc_header"><code>clean_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>clean_query</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Remove newline and too many spaces characters.
-Newline characters in SELECT statement with comments
-are replaced by special token [EOC] (end of comment)
-because otherwise we cannot format SELECT statements
-with comments properly</p>
+<p>Remove redundant whitespaces and mark comments boundaries and remove newlines afterwards in query <code>s</code></p>
 
 </div>
 
@@ -256,37 +186,6 @@ with comments properly</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">remove_newlines_mspaces</span><span class="p">(</span><span class="n">example_sql</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>create or replace table mytable as -- Mytable example[EOC]seLecT a.asdf, b.qwer, -- some comment here[EOC]/* and here is a line comment inside select */[EOC]c.asdf, -- some commenT there[EOC]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[EOC]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[EOC]b.asdf2 frOm table1 as a leFt join table2 as b -- and here a comment[EOC]on a.asdf = b.asdf /* joiN this way */[EOC]inner join table3 as c on a.asdf=c.asdf whEre a.asdf= 1 -- comment this[EOC]anD b.qwer =2 and a.asdf&lt;=1 --comment that[EOC]or b.qwer&gt;=5 groUp by a.asdf
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}
@@ -299,7 +198,7 @@ with comments properly</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">remove_newlines_mspaces</span><span class="p">(</span>
+    <span class="n">clean_query</span><span class="p">(</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">SELECT asdf, qwer,</span>
 <span class="sd"> qwer1,    qwer2</span>
@@ -345,12 +244,12 @@ with comments properly</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">remove_newlines_mspaces</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+    <span class="n">clean_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SELECT asdf, qwer, -- some comment</span>
 <span class="s2"> qwer1,    qwer2</span>
 <span class="s2">FROM table1</span>
 <span class="s2">WHERE asdf=1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;SELECT asdf, qwer, -- some comment[EOC]qwer1, qwer2 FROM table1 WHERE asdf=1&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;SELECT asdf, qwer, -- some comment[C]qwer1, qwer2 FROM table1 WHERE asdf=1&quot;</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -364,7 +263,7 @@ with comments properly</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf, qwer, -- some comment[EOC]qwer1, qwer2 FROM table1 WHERE asdf=1
+<pre>SELECT asdf, qwer, -- some comment[C]qwer1, qwer2 FROM table1 WHERE asdf=1
 </pre>
 </div>
 </div>
@@ -390,12 +289,12 @@ with comments properly</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">remove_newlines_mspaces</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+    <span class="n">clean_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SELECT asdf, qwer, /*  another comment */</span>
 <span class="s2">qwer1,    qwer2</span>
 <span class="s2">FROM table1</span>
 <span class="s2">WHERE asdf=1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;SELECT asdf, qwer, /* another comment */[EOC]qwer1, qwer2 FROM table1 WHERE asdf=1&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;SELECT asdf, qwer, /* another comment */[C]qwer1, qwer2 FROM table1 WHERE asdf=1&quot;</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -409,7 +308,96 @@ with comments properly</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf, qwer, /* another comment */[EOC]qwer1, qwer2 FROM table1 WHERE asdf=1
+<pre>SELECT asdf, qwer, /* another comment */[C]qwer1, qwer2 FROM table1 WHERE asdf=1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">clean_query</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SELECT asdf, qwer, /*  another comment */</span>
+<span class="sd">qwer1,    </span>
+<span class="sd">/* inline comment */</span>
+<span class="sd">qwer2</span>
+<span class="sd">FROM table1</span>
+<span class="sd">WHERE asdf=1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span> 
+    <span class="s2">&quot;SELECT asdf, qwer, /* another comment */[C]qwer1,[CS]/* inline comment */[C]qwer2 FROM table1 WHERE asdf=1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT asdf, qwer, /* another comment */[C]qwer1,[CS]/* inline comment */[C]qwer2 FROM table1 WHERE asdf=1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">clean_query</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace my_table as</span>
+<span class="sd">/* some comment</span>
+<span class="sd">   some new comment line */</span>
+<span class="sd">select asdf,</span>
+<span class="sd">qwer,   qwer2</span>
+
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;create or replace my_table as[CS]/* some comment</span>
+<span class="sd">some new comment line */[C]select asdf, qwer, qwer2 from table1&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>create or replace my_table as[CS]/* some comment
+some new comment line */[C]select asdf, qwer, qwer2 from table1
 </pre>
 </div>
 </div>
@@ -438,7 +426,7 @@ with comments properly</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="preformat_statement" class="doc_header"><code>preformat_statement</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L77" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>preformat_statement</code>(<strong><code>s</code></strong>, <strong><code>statements</code></strong>)</p>
+<h4 id="preformat_statements" class="doc_header"><code>preformat_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L43" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>preformat_statements</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Write a newline in <code>s</code> for all <code>statements</code> and
 uppercase them but not if they are inside a comment</p>
@@ -468,7 +456,7 @@ uppercase them but not if they are inside a comment</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">preformat_statement</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer as new_var from table1 where asdf = 1&quot;</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">),</span>
+    <span class="n">preformat_statements</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer as new_var from table1 where asdf = 1&quot;</span><span class="p">),</span>
     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SELECT asdf, qwer as new_var</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
 <span class="p">)</span>
 </pre></div>
@@ -504,13 +492,13 @@ WHERE asdf = 1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="n">preformat_statements</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">seLect asdf,</span>
 <span class="s2">       /* some comment inside select */</span>
 <span class="s2">       qwer</span>
 <span class="s2">From   table1 where  asdf = 1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">),</span>
-    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SELECT asdf, /* some comment inside select */[EOC]qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SELECT asdf,[CS]/* some comment inside select */[C]qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -525,7 +513,7 @@ WHERE asdf = 1
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-SELECT asdf, /* some comment inside select */[EOC]qwer
+SELECT asdf,[CS]/* some comment inside select */[C]qwer
 FROM table1
 WHERE asdf = 1
 </pre>
@@ -545,14 +533,56 @@ WHERE asdf = 1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">preformat_statements</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">seLect asdf, /* some comment inside select */</span>
+<span class="s2">       qwer</span>
+<span class="s2">From   table1 where  asdf = 1</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SELECT asdf, /* some comment inside select */[C]qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+SELECT asdf, /* some comment inside select */[C]qwer
+FROM table1
+WHERE asdf = 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">preformat_statements</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">create or replace view my_view as</span>
 <span class="s2">seLect asdf,</span>
 <span class="s2">       /* some comment inside select */</span>
 <span class="s2">       qwer</span>
 <span class="s2">From   table1 where  asdf = 1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">),</span>
-    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CREATE OR REPLACE VIEW my_view AS</span><span class="se">\n</span><span class="s2">SELECT asdf, /* some comment inside select */[EOC]qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CREATE OR REPLACE VIEW my_view AS</span><span class="se">\n</span><span class="s2">SELECT asdf,[CS]/* some comment inside select */[C]qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -568,7 +598,7 @@ WHERE asdf = 1
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 CREATE OR REPLACE VIEW my_view AS
-SELECT asdf, /* some comment inside select */[EOC]qwer
+SELECT asdf,[CS]/* some comment inside select */[C]qwer
 FROM table1
 WHERE asdf = 1
 </pre>
@@ -588,13 +618,14 @@ WHERE asdf = 1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">preformat_statements</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">create or replace view my_view as</span>
 <span class="s2">seLect asdf,</span>
 <span class="s2">       qwer_function,</span>
 <span class="s2">       qwer</span>
 <span class="s2">From   table1 where  asdf = 1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">),</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CREATE OR REPLACE VIEW my_view AS</span><span class="se">\n</span><span class="s2">SELECT asdf, qwer_function, qwer</span><span class="se">\n</span><span class="s2">FROM table1</span><span class="se">\n</span><span class="s2">WHERE asdf = 1&quot;</span>
 <span class="p">)</span>
 </pre></div>
@@ -631,20 +662,20 @@ WHERE asdf = 1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">preformat_statements</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">create or replace view my_view as</span>
-<span class="s2">seLect asdf,</span>
-<span class="s2">       qwer_function,</span>
-<span class="s2">       lead(asdf) OVER (PARTITION BY asdf ORDER BY qwer)</span>
-<span class="s2">From   table1 where  asdf = 1</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">),</span>
+<span class="s2">seLect asdf, qwer_function,</span>
+<span class="s2">       lead(asdf) over (Partition By asdf order BY qwer),</span>
+<span class="s2">    qwer2</span>
+<span class="s2">From   table1 where  asdf = 1 order by asdf</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">CREATE OR REPLACE VIEW my_view AS</span>
-<span class="sd">SELECT asdf, qwer_function, lead(asdf) OVER (</span>
-<span class="sd">PARTITION BY asdf</span>
-<span class="sd">ORDER BY qwer)</span>
+<span class="sd">SELECT asdf, qwer_function, lead(asdf) OVER (PARTITION BY asdf ORDER BY qwer), qwer2</span>
 <span class="sd">FROM table1</span>
-<span class="sd">WHERE asdf = 1&quot;&quot;&quot;</span>
+<span class="sd">WHERE asdf = 1</span>
+<span class="sd">ORDER BY asdf&quot;&quot;&quot;</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -660,11 +691,10 @@ WHERE asdf = 1
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 CREATE OR REPLACE VIEW my_view AS
-SELECT asdf, qwer_function, lead(asdf) OVER (
-PARTITION BY asdf
-ORDER BY qwer)
+SELECT asdf, qwer_function, lead(asdf) OVER (PARTITION BY asdf ORDER BY qwer), qwer2
 FROM table1
 WHERE asdf = 1
+ORDER BY asdf
 </pre>
 </div>
 </div>
@@ -682,7 +712,20 @@ WHERE asdf = 1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">preformat_statement</span><span class="p">(</span><span class="n">example_sql</span><span class="p">,</span> <span class="n">MAIN_STATEMENTS</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">preformat_statements</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace table mytable as -- Mytable example</span>
+<span class="sd">seLecT a.asdf, b.qwer, -- some comment here</span>
+<span class="sd">/* and here is a line comment inside select */</span>
+<span class="sd">substr(c.asdf, 1, 2) as substr_asdf</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE mytable AS -- Mytable example[C]</span>
+<span class="sd">SELECT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -696,14 +739,47 @@ WHERE asdf = 1
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-CREATE OR REPLACE TABLE mytable AS -- Mytable example[EOC]
-SELECT a.asdf, b.qwer, -- some comment here[EOC]/* and here is a line comment inside select */[EOC]c.asdf, -- some commenT there[EOC]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[EOC]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[EOC]b.asdf2
+CREATE OR REPLACE TABLE mytable AS -- Mytable example[C]
+SELECT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">preformat_statements</span><span class="p">(</span><span class="n">example_sql</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+CREATE OR REPLACE TABLE mytable AS -- Mytable example[C]
+SELECT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf,[CS]/* some commenT there */[C]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[C]b.asdf2
 FROM table1 as a
-LEFT JOIN table2 as b -- and here a comment[EOC]
-ON a.asdf = b.asdf /* joiN this way */[EOC]
+LEFT JOIN table2 as b -- and here a comment[C]
+ON a.asdf = b.asdf /* joiN this way */[C]
 INNER JOIN table3 as c
 ON a.asdf=c.asdf
-WHERE a.asdf= 1 -- comment this[EOC]anD b.qwer =2 and a.asdf&lt;=1 --comment that[EOC]or b.qwer&gt;=5
+WHERE a.asdf= 1 -- comment this[C]anD b.qwer =2 and a.asdf&lt;=1 --comment that[C]or b.qwer&gt;=5
 GROUP BY a.asdf
 </pre>
 </div>
@@ -733,7 +809,7 @@ GROUP BY a.asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="lowercase_query" class="doc_header"><code>lowercase_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L113" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lowercase_query</code>(<strong><code>s</code></strong>)</p>
+<h4 id="lowercase_query" class="doc_header"><code>lowercase_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L93" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lowercase_query</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Lowercase query but let comments untouched</p>
 
@@ -873,117 +949,6 @@ from table1
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Helper-function">Helper function<a class="anchor-link" href="#Helper-function"> </a></h4>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L130" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Add whitespaces between symbols in line <code>s</code></p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">add_whitespaces_between_symbols</span><span class="p">(</span>
-        <span class="s2">&quot;WHERE asdf= 1 and qwer=&gt;1 or blabla =&#39;asdf&#39;&quot;</span>
-    <span class="p">),</span> <span class="s2">&quot;WHERE asdf = 1 and qwer =&gt; 1 or blabla = &#39;asdf&#39;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>WHERE asdf = 1 and qwer =&gt; 1 or blabla = &#39;asdf&#39;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Common-function-for-SELECT-and-PARTITION-BY">Common function for SELECT and PARTITION BY<a class="anchor-link" href="#Common-function-for-SELECT-and-PARTITION-BY"> </a></h3>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_select_partition_by" class="doc_header"><code>format_select_partition_by</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L138" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select_partition_by</code>(<strong><code>s</code></strong>, <strong><code>indentation</code></strong>=<em><code>7</code></em>)</p>
-</blockquote>
-<p>Format statement line <code>s</code> with <code>indentation</code> spaces</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="SELECT">SELECT<a class="anchor-link" href="#SELECT"> </a></h3>
 </div>
 </div>
@@ -999,9 +964,9 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L165" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L110" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Format SELECT statement line <code>s</code></p>
+<p>Format statement line <code>s</code></p>
 
 </div>
 
@@ -1079,7 +1044,44 @@ from table1
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select asdf, cast(qwer as numeric), -- some comment[EOC]ASDF, qwer1&quot;</span><span class="p">),</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select asdf, cast(qwer as numeric), -- some comment[C]ASDF, qwer1&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;select asdf,</span><span class="se">\n</span><span class="s2">       cast(qwer as numeric), -- some comment</span><span class="se">\n</span><span class="s2">       ASDF,</span><span class="se">\n</span><span class="s2">       qwer1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       cast(qwer as numeric), -- some comment
+       ASDF,
+       qwer1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select asdf, cast(qwer as numeric), -- some comment[C]ASDF, qwer1&quot;</span><span class="p">),</span>
     <span class="s2">&quot;select asdf,</span><span class="se">\n</span><span class="s2">       cast(qwer as numeric), -- some comment</span><span class="se">\n</span><span class="s2">       ASDF,</span><span class="se">\n</span><span class="s2">       qwer1&quot;</span>
 <span class="p">)</span>
 </pre></div>
@@ -1150,6 +1152,86 @@ from table1
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;SELECT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]qwer2&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SELECT a.asdf,</span>
+<span class="sd">       b.qwer, -- some comment here</span>
+<span class="sd">       /* and here is a line comment inside select */</span>
+<span class="sd">       qwer2</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT a.asdf,
+       b.qwer, -- some comment here
+       /* and here is a line comment inside select */
+       qwer2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;SELECT a.asdf, [CS]/* and here is a line comment inside select */&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SELECT a.asdf, </span>
+<span class="sd">       /* and here is a line comment inside select */</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT a.asdf, 
+       /* and here is a line comment inside select */
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Correcting comma at end of SELECT but having a comment in the last field</p>
@@ -1165,8 +1247,8 @@ from table1
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1,   asdf, -- this field&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;select qwer1,</span><span class="se">\n</span><span class="s2">       asdf -- this field&quot;</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1 as qwer2,   asdf as asdf3, -- this field&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;select qwer1 as qwer2,</span><span class="se">\n</span><span class="s2">       asdf as asdf3 -- this field&quot;</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -1180,8 +1262,8 @@ from table1
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>select qwer1,
-       asdf -- this field
+<pre>select qwer1 as qwer2,
+       asdf as asdf3 -- this field
 </pre>
 </div>
 </div>
@@ -1284,9 +1366,9 @@ from table1
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1, case when abc = 1 then &#39;a&#39; -- first condition[EOC]&quot;</span> <span class="o">+</span>
-                  <span class="s2">&quot;when abc = 2 then &#39;b&#39; -- second condition[EOC]&quot;</span> <span class="o">+</span>
-                  <span class="s2">&quot;else &#39;c&#39; end as qwer2, /* else condition */[EOC]&quot;</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1, case when abc = 1 then &#39;a&#39; -- first condition[C]&quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;when abc = 2 then &#39;b&#39; -- second condition[C]&quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;else &#39;c&#39; end as qwer2, /* else condition */[C]&quot;</span>
                   <span class="s2">&quot;asdf3&quot;</span>
 <span class="p">),</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1339,9 +1421,9 @@ from table1
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1, case when abc&lt;= 1 then &#39;a&#39; -- first condition[EOC]&quot;</span> <span class="o">+</span>
-                  <span class="s2">&quot;when abc=2 then &#39;b&#39; -- second condition[EOC]&quot;</span> <span class="o">+</span>
-                  <span class="s2">&quot;else &#39;c&#39; end as qwer2, -- else condition[EOC]&quot;</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1, case when abc&lt;= 1 then &#39;a&#39; -- first condition[C]&quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;when abc=2 then &#39;b&#39; -- second condition[C]&quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;else &#39;c&#39; end as qwer2, -- else condition[C]&quot;</span>
                   <span class="s2">&quot;asdf3&quot;</span>
 <span class="p">),</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1381,38 +1463,44 @@ from table1
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="PARTITION-BY">PARTITION BY<a class="anchor-link" href="#PARTITION-BY"> </a></h3>
+<p>With functions in SELECT</p>
+
 </div>
 </div>
 </div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select aSdf, substr(qweR, 2) as qwer,  Asdf,qwer1&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;select aSdf,</span><span class="se">\n</span><span class="s2">       substr(qweR, 2) as qwer,</span><span class="se">\n</span><span class="s2">       Asdf,</span><span class="se">\n</span><span class="s2">       qwer1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_partition_by" class="doc_header"><code>format_partition_by</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L170" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_partition_by</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Format partition by line <code>s</code></p>
-
-</div>
-
-</div>
-
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select aSdf,
+       substr(qweR, 2) as qwer,
+       Asdf,
+       qwer1
+</pre>
 </div>
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
+</div>
 
 </div>
     {% endraw %}
@@ -1425,11 +1513,15 @@ from table1
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_partition_by</span><span class="p">(</span><span class="s2">&quot;partition by asdf, qwer, qwer2 &quot;</span><span class="p">),</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">partition by asdf,</span>
-<span class="sd">             qwer,</span>
-<span class="sd">             qwer2</span>
+    <span class="n">format_select</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select car_id,</span>
+<span class="sd">       avg(price) as avg_price,</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select car_id,</span>
+<span class="sd">       avg(price) as avg_price</span>
 <span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -1444,9 +1536,8 @@ from table1
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>partition by asdf,
-             qwer,
-             qwer2
+<pre>select car_id,
+       avg(price) as avg_price
 </pre>
 </div>
 </div>
@@ -1474,7 +1565,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L175" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L139" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format FROM statement line <code>s</code></p>
 
@@ -1543,7 +1634,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L186" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L150" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format JOIN statement line <code>s</code></p>
 
@@ -1612,7 +1703,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L192" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L156" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format ON statement line <code>s</code></p>
 
@@ -1681,7 +1772,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L199" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L163" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format WHERE statement line <code>s</code></p>
 
@@ -1756,7 +1847,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L209" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L173" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statement line <code>s</code></p>
 
@@ -1892,45 +1983,6 @@ from table1
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_statement_line</span><span class="p">(</span><span class="s2">&quot;partition by asdf, qwer, qwer2&quot;</span><span class="p">),</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">partition by asdf,</span>
-<span class="sd">             qwer,</span>
-<span class="sd">             qwer2</span>
-<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>partition by asdf,
-             qwer,
-             qwer2
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -1939,7 +1991,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L228" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L191" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statements lines <code>s</code></p>
 
@@ -1967,7 +2019,14 @@ from table1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">format_statements</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer</span><span class="se">\n</span><span class="s2">from table1&quot;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_statements</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer</span><span class="se">\n</span><span class="s2">from table1&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">       qwer</span>
+<span class="sd">from   table1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2010,7 +2069,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L238" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L201" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Add ending semicolon for SQL query <code>s</code></p>
 
@@ -2176,7 +2235,7 @@ where asdf = 1;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L246" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L209" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Format a simple SQL query without subqueries <code>s</code>.
 If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
@@ -2225,7 +2284,8 @@ If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
 SELECT a.asdf,
        b.qwer, -- some comment here
        /* and here is a line comment inside select */
-       c.asdf, -- some commenT there
+       substr(c.asdf, 1, 2) as substr_asdf,
+       /* some commenT there */
        case when a.asdf = 1 then &#39;b&#39; /* here a case comment */
             when b.qwer = 2 then &#39;c&#39;
             else &#39;d&#39; end as new_field, -- Some comment
@@ -2240,6 +2300,58 @@ WHERE  a.asdf = 1 -- comment this
    and a.asdf &lt;= 1 --comment that
     or b.qwer &gt;= 5
 GROUP BY a.asdf;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_simple_sql</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace table first_table as -- my first table</span>
+<span class="sd">select car_id,</span>
+<span class="sd">       avg(price) as avg_price,</span>
+<span class="sd">from first_view</span>
+<span class="sd">group by car_id</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE first_table AS -- my first table</span>
+<span class="sd">SELECT car_id,</span>
+<span class="sd">       avg(price) as avg_price</span>
+<span class="sd">FROM   first_view</span>
+<span class="sd">GROUP BY car_id;</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE first_table AS -- my first table
+SELECT car_id,
+       avg(price) as avg_price
+FROM   first_view
+GROUP BY car_id;
 </pre>
 </div>
 </div>
@@ -2272,7 +2384,7 @@ GROUP BY a.asdf;
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_with_subqueries</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">select asdf, cast(qwer as numeric), -- some comment</span>
-<span class="s2">qwer1 /* some field */</span>
+<span class="s2">substr(qwer1, 3, 2) as substr_qwer /* some field */</span>
 <span class="s2">from </span>
 <span class="s2">(select asdf, qwer, /* some nice field */ from table1 where asdf = 1) as a</span>
 <span class="s2">left </span>
@@ -2280,33 +2392,9 @@ GROUP BY a.asdf;
 <span class="s2">on a.asdf = b.asdf</span>
 <span class="s2">where qwer1 &gt;= 0</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">example_with_subqueries</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-select asdf, cast(qwer as numeric), -- some comment
-qwer1 /* some field */
-from 
-(select asdf, qwer, /* some nice field */ from table1 where asdf = 1) as a
-left 
-join (select asdf, qwer2 from table2 where qwer2 = 1) as b
-on a.asdf = b.asdf
-where qwer1 &gt;= 0
-
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -2330,7 +2418,7 @@ where qwer1 &gt;= 0
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_with_subqueries</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SELECT asdf,</span>
 <span class="s2">       cast(qwer as numeric), -- some comment</span>
-<span class="s2">       qwer1 /* some field */</span>
+<span class="s2">       substr(qwer1, 3, 2) as substr_qwer /* some field */</span>
 <span class="s2">FROM   (SELECT asdf,</span>
 <span class="s2">               qwer /* some nice field */</span>
 <span class="s2">        FROM   table1</span>
@@ -2353,118 +2441,6 @@ where qwer1 &gt;= 0
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Helper-functions-to-handle-subqueries">Helper functions to handle subqueries<a class="anchor-link" href="#Helper-functions-to-handle-subqueries"> </a></h3>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L259" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Extract outer subquery in query <code>s</code></p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="p">(</span>
-    <span class="n">extract_outer_subquery</span><span class="p">(</span>
-        <span class="s2">&quot;() () (</span><span class="se">\n</span><span class="s2">SELECT () (</span><span class="se">\n</span><span class="s2">SELECT ())) ()&quot;</span>
-    <span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="p">(</span>
-    <span class="n">extract_outer_subquery</span><span class="p">(</span>
-        <span class="s2">&quot;() () (</span><span class="se">\n</span><span class="s2">PARTITION BY () (</span><span class="se">\n</span><span class="s2">SELECT ())) ()&quot;</span>
-    <span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">36</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L285" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
-</blockquote>
-<p>Format subquery in line <code>s</code> based on indentation on <code>previous_s</code></p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Main-function-handling-queries-with-subqueries">Main function handling queries with subqueries<a class="anchor-link" href="#Main-function-handling-queries-with-subqueries"> </a></h3>
 </div>
 </div>
@@ -2480,7 +2456,7 @@ where qwer1 &gt;= 0
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L315" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L222" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Format SQL query with subqueries. If <code>add_semicolon</code> is True then add a semicolon at the end</p>
 
@@ -2526,7 +2502,7 @@ where qwer1 &gt;= 0
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>SELECT asdf,
        cast(qwer as numeric), -- some comment
-       qwer1 /* some field */
+       substr(qwer1, 3, 2) as substr_qwer /* some field */
 FROM   (SELECT asdf,
                qwer /* some nice field */
         FROM   table1
@@ -2581,7 +2557,8 @@ WHERE  qwer1 &gt;= 0;
 SELECT a.asdf,
        b.qwer, -- some comment here
        /* and here is a line comment inside select */
-       c.asdf, -- some commenT there
+       substr(c.asdf, 1, 2) as substr_asdf,
+       /* some commenT there */
        case when a.asdf = 1 then &#39;b&#39; /* here a case comment */
             when b.qwer = 2 then &#39;c&#39;
             else &#39;d&#39; end as new_field, -- Some comment
@@ -2623,7 +2600,7 @@ GROUP BY a.asdf;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_nested_subqueries</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">select asdf, qwer</span>
 <span class="s2">from (select a.asdf</span>
-<span class="s2">    from (select asdf, qwer from table2) as a</span>
+<span class="s2">    from (select asdf, substr(qwer, 3, 2) as substr_qwer from table2) as a</span>
 <span class="s2">        inner join (select asdf, qwer from table3) as b</span>
 <span class="s2">            on a.qwer = b.qwer</span>
 <span class="s2">)</span>
@@ -2648,7 +2625,7 @@ GROUP BY a.asdf;
 <span class="s2">       qwer</span>
 <span class="s2">FROM   (SELECT a.asdf</span>
 <span class="s2">        FROM   (SELECT asdf,</span>
-<span class="s2">                       qwer</span>
+<span class="s2">                       substr(qwer, 3, 2) as substr_qwer</span>
 <span class="s2">                FROM   table2) as a</span>
 <span class="s2">            INNER JOIN (SELECT asdf,</span>
 <span class="s2">                               qwer</span>
@@ -2690,7 +2667,7 @@ GROUP BY a.asdf;
        qwer
 FROM   (SELECT a.asdf
         FROM   (SELECT asdf,
-                       qwer
+                       substr(qwer, 3, 2) as substr_qwer
                 FROM   table2) as a
             INNER JOIN (SELECT asdf,
                                qwer
@@ -2799,99 +2776,6 @@ FROM   (SELECT asdf,
                     RIGHT JOIN (SELECT qwer
                                 FROM   table2) as b
                         ON a.asdf = b.asdf));
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="With-PARTITION-BY">With PARTITION BY<a class="anchor-link" href="#With-PARTITION-BY"> </a></h3>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_partition_by</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">select asdf, qwer, lead(asdf) over (partition by qwer, /* some comment */</span>
-<span class="s2">qwer2 order by asdf2)</span>
-<span class="s2">from table2</span>
-<span class="s2">where asdf &gt;=1</span>
-<span class="s2">&quot;&quot;&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_partition_by</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">SELECT asdf,</span>
-<span class="s2">       qwer,</span>
-<span class="s2">       lead(asdf) OVER (PARTITION BY qwer, /* some comment */</span>
-<span class="s2">                                     qwer2</span>
-<span class="s2">                        ORDER BY asdf2)</span>
-<span class="s2">FROM   table2</span>
-<span class="s2">WHERE  asdf &gt;= 1;</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_sql</span><span class="p">(</span><span class="n">example_partition_by</span><span class="p">),</span>
-    <span class="n">expected_partition_by</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf,
-       qwer,
-       lead(asdf) OVER (PARTITION BY qwer, /* some comment */
-                                     qwer2
-                        ORDER BY asdf2)
-FROM   table2
-WHERE  asdf &gt;= 1;
 </pre>
 </div>
 </div>
