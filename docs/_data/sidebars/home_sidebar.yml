@@ -15,6 +15,9 @@ entries:
     - output: web,pdf
       title: format_file
       url: format_file.html
+    - output: web,pdf
+      title: utils
+      url: utils.html
     output: web
     title: sql_formatter
   output: web
