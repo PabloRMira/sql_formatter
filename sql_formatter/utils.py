@@ -243,7 +243,8 @@ def format_subquery(s, previous_s):
 # Cell
 def check_sql_query(s):
     "Checks whether `s` is a SQL query"
-    return bool(re.match(pattern=r".*(?:select|create).*", string=s, flags=re.I | re.DOTALL))
+    return (bool(re.search(pattern=r".*(?:select|create.{0,10}(?:table|view)).*", string=s, flags=re.I)) and
+            not bool(re.search(pattern=r"create(?!.*(?:table|view))", string=s, flags=re.I)))
 
 # Cell
 def check_skip_marker(s):
