@@ -58,8 +58,7 @@ nb_path: "nbs/01_format_file.ipynb"
 
 <span class="s2">create or replace view first_view as -- my first view</span>
 <span class="s2">select a.car_id,</span>
-<span class="s2">       b.car_name,</span>
-<span class="s2">       a.price,</span>
+<span class="s2">       b.car_name, sum(a.price) over (partition by b.car_name order by a.car_id) as sum_price, a.price,</span>
 <span class="s2">from sales as a left join (select car_id, car_name, from cars) as b </span>
 <span class="s2">on a.car_id = b.car_id</span>
 <span class="s2">where car_id&gt;1 and car_id&lt;=100 order by b.car_name;</span>
@@ -105,6 +104,8 @@ nb_path: "nbs/01_format_file.ipynb"
 <span class="s2">CREATE OR REPLACE VIEW first_view AS -- my first view</span>
 <span class="s2">SELECT a.car_id,</span>
 <span class="s2">       b.car_name,</span>
+<span class="s2">       sum(a.price) OVER (PARTITION BY b.car_name</span>
+<span class="s2">                          ORDER BY a.car_id) as sum_price,</span>
 <span class="s2">       a.price</span>
 <span class="s2">FROM   sales as a</span>
 <span class="s2">    LEFT JOIN (SELECT car_id,</span>
@@ -228,6 +229,8 @@ use schema my_schema;
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
+       sum(a.price) OVER (PARTITION BY b.car_name
+                          ORDER BY a.car_id) as sum_price,
        a.price
 FROM   sales as a
     LEFT JOIN (SELECT car_id,
@@ -455,6 +458,8 @@ use schema my_schema;
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
+       sum(a.price) OVER (PARTITION BY b.car_name
+                          ORDER BY a.car_id) as sum_price,
        a.price
 FROM   sales as a
     LEFT JOIN (SELECT car_id,
@@ -571,6 +576,8 @@ use schema my_schema;
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
+       sum(a.price) OVER (PARTITION BY b.car_name
+                          ORDER BY a.car_id) as sum_price,
        a.price
 FROM   sales as a
     LEFT JOIN (SELECT car_id,
@@ -600,6 +607,8 @@ use schema my_schema;
 CREATE OR REPLACE VIEW first_view AS -- my first view
 SELECT a.car_id,
        b.car_name,
+       sum(a.price) OVER (PARTITION BY b.car_name
+                          ORDER BY a.car_id) as sum_price,
        a.price
 FROM   sales as a
     LEFT JOIN (SELECT car_id,
