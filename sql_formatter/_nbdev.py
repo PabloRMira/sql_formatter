@@ -25,7 +25,6 @@ index = {"MAIN_STATEMENTS": "00_core.ipynb",
          "remove_whitespaces_comments": "02_utils.ipynb",
          "remove_redundant_whitespaces": "02_utils.ipynb",
          "mark_comments": "02_utils.ipynb",
-         "identify_queries": "02_utils.ipynb",
          "identify_newline_chars": "02_utils.ipynb",
          "replace_newline_chars": "02_utils.ipynb",
          "identify_select_from": "02_utils.ipynb",
@@ -37,7 +36,8 @@ index = {"MAIN_STATEMENTS": "00_core.ipynb",
          "format_subquery": "02_utils.ipynb",
          "check_sql_query": "02_utils.ipynb",
          "check_skip_marker": "02_utils.ipynb",
-         "split_by_query": "02_utils.ipynb"}
+         "identify_semicolon": "02_utils.ipynb",
+         "split_by_semicolon": "02_utils.ipynb"}
 
 modules = ["core.py",
            "format_file.py",
