@@ -56,4 +56,4 @@ def format_sql_files(
     if sum(exit_codes) == 0:
         print("Nothing to format, everything is fine!")
     else:
-        print("All done!")
+        print("All specified files were formatted!")
