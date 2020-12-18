@@ -5,6 +5,7 @@ __all__ = ['format_sql_commands', 'format_sql_file', 'format_sql_files']
 # Cell
 import re
 import os
+from glob import glob
 from fastcore.script import call_parse, Param
 from .core import *
 from .utils import *
@@ -51,6 +52,9 @@ def format_sql_files(
 ):
     "Format SQL `files`"
     exit_codes = []
+    # if wildcard * is used then use it
+    if len(files) == 1 and re.search("\*", files[0]):
+        files = glob(files[0])
     for file in files:
         exit_codes.append(format_sql_file(file))
     if sum(exit_codes) == 0:
