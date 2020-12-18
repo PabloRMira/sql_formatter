@@ -91,19 +91,128 @@ def preformat_statements(s):
 
 # Cell
 def lowercase_query(s):
-    "Lowercase query but let comments untouched"
-    split_s = s.split("\n")  # split by newline
+    "Lowercase query but let comments and text in quotes untouched"
+    k = 0  # indicator for position
+    comment_open1 = False # comment indicator for /* */ comments
+    comment_open2 = False  # comment indicator for -- comments
+    quote_open1 = False  # quote '
+    quote_open2 = False # quote "
+    split_s = []  # container for splitted string
+    for i, c in enumerate(s):
+        if (
+            s[i:i+2] == "/*" and
+            not comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            not quote_open2
+        ):  # if there is an opening comment /*
+            split_s.append({
+                "string": s[k:i], # up to opening comment can be lowercased
+                "lowercase": True
+            })
+            k = i  # update string start
+            comment_open1 = True
+        elif (
+            s[i:i+2] == "*/" and
+            comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            not quote_open2
+        ):  # if there is a closing comment */
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": False
+            })
+            k = i  # update string start
+            comment_open1 = False
+        elif (
+            s[i:i+2] == "--" and
+            not comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            not quote_open2
+        ):  # if there is an opening comment --
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": True
+            })
+            k = i  # update string start
+            comment_open2 = True
+        elif (
+            c == "\n" and
+            not comment_open1 and
+            comment_open2 and
+            not quote_open1 and
+            not quote_open2
+        ):  # if the -- comment ends
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": False
+            })
+            k = i  # update string start
+            comment_open2 = False
+        elif (
+            c == "'" and
+            not comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            not quote_open2
+        ):  # if opening quote '
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": True
+            })
+            k = i  # update string start
+            quote_open1 = True
+        elif (
+            c == "'" and
+            not comment_open1 and
+            not comment_open2 and
+            quote_open1 and
+            not quote_open2
+        ):  # if closing quote '
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": False
+            })
+            k = i  # update string start
+            quote_open1 = False
+        elif (
+            c == '"' and
+            not comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            quote_open2
+        ):  # if opening quote "
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": True
+            })
+            k = i  # update string start
+            quote_open2 = True
+        elif (
+            c == '"' and
+            not comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            quote_open2
+        ):  # if closing quote "
+            split_s.append({
+                "string": s[k:i],
+                "lowercase": False
+            })
+            k = i  # update string start
+            quote_open2 = False
+    split_s.append({
+        "string": s[k:],
+        "lowercase": True
+    })  # append remainder
+    # lowercase everything not in comments or in quotes
     split_s = [
-        line if re.match(r"^--", line) # comment at the beginning
-        else re.sub(r"(.*)(--.*)$", lambda pat: pat.group(1).lower() + pat.group(2), line)
-        if re.match(r".*--", line) # comment in between
-        else re.sub(r"(.*)(\/\*.*\*\/)(.*)$",
-                    lambda pat: pat.group(1).lower() + pat.group(2) + pat.group(3).lower(), line)
-        if re.match(r".*\/\*.*\*\/.*", line) # comment in between
-        else line.lower()  # no comment
-        for line in split_s
+        elem["string"].lower() if elem["lowercase"] else elem["string"]
+        for elem in split_s
     ]
-    s = "\n".join(split_s)
+    s = "".join(split_s)
     return s
 
 # Cell
