@@ -21,6 +21,7 @@ MAIN_STATEMENTS = [
     "inner join",
     "outer join",
     "right join",
+    "union",
     "on",
     "where",
     "group by",
