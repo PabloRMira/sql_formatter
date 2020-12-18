@@ -10,10 +10,8 @@ from .utils import *
 
 # Cell
 MAIN_STATEMENTS = [
-    "create table",
-    "create or replace table",
-    "create view",
-    "create or replace view",
+    "create.*table",
+    "create.*view",
     "select distinct",
     "select",
     "from",
@@ -72,7 +70,7 @@ def preformat_statements(s):
                 else:
                     if re.match("^create", statement, flags=re.I):  # special case CREATE with AS capitalize as well
                         split_cn = [  # update list
-                            re.sub(rf"\s*({statement})\b(.*) as\b", "\n" + statement.upper() + r"\2 AS", sline, flags=re.I)
+                            re.sub(rf"\s*({statement} )(.*) as\b", lambda pat: "\n" + pat.group(1).upper() + pat.group(2) + " AS", sline, flags=re.I)
                             if not re.search("(?:--.*|\/\*.*\*\/)", sline)
                             else sline
                             for sline in split_cn
