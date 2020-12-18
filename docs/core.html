@@ -985,7 +985,7 @@ GROUP BY a.asdf
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We would like to have every non capital statement lower cased but let comments untouched</p>
+<p>We would like to have every non capital statement lower cased but let comments and quoted text untouched</p>
 
 </div>
 </div>
@@ -1003,7 +1003,7 @@ GROUP BY a.asdf
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="lowercase_query" class="doc_header"><code>lowercase_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L93" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lowercase_query</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Lowercase query but let comments untouched</p>
+<p>Lowercase query but let comments and text in quotes untouched</p>
 
 </div>
 
@@ -1132,6 +1132,116 @@ from table1
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">lowercase_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">-- Some comment --</span>
+<span class="s2">Create Or rePlace tablE aS</span>
+<span class="s2">sElEct asdf, replace(&#39;J&#39;, &#39;N&#39;, Asdf2) as Asdf3</span>
+<span class="s2">/* sOme CommEnt */</span>
+<span class="s2">qwer</span>
+<span class="s2">FroM table1</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">-- Some comment --</span>
+<span class="sd">create or replace table as</span>
+<span class="sd">select asdf, replace(&#39;J&#39;, &#39;N&#39;, asdf2) as asdf3</span>
+<span class="sd">/* sOme CommEnt */</span>
+<span class="sd">qwer</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+-- Some comment --
+create or replace table as
+select asdf, replace(&#39;J&#39;, &#39;N&#39;, asdf2) as asdf3
+/* sOme CommEnt */
+qwer
+from table1
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">lowercase_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">-- Some comment --</span>
+<span class="s2">Create Or rePlace tablE aS</span>
+<span class="s2">sElEct asdf, replace(&#39;J&#39;, &#39;N&#39;, Asdf2) as Asdf3</span>
+<span class="s2">/* sOme CommEnt */</span>
+<span class="s2">qwer</span>
+<span class="s2">FroM table1 -- Some comment</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">-- Some comment --</span>
+<span class="sd">create or replace table as</span>
+<span class="sd">select asdf, replace(&#39;J&#39;, &#39;N&#39;, asdf2) as asdf3</span>
+<span class="sd">/* sOme CommEnt */</span>
+<span class="sd">qwer</span>
+<span class="sd">from table1 -- Some comment</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+-- Some comment --
+create or replace table as
+select asdf, replace(&#39;J&#39;, &#39;N&#39;, asdf2) as asdf3
+/* sOme CommEnt */
+qwer
+from table1 -- Some comment
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Specific-formatting-and-validation">Specific formatting and validation<a class="anchor-link" href="#Specific-formatting-and-validation"> </a></h2><p>Now we will format each statement individually</p>
@@ -1157,7 +1267,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_partition_by" class="doc_header"><code>format_partition_by</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L110" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_partition_by</code>(<strong><code>s</code></strong>, <strong><code>base_indentation</code></strong>)</p>
+<h4 id="format_partition_by" class="doc_header"><code>format_partition_by</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L219" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_partition_by</code>(<strong><code>s</code></strong>, <strong><code>base_indentation</code></strong>)</p>
 </blockquote>
 <p>Format PARTITION BY line in SELECT (DISTINCT)</p>
 
@@ -1195,7 +1305,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L240" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format SELECT statement line <code>s</code></p>
 
@@ -1986,7 +2096,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L175" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L284" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format FROM statement line <code>s</code></p>
 
@@ -2055,7 +2165,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L186" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L295" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format JOIN statement line <code>s</code></p>
 
@@ -2124,7 +2234,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L192" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L301" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format ON statement line <code>s</code></p>
 
@@ -2193,7 +2303,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L199" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format WHERE statement line <code>s</code></p>
 
@@ -2268,7 +2378,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L209" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L318" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statement line <code>s</code></p>
 
@@ -2412,7 +2522,7 @@ from table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L227" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L336" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statements lines <code>s</code></p>
 
@@ -2490,7 +2600,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L237" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L346" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Add ending semicolon for SQL query <code>s</code></p>
 
@@ -2656,7 +2766,7 @@ where asdf = 1;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L245" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L354" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Format a simple SQL query without subqueries <code>s</code>.
 If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
@@ -2879,7 +2989,7 @@ GROUP BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L259" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L368" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Format SQL query with subqueries. If <code>add_semicolon</code> is True then add a semicolon at the end</p>
 
