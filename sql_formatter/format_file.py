@@ -14,7 +14,7 @@ from .utils import *
 def format_sql_commands(s):
     "Format SQL commands in `s`"
     s = s.strip()  # strip file contents
-    split_s = s.split(";")  # split by query
+    split_s = split_by_semicolon(s)  # split by query
     # format only SQL queries, let everything else unchanged
     formatted_split_s = [
         "\n\n\n" + format_sql(sp, add_semicolon=False).strip()
