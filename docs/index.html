@@ -380,6 +380,55 @@ From my_view;
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="How-to-contribute">How to contribute<a class="anchor-link" href="#How-to-contribute"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can contribute to this project:</p>
+<ul>
+<li>writing issues</li>
+<li>contributing to the code basis</li>
+</ul>
+<h3 id="Writing-issues">Writing issues<a class="anchor-link" href="#Writing-issues"> </a></h3><p>If you find some bug or you think some new feature could improve the package, please write an issue going to <a href="https://github.com/PabloRMira/sql_formatter/issues/new/choose">New Issue</a> and follow the instructions under the corresponding template</p>
+<h3 id="Contributing-to-the-code-basis">Contributing to the code basis<a class="anchor-link" href="#Contributing-to-the-code-basis"> </a></h3><p>We follow the <a href="https://github.com/fastai/nbdev">nbdev</a> framework for the literate programming development of this project. So if you want to contribute, please familiarize first with this framework. Specially, we write our code, tests and documentation at the same time in jupyter notebooks.</p>
+<p>If you have not heard about <code>nbdev</code> yet and / or find the idea weird to develop in notebooks as it was the case for me, please watch the following youtube video first: <a href="https://www.youtube.com/watch?v=9Q6sLbz37gk">I like notebooks</a> by Jeremy Howard, the creator of this wonderful framework.</p>
+<h4 id="Setup-the-development-environment">Setup the development environment<a class="anchor-link" href="#Setup-the-development-environment"> </a></h4><p>Prerequisites to setup the development environment:</p>
+<ul>
+<li>conda</li>
+</ul>
+<p>To setup the development environment:</p>
+<ol>
+<li>Clone the project and navigate into the project with your terminal</li>
+<li>Install our conda development environment running <code>conda env create -f environment.yml</code></li>
+<li>Activate the python environment using <code>conda activate sql-formatter-dev</code></li>
+<li>Run <code>nbdev_install_git_hooks</code></li>
+</ol>
+<h4 id="Development-Workflow">Development Workflow<a class="anchor-link" href="#Development-Workflow"> </a></h4><p>For development we follow these steps:</p>
+<ol>
+<li>Pick an existing issue and write in the comments you would like to fix it<ul>
+<li>If your idea is not documented in an issue yet, please write first an issue</li>
+</ul>
+</li>
+<li>Create a branch from <code>master</code> and implement your idea</li>
+<li>Before pushing your solution run first <code>make prepush</code> to make sure everything is allright to merge, specially our tests</li>
+<li>Make a pull request for your solution<ul>
+<li>The pull request title should be meaningful, something like "[PREFIX] Title of the issue you fixed". Please try to use some of the following prefixes: <ul>
+<li>[FIX] for bugfixes</li>
+<li>[FEA] for new features</li>
+<li>[DOC] for documentation</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Acknowledgements">Acknowledgements<a class="anchor-link" href="#Acknowledgements"> </a></h2>
 </div>
 </div>
