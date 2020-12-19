@@ -358,8 +358,11 @@ From my_view;
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="A-note-of-caution">A note of caution<a class="anchor-link" href="#A-note-of-caution"> </a></h3><p>For the SQL-formatter to work properly you should meticulously end each of your SQL statements with semicolon (;)</p>
-<blockquote><p>We have equiped the <code>sql-formatter</code> with some basic validations. Specially it will look in each query of the file if the keyword <code>CREATE</code> appears more than twice, indicating the user that he / she may have forgotten a semicolon</p>
-</blockquote>
+<p>However, we have equiped the <code>sql-formatter</code> with some basic validations:</p>
+<ul>
+<li><em>Forgotten semicolon validation</em>: The validator will check if the <code>CREATE</code> keyword appears more than twice, indicating the user that he / she may have forgotten a semicolon</li>
+<li><em>Unbalanced parenthesis</em>: The validator will check if there are unbalanced parenthesis in the query</li>
+</ul>
 
 </div>
 </div>
@@ -369,7 +372,7 @@ From my_view;
 <h3 id="What-sql_formatter-does-not-do">What <code>sql_formatter</code> does not do<a class="anchor-link" href="#What-sql_formatter-does-not-do"> </a></h3><p>This package is just a SQL formatter and therefore</p>
 <ul>
 <li>cannot parse your SQL queries into e.g. dictionaries</li>
-<li>cannot validate your SQL queries before formatting</li>
+<li>cannot validate your SQL queries to be valid for the corresponding database system / provider</li>
 </ul>
 
 </div>
