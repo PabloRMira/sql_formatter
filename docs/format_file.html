@@ -577,7 +577,7 @@ ORDER BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"Path to SQL files")</p>
+<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"(Relative) path to SQL files. You can also use wildcard using ".<em>sql"", <strong><code>recursive</code></strong>:"Should files also be searched in subfolders?"=</em><code>False</code>*)</p>
 </blockquote>
 <p>Format SQL <code>files</code></p>
 
@@ -609,7 +609,7 @@ ORDER BY car_id;
     <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
-<span class="n">format_sql_files</span><span class="p">([</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">])</span>
+<span class="n">format_sql_files</span><span class="p">([</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">],</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">assert_and_print</span><span class="p">(</span>

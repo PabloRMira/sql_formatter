@@ -14,6 +14,18 @@ Format your SQL files via the command line
 
 `sql-formatter sql_file.sql sql_file2.sql`
 
+You can also format all your SQL-files via
+
+`sql-formatter *.sql` in Unix
+
+or via
+
+`sql-formatter "*.sql"` in Windows
+
+To format all your SQL files recursively use
+
+`sql-formatter --recursive "*.sql"` in Unix and Windows
+
 ### Usage with `pre-commit`
 
 [pre-commit](https://pre-commit.com) is a nice development tool to automatize the binding of pre-commit hooks. After installation and configuration `pre-commit` will run your hooks before you commit any change. 

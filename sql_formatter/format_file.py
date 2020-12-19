@@ -6,7 +6,7 @@ __all__ = ['format_sql_commands', 'format_sql_file', 'format_sql_files']
 import re
 import os
 from glob import glob
-from fastcore.script import call_parse, Param
+from fastcore.script import call_parse, Param, store_true
 from .core import *
 from .utils import *
 
@@ -48,13 +48,17 @@ def format_sql_file(f):
 # Cell
 @call_parse
 def format_sql_files(
-    files: Param(help="Path to SQL files", type=str, nargs="+")
+    files: Param(help='(Relative) path to SQL files. You can also use wildcard using ".*sql"', type=str, nargs="+"),
+    recursive: Param(help="Should files also be searched in subfolders?", type=store_true)=False
 ):
     "Format SQL `files`"
     exit_codes = []
-    # if wildcard * is used then use it
+    # if wildcard "*" is input then use it
     if len(files) == 1 and re.search("\*", files[0]):
-        files = glob(files[0])
+        if recursive:  # if recursive search
+            files = glob(os.path.join("**", files[0]), recursive=True)
+        else:
+            files = glob(files[0])
     for file in files:
         exit_codes.append(format_sql_file(file))
     if sum(exit_codes) == 0:
