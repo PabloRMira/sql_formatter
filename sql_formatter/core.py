@@ -218,7 +218,11 @@ def lowercase_query(s):
 # Cell
 def format_partition_by(s, base_indentation):
     "Format PARTITION BY line in SELECT (DISTINCT)"
-    split_s = re.split("(partition by.*)", s, flags=re.I)  # split PARTITION BY
+    orderby_involved = bool(re.search("order by", s))
+    if orderby_involved:
+        split_s = re.split("(partition by.*)(order by.*)", s, flags=re.I)  # split PARTITION BY
+    else:
+        split_s = re.split("(partition by.*)", s, flags=re.I)  # split PARTITION BY
     split_s = [sp for sp in split_s if sp != ""]
     begin_s = split_s[0]
     partition_by = split_s[1]
@@ -226,6 +230,8 @@ def format_partition_by(s, base_indentation):
     # add newline after each comma (no comments) and indentation
     partition_by = add_newline_indentation(partition_by, indentation=indentation)
     # add new line and indentation after order by
+    if orderby_involved:
+        partition_by = "".join([partition_by, " "] + split_s[2:])
     partition_by = re.sub(
         r"\s(order by.*)", "\n" + " " * (base_indentation + len(begin_s)) + r"\1",
         partition_by,
