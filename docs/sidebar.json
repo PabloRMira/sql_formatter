@@ -3,6 +3,7 @@
     "Overview": "/",
     "core": "core.html",
     "format_file": "format_file.html",
-    "utils": "utils.html"
+    "utils": "utils.html",
+    "validation": "validation.html"
   }
 }
