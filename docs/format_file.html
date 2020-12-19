@@ -149,20 +149,14 @@ nb_path: "nbs/01_format_file.ipynb"
 <li>Every SQL-query is separated from above and below by two new lines</li>
 <li>Every SQL-query is formatted via <a href="/sql_formatter/core.html#format_sql"><code>format_sql</code></a></li>
 </ul>
-<p>So our first step is to identify the lines corresponding to the SQL queries</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Formatting-Functions">Formatting Functions<a class="anchor-link" href="#Formatting-Functions"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Main-function-formatting-SQL-commands">Main function formatting SQL commands<a class="anchor-link" href="#Main-function-formatting-SQL-commands"> </a></h3>
+<h3 id="Main-function-to-format-the-SQL-commands">Main function to format the SQL commands<a class="anchor-link" href="#Main-function-to-format-the-SQL-commands"> </a></h3><p>This function applies also basic validation and aborts formatting if the keyword <code>CREATE</code> appears at least twice in the same query, indicating the user that he / she may have forgotten a semicolon</p>
+
 </div>
 </div>
 </div>
@@ -177,7 +171,7 @@ nb_path: "nbs/01_format_file.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_commands" class="doc_header"><code>format_sql_commands</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_commands</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_sql_commands" class="doc_header"><code>format_sql_commands</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_commands</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format SQL commands in <code>s</code></p>
 
@@ -198,6 +192,13 @@ nb_path: "nbs/01_format_file.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Basic file formatting</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -262,6 +263,13 @@ ORDER BY car_id;
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Using the <code>/*skip-formatter*/</code> marker to not format some query</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -522,6 +530,59 @@ FROM   my_table;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>If the validation fails, then the function returns a dictionary instead of the formatted queries with information about the error</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_sql_commands</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace transient table my_table As</span>
+<span class="sd">select asdf, Qwer, /* ; */</span>
+<span class="sd">qwer2, -- ;</span>
+<span class="sd">replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4</span>
+<span class="sd">from table1</span>
+
+<span class="sd">create view my_view As</span>
+<span class="sd">Select asdf</span>
+<span class="sd">From my_table;</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+    <span class="p">),</span> 
+    <span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 7)]}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Function-to-format-1-SQL-file">Function to format 1 SQL file<a class="anchor-link" href="#Function-to-format-1-SQL-file"> </a></h3>
 </div>
 </div>
@@ -537,10 +598,15 @@ FROM   my_table;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>)</p>
+<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L50" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>)</p>
 </blockquote>
-<p>Format file <code>f</code> with SQL commands and overwrite the file.
-Return 0 for no change and 1 for formatting adjustments</p>
+<p>Format file <code>f</code> with SQL commands and overwrite the file.</p>
+<p>Return exit_code:</p>
+<ul>
+<li>0 = Everything already formatted</li>
+<li>1 = Formatting applied</li>
+<li>2 = Problem detected, formatting aborted</li>
+</ul>
 
 </div>
 
@@ -566,16 +632,15 @@ Return 0 for no change and 1 for formatting adjustments</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
-<span class="n">format_sql_file</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">)</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">format_sql_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
     <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">assert_and_print</span><span class="p">(</span>
     <span class="n">formatted_file</span><span class="p">,</span>
     <span class="n">expected_sql_file</span>
 <span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -629,9 +694,74 @@ ORDER BY car_id;
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sql_forgotten_semicolon</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">create or replace transient table my_table As</span>
+<span class="s2">select asdf, Qwer, /* ; */</span>
+<span class="s2">qwer2, -- ;</span>
+<span class="s2">replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4</span>
+<span class="s2">from table1</span>
+
+<span class="s2">create view my_view As</span>
+<span class="s2">Select asdf</span>
+<span class="s2">From my_table;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_forgotten_semicolon</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">exit_code</span> <span class="o">=</span> <span class="n">format_sql_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">assert_and_print</span><span class="p">(</span> <span class="c1"># no formatting</span>
+    <span class="n">formatted_file</span><span class="p">,</span>
+    <span class="n">sql_forgotten_semicolon</span>
+<span class="p">)</span>
+<span class="k">assert</span> <span class="n">exit_code</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Something went wrong in file: /tmp/tmpx7llnf89
+Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
+You may have forgotten a semicolon (;) to delimit the queries
+Aborting formatting for file /tmp/tmpx7llnf89
+create or replace transient table my_table As
+select asdf, Qwer, /* ; */
+qwer2, -- ;
+replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4
+from table1
+
+create view my_view As
+Select asdf
+From my_table;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Function-to-format-many-SQL-files">Function to format many SQL files<a class="anchor-link" href="#Function-to-format-many-SQL-files"> </a></h3>
+<h3 id="Function-to-format-many-SQL-files">Function to format many SQL files<a class="anchor-link" href="#Function-to-format-many-SQL-files"> </a></h3><p>With built-in CLI via <code>fastcore</code></p>
+
 </div>
 </div>
 </div>
@@ -646,7 +776,7 @@ ORDER BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"(Relative) path to SQL files. You can also use wildcard using ".<em>sql"", <strong><code>recursive</code></strong>:"Should files also be searched in subfolders?"=</em><code>False</code>*)</p>
+<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L83" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"(Relative) path to SQL files. You can also use wildcard using ".<em>sql"", <strong><code>recursive</code></strong>:"Should files also be searched in subfolders?"=</em><code>False</code>*)</p>
 </blockquote>
 <p>Format SQL <code>files</code></p>
 
@@ -674,25 +804,24 @@ ORDER BY car_id;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
-<span class="n">format_sql_files</span><span class="p">([</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">],</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">formatted_file</span><span class="p">,</span>
-    <span class="n">expected_sql_file</span>
-<span class="p">)</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">formatted_file</span><span class="p">,</span>
-    <span class="n">expected_sql_file</span>
-<span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;tmp2&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp_dir</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;tmp&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_file</span><span class="p">)</span>
+    <span class="n">format_sql_files</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;tmp&quot;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">)])</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;tmp&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">assert_and_print</span><span class="p">(</span>
+        <span class="n">formatted_file</span><span class="p">,</span>
+        <span class="n">expected_sql_file</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;tmp2&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">assert_and_print</span><span class="p">(</span>
+        <span class="n">formatted_file</span><span class="p">,</span>
+        <span class="n">expected_sql_file</span>
+    <span class="p">)</span>
 </pre></div>
 
     </div>

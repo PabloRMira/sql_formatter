@@ -4,7 +4,8 @@ __all__ = ['assert_and_print', 'remove_whitespaces_newline', 'remove_whitespaces
            'remove_redundant_whitespaces', 'mark_comments', 'identify_in_sql', 'identify_newline_chars',
            'replace_newline_chars', 'identify_select_from', 'split_by_select_from', 'add_whitespaces_between_symbols',
            'identify_end_of_fields', 'add_newline_indentation', 'extract_outer_subquery', 'format_subquery',
-           'check_sql_query', 'check_skip_marker', 'identify_semicolon', 'split_by_semicolon']
+           'check_sql_query', 'check_skip_marker', 'identify_semicolon', 'split_by_semicolon', 'identify_create',
+           'count_lines', 'find_line_number']
 
 # Cell
 import re
@@ -311,3 +312,18 @@ def split_by_semicolon(s):
         else:
             split_s.append(s[start+1:end])  # do not take the semicolon
     return split_s
+
+# Cell
+def identify_create(s):
+    "Identify positions of CREATE keyword"
+    return identify_in_sql("create", s)
+
+# Cell
+def count_lines(s):
+    "Count the number of lines in `s`"
+    return s.count("\n")
+
+# Cell
+def find_line_number(s, positions):
+    "Find line number in `s` out of `positions`"
+    return [s[0:pos].count("\n") + 1 for pos in positions]

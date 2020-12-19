@@ -5,44 +5,78 @@ __all__ = ['format_sql_commands', 'format_sql_file', 'format_sql_files']
 # Cell
 import re
 import os
+import tempfile
 from glob import glob
 from fastcore.script import call_parse, Param, store_true
 from .core import *
 from .utils import *
+from .validation import *
 
 # Cell
 def format_sql_commands(s):
     "Format SQL commands in `s`"
     s = s.strip()  # strip file contents
     split_s = split_by_semicolon(s)  # split by query
-    # format only SQL queries, let everything else unchanged
-    formatted_split_s = [
-        "\n\n\n" + format_sql(sp, add_semicolon=False).strip()
-        if check_sql_query(sp) and not check_skip_marker(sp)
-        else sp
-        for sp in split_s
-    ]
-    # join by semicolon
-    formatted_s = ";".join(formatted_split_s)
-    # remove starting and ending newlines
-    formatted_s = formatted_s.strip()
-    # add newline at the end of file
-    formatted_s = formatted_s + "\n"
-    return formatted_s
+    # validate queries
+    validations = [validate_semicolon(sp) for sp in split_s]
+    if sum([val["exit_code"] for val in validations]) == 0:
+        # format only SQL queries, let everything else unchanged
+        formatted_split_s = [
+            "\n\n\n" + format_sql(sp, add_semicolon=False).strip()
+            if check_sql_query(sp) and not check_skip_marker(sp)
+            else sp
+            for sp in split_s
+        ]
+        # join by semicolon
+        formatted_s = ";".join(formatted_split_s)
+        # remove starting and ending newlines
+        formatted_s = formatted_s.strip()
+        # add newline at the end of file
+        formatted_s = formatted_s + "\n"
+        return formatted_s
+    else:
+        file_lines = [
+            tuple([line + sum([sd["total_lines"] for sd in validations[0:i]]) for line in d["val_lines"]])
+            for i, d in enumerate(validations)
+            if d["exit_code"] == 1
+        ]
+        error_dict = {
+            "error_code": 2,
+            "lines": file_lines
+        }
+        return error_dict
 
 # Cell
 def format_sql_file(f):
     """Format file `f` with SQL commands and overwrite the file.
-    Return 0 for no change and 1 for formatting adjustments"""
+
+    Return exit_code:
+    * 0 = Everything already formatted
+    * 1 = Formatting applied
+    * 2 = Problem detected, formatting aborted
+    """
     # open the file
     with open(f, "r") as file:
         sql_commands = file.read()
     # format SQL statements
     formatted_file = format_sql_commands(sql_commands)
-    exit_code = 0 if sql_commands == formatted_file else 1
-    # overwrite file
-    with open(f, "w") as f:
-        f.write(formatted_file)
+    if isinstance(formatted_file, dict):
+        if formatted_file["error_code"] == 2:
+            print(f"Something went wrong in file: {f}")
+            print(
+                (
+                "Identified CREATE keyword more than twice within the same query " +
+                f"at lines {formatted_file['lines']}\n"
+                "You may have forgotten a semicolon (;) to delimit the queries"
+                )
+            )
+            print(f"Aborting formatting for file {f}")
+            exit_code = 2
+    else:
+        exit_code = 0 if sql_commands == formatted_file else 1
+        # overwrite file
+        with open(f, "w") as f:
+            f.write(formatted_file)
     return exit_code
 
 # Cell

@@ -38,11 +38,16 @@ index = {"MAIN_STATEMENTS": "00_core.ipynb",
          "check_sql_query": "02_utils.ipynb",
          "check_skip_marker": "02_utils.ipynb",
          "identify_semicolon": "02_utils.ipynb",
-         "split_by_semicolon": "02_utils.ipynb"}
+         "split_by_semicolon": "02_utils.ipynb",
+         "identify_create": "02_utils.ipynb",
+         "count_lines": "02_utils.ipynb",
+         "find_line_number": "02_utils.ipynb",
+         "validate_semicolon": "03_validation.ipynb"}
 
 modules = ["core.py",
            "format_file.py",
-           "utils.py"]
+           "utils.py",
+           "validation.py"]
 
 doc_url = "https://PabloRMira.github.io/sql_formatter/"
 
