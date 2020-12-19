@@ -1,8 +1,8 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[FEA] "
-labels: new feature
+title: ""
+labels: enhancement
 assignees: ''
 
 ---
