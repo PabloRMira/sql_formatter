@@ -17,9 +17,13 @@ def format_sql_commands(s):
     "Format SQL commands in `s`"
     s = s.strip()  # strip file contents
     split_s = split_by_semicolon(s)  # split by query
-    # validate queries
-    validations = [validate_semicolon(sp) for sp in split_s]
-    if sum([val["exit_code"] for val in validations]) == 0:
+    # validate semicolon
+    validations_semicolon = [validate_semicolon(sp) for sp in split_s]
+    val_summary_semicolon = sum([val["exit_code"] for val in validations_semicolon])
+    # validate balanced parenthesis
+    validations_balanced = [validate_balanced_parenthesis(sp) for sp in split_s]
+    val_summary_balanced = sum([val["exit_code"] for val in validations_balanced])
+    if sum([val_summary_semicolon, val_summary_balanced]) == 0:
         # format only SQL queries, let everything else unchanged
         formatted_split_s = [
             "\n\n\n" + format_sql(sp, add_semicolon=False).strip()
@@ -35,15 +39,27 @@ def format_sql_commands(s):
         formatted_s = formatted_s + "\n"
         return formatted_s
     else:
-        file_lines = [
-            tuple([line + sum([sd["total_lines"] for sd in validations[0:i]]) for line in d["val_lines"]])
-            for i, d in enumerate(validations)
-            if d["exit_code"] == 1
-        ]
-        error_dict = {
-            "error_code": 2,
-            "lines": file_lines
-        }
+        error_dict = {}
+        if val_summary_semicolon > 0:
+            file_lines = [
+                tuple([line + sum([sd["total_lines"] for sd in validations_semicolon[0:i]]) for line in d["val_lines"]])
+                for i, d in enumerate(validations_semicolon)
+                if d["exit_code"] == 1
+            ]
+            error_dict["semicolon"] = {
+                "error_code": 2,
+                "lines": file_lines
+            }
+        if val_summary_balanced > 0:
+            file_lines = [
+                [line + sum([sd["total_lines"] for sd in validations_balanced[0:i]]) for line in d["val_lines"]]
+                for i, d in enumerate(validations_balanced)
+                if d["exit_code"] == 1
+            ]
+            error_dict["unbalanced"] = {
+                "error_code": 3,
+                "lines": file_lines
+            }
         return error_dict
 
 # Cell
@@ -61,17 +77,25 @@ def format_sql_file(f):
     # format SQL statements
     formatted_file = format_sql_commands(sql_commands)
     if isinstance(formatted_file, dict):
-        if formatted_file["error_code"] == 2:
-            print(f"Something went wrong in file: {f}")
+        print(f"Something went wrong in file: {f}")
+        if "semicolon" in formatted_file.keys():
             print(
                 (
                 "Identified CREATE keyword more than twice within the same query " +
-                f"at lines {formatted_file['lines']}\n"
+                f"at lines {formatted_file['semicolon']['lines']}\n"
                 "You may have forgotten a semicolon (;) to delimit the queries"
                 )
             )
-            print(f"Aborting formatting for file {f}")
-            exit_code = 2
+        if "unbalanced" in formatted_file.keys():
+            print(
+                (
+                "Identified unbalanced parenthesis " +
+                f"at lines {formatted_file['unbalanced']['lines']}\n"
+                "You should check your parenthesis"
+                )
+            )
+        print(f"Aborting formatting for file {f}")
+        exit_code = 2
     else:
         exit_code = 0 if sql_commands == formatted_file else 1
         # overwrite file

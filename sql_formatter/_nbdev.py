@@ -42,7 +42,8 @@ index = {"MAIN_STATEMENTS": "00_core.ipynb",
          "identify_create": "02_utils.ipynb",
          "count_lines": "02_utils.ipynb",
          "find_line_number": "02_utils.ipynb",
-         "validate_semicolon": "03_validation.ipynb"}
+         "validate_semicolon": "03_validation.ipynb",
+         "validate_balanced_parenthesis": "03_validation.ipynb"}
 
 modules = ["core.py",
            "format_file.py",

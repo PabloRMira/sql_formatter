@@ -185,14 +185,17 @@ From my_view;
 
 For the SQL-formatter to work properly you should meticulously end each of your SQL statements with semicolon (;)
 
-> We have equiped the `sql-formatter` with some basic validations. Specially it will look in each query of the file if the keyword `CREATE` appears more than twice, indicating the user that he / she may have forgotten a semicolon
+However, we have equiped the `sql-formatter` with some basic validations:
+
+* *Forgotten semicolon validation*: The validator will check if the `CREATE` keyword appears more than twice, indicating the user that he / she may have forgotten a semicolon
+* *Unbalanced parenthesis*: The validator will check if there are unbalanced parenthesis in the query
 
 ### What `sql_formatter` does not do
 
 This package is just a SQL formatter and therefore
 
 * cannot parse your SQL queries into e.g. dictionaries
-* cannot validate your SQL queries before formatting
+* cannot validate your SQL queries to be valid for the corresponding database system / provider
 
 ## Acknowledgements
 

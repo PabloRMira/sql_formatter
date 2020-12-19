@@ -535,6 +535,13 @@ FROM   my_table;
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Semicolon validation error</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -556,7 +563,7 @@ FROM   my_table;
 <span class="sd">From my_table;</span>
 <span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
     <span class="p">),</span> 
-    <span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]}</span>
+    <span class="p">{</span><span class="s2">&quot;semicolon&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]}}</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -570,7 +577,118 @@ FROM   my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 7)]}
+<pre>{&#39;semicolon&#39;: {&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 7)]}}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unbalanced parenthesis error</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_sql_commands</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace transient table my_table As</span>
+<span class="sd">select asdf, Qwer, /* ; */</span>
+<span class="sd">(qwer2, -- ; ()</span>
+<span class="sd">( /* ) */</span>
+<span class="sd">replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4</span>
+<span class="sd">from table1;</span>
+
+<span class="sd">create view my_view As</span>
+<span class="sd">(Select asdf</span>
+<span class="sd">From my_table;</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+    <span class="p">),</span> 
+    <span class="p">{</span><span class="s2">&quot;unbalanced&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">]]}}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;unbalanced&#39;: {&#39;error_code&#39;: 3, &#39;lines&#39;: [[3, 4], [9]]}}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unbalanced parenthesis + semicolon error</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_sql_commands</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace transient table my_table As</span>
+<span class="sd">select asdf, Qwer, /* ; */</span>
+<span class="sd">(qwer2, -- ; ()</span>
+<span class="sd">( /* ) */</span>
+<span class="sd">replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4</span>
+<span class="sd">from table1</span>
+
+<span class="sd">create view my_view As</span>
+<span class="sd">(Select asdf</span>
+<span class="sd">From my_table;</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+    <span class="p">),</span> 
+    <span class="p">{</span>
+        <span class="s2">&quot;semicolon&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)]},</span>        
+        <span class="s2">&quot;unbalanced&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]},</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;semicolon&#39;: {&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 8)]}, &#39;unbalanced&#39;: {&#39;error_code&#39;: 3, &#39;lines&#39;: [[3, 4, 9]]}}
 </pre>
 </div>
 </div>
@@ -598,7 +716,7 @@ FROM   my_table;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L50" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>)</p>
+<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>)</p>
 </blockquote>
 <p>Format file <code>f</code> with SQL commands and overwrite the file.</p>
 <p>Return exit_code:</p>
@@ -734,10 +852,10 @@ ORDER BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmpx7llnf89
+<pre>Something went wrong in file: /tmp/tmpneef6acm
 Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
-Aborting formatting for file /tmp/tmpx7llnf89
+Aborting formatting for file /tmp/tmpneef6acm
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 qwer2, -- ;
@@ -746,6 +864,136 @@ from table1
 
 create view my_view As
 Select asdf
+From my_table;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sql_forgotten_semicolon</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">create or replace transient table my_table As</span>
+<span class="s2">select asdf, Qwer, /* ; */</span>
+<span class="s2">(qwer2, -- ;</span>
+<span class="s2">replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4</span>
+<span class="s2">from table1;</span>
+
+<span class="s2">create view my_view As</span>
+<span class="s2">(Select asdf</span>
+<span class="s2">From my_table;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_forgotten_semicolon</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">exit_code</span> <span class="o">=</span> <span class="n">format_sql_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">assert_and_print</span><span class="p">(</span> <span class="c1"># no formatting</span>
+    <span class="n">formatted_file</span><span class="p">,</span>
+    <span class="n">sql_forgotten_semicolon</span>
+<span class="p">)</span>
+<span class="k">assert</span> <span class="n">exit_code</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Something went wrong in file: /tmp/tmpl6a7uz34
+Identified unbalanced parenthesis at lines [[3], [8]]
+You should check your parenthesis
+Aborting formatting for file /tmp/tmpl6a7uz34
+create or replace transient table my_table As
+select asdf, Qwer, /* ; */
+(qwer2, -- ;
+replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4
+from table1;
+
+create view my_view As
+(Select asdf
+From my_table;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sql_forgotten_semicolon</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">create or replace transient table my_table As</span>
+<span class="s2">select asdf, Qwer, /* ; */</span>
+<span class="s2">(qwer2, -- ;</span>
+<span class="s2">replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4</span>
+<span class="s2">from table1</span>
+
+<span class="s2">create view my_view As</span>
+<span class="s2">(Select asdf</span>
+<span class="s2">From my_table;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql_forgotten_semicolon</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">exit_code</span> <span class="o">=</span> <span class="n">format_sql_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">formatted_file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">assert_and_print</span><span class="p">(</span> <span class="c1"># no formatting</span>
+    <span class="n">formatted_file</span><span class="p">,</span>
+    <span class="n">sql_forgotten_semicolon</span>
+<span class="p">)</span>
+<span class="k">assert</span> <span class="n">exit_code</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Something went wrong in file: /tmp/tmph5q5unov
+Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
+You may have forgotten a semicolon (;) to delimit the queries
+Identified unbalanced parenthesis at lines [[3, 8]]
+You should check your parenthesis
+Aborting formatting for file /tmp/tmph5q5unov
+create or replace transient table my_table As
+select asdf, Qwer, /* ; */
+(qwer2, -- ;
+replace(&#39;;&#39;, &#39;&#39;, qwer3) as Qwer4
+from table1
+
+create view my_view As
+(Select asdf
 From my_table;
 
 </pre>
@@ -776,7 +1024,7 @@ From my_table;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L83" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"(Relative) path to SQL files. You can also use wildcard using ".<em>sql"", <strong><code>recursive</code></strong>:"Should files also be searched in subfolders?"=</em><code>False</code>*)</p>
+<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L107" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"(Relative) path to SQL files. You can also use wildcard using ".<em>sql"", <strong><code>recursive</code></strong>:"Should files also be searched in subfolders?"=</em><code>False</code>*)</p>
 </blockquote>
 <p>Format SQL <code>files</code></p>
 
