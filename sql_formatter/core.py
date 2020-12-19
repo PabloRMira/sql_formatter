@@ -267,12 +267,18 @@ def format_select(s):
     s = re.sub(r"\[CS\]", "\n" + " " * indentation, s)  # replace [CS] by newline
     s = re.sub(r"(then.*?) ((?:when|else).*?)", r"\1\n\2", s)  # add newline before when or else
     split_s = s.split("\n")
-    split_s = [
-        line if not re.match("^(?:when|else)", line.strip())
-        else " " * 12 + line.strip()
-        for line in split_s
-    ]
-    s = "\n".join(split_s)
+    split_s_out = []
+    case_extra_indentation = 0
+    for line in split_s:
+        strip_line = line.strip()
+        case_when_search = re.search("case when", strip_line)
+        if bool(case_when_search):
+            case_extra_indentation = case_when_search.start()
+        if re.match("^(?:when|else)", strip_line):
+            split_s_out.append(" " * (12 + case_extra_indentation) + strip_line)
+        else:
+            split_s_out.append(line)
+    s = "\n".join(split_s_out)
     s = s.strip()
     # format partition by
     begin_s = s[0:indentation]
