@@ -197,6 +197,46 @@ This package is just a SQL formatter and therefore
 * cannot parse your SQL queries into e.g. dictionaries
 * cannot validate your SQL queries to be valid for the corresponding database system / provider
 
+## How to contribute
+
+You can contribute to this project:
+
+* writing issues
+* contributing to the code basis
+
+### Writing issues
+
+If you find some bug or you think some new feature could improve the package, please write an issue going to [New Issue](https://github.com/PabloRMira/sql_formatter/issues/new/choose) and follow the instructions under the corresponding template
+
+### Contributing to the code basis
+
+We follow the [nbdev](https://github.com/fastai/nbdev) framework for the literate programming development of this project. So if you want to contribute, please familiarize first with this framework. Specially, we write our code, tests and documentation at the same time in jupyter notebooks.
+
+If you have not heard about `nbdev` yet and / or find the idea weird to develop in notebooks as it was the case for me, please watch the following youtube video first: [I like notebooks](https://www.youtube.com/watch?v=9Q6sLbz37gk) by Jeremy Howard, the creator of this wonderful framework. 
+
+#### Setup the development environment
+Prerequisites to setup the development environment:
+* conda
+
+To setup the development environment:
+1. Clone the project and navigate into the project with your terminal
+2. Install our conda development environment running `conda env create -f environment.yml`
+3. Activate the python environment using `conda activate sql-formatter-dev`
+4. Run `nbdev_install_git_hooks`
+
+#### Development Workflow
+
+For development we follow these steps:
+1. Pick an existing issue and write in the comments you would like to fix it
+  * If your idea is not documented in an issue yet, please write first an issue
+2. Create a branch from `master` and implement your idea
+3. Before pushing your solution run first `make prepush` to make sure everything is allright to merge, specially our tests
+4. Make a pull request for your solution
+  * The pull request title should be meaningful, something like "[PREFIX] Title of the issue you fixed". Please try to use some of the following prefixes: 
+    * [FIX] for bugfixes
+    * [FEA] for new features
+    * [DOC] for documentation
+
 ## Acknowledgements
 
 Thank you very much to Jeremy Howard and all the [nbdev](https://github.com/fastai/nbdev) team for enabling the *fast* and delightful development of this library via the `nbdev` framework.
