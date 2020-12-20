@@ -848,6 +848,60 @@ FROM table1
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With additional keyword <code>COMMENT</code></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">preformat_statements</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace table  my_table comment=&#39;blabla&#39; as -- mytable</span>
+<span class="sd">select distinct asdf, qwer, -- some comment</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE my_table comment=&#39;blabla&#39; AS -- mytable[C]</span>
+<span class="sd">SELECT DISTINCT asdf, qwer, -- some comment[C]</span>
+<span class="sd">FROM table1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+CREATE OR REPLACE TABLE my_table comment=&#39;blabla&#39; AS -- mytable[C]
+SELECT DISTINCT asdf, qwer, -- some comment[C]
+FROM table1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
