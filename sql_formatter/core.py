@@ -313,7 +313,10 @@ def format_join(s):
 def format_on(s):
     "Format ON statement line `s`"
     s = add_whitespaces_between_symbols(s)  # add whitespaces between symbols in join
+    s = s.replace("[C]", " ")
     s = "        " + s  # add indentation
+    s = re.sub(r"and\s", r"and\n" + " " * 11, s, flags=re.I)  # add new line before every 'and' and indentation
+    s = re.sub(r"or\s", r"or\n" + " " * 11, s, flags=re.I)  # add new line before every 'or' and indentation
     return s
 
 # Cell
@@ -371,7 +374,8 @@ def format_simple_sql(s, add_semicolon=True):
     s = preformat_statements(s)  # add breaklines for the main statements
     s = format_statements(s)  # format statements
     s = re.sub(r"\[C\]", "", s)  # replace remaining [C]
-    s = re.sub(r"\[CS\]", "\n", s)  # replace remainig [CS]
+    s = re.sub(r"\[CS\]", "\n", s)  # replace remaining [CS]
+    s = re.sub(r"\s+\n", "\n", s)  # replace redundant whitespaces before newline
     if add_semicolon:
         s = add_ending_semicolon(s)  # add ending semicolon if not there yet
     return s
