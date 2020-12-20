@@ -10,8 +10,8 @@ from .utils import *
 
 # Cell
 MAIN_STATEMENTS = [
-    "create.*table",
-    "create.*view",
+    "create.*?table",  # regex for all variants: CREATE OR REPLACE TABLE, ...
+    "create.*?view",  # regex
     "select distinct",
     "select",
     "from",
