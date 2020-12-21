@@ -2,7 +2,7 @@
 
 __all__ = ['MAIN_STATEMENTS', 'clean_query', 'preformat_statements', 'lowercase_query', 'format_partition_by',
            'format_select', 'format_from', 'format_join', 'format_on', 'format_where', 'format_statement_line',
-           'format_statements', 'add_ending_semicolon', 'format_simple_sql', 'format_sql']
+           'format_statements', 'add_ending_semicolon', 'format_multiline_comments', 'format_simple_sql', 'format_sql']
 
 # Cell
 import re
@@ -245,11 +245,8 @@ def format_select(s):
     elif re.search(r"[\w\d]+,\s*\/\*.*\*\/$", s, flags=re.I):
         s = re.sub(r"([\w\d]+)(,+)(\s*)(\/\*.*\*\/)$", r"\1 \4", s, flags=re.I)
     s = add_whitespaces_between_symbols(s)  # add whitespaces between symbols
-    # check whether is is a SELECT DISTINCT
-    if re.search("^select distinct", s):
-        indentation = 16
-    else:
-        indentation = 7
+    # check whether there is a SELECT DISTINCT
+    indentation = 16 if re.search("^select distinct", s) else 7
     s = add_newline_indentation(s, indentation=indentation)  # add newline after each comma (no comments) and indentation
     s = re.sub(r"\[C\]\[CS\]", "[C]", s)  # replace [C][CS] by [C]
     s = re.sub(r"\[C\]", "\n" + " " * indentation, s)  # replace [C] by newline
@@ -355,6 +352,21 @@ def add_ending_semicolon(s):
     return s
 
 # Cell
+def format_multiline_comments(s):
+    "Format multiline comments by replacing multiline comment [CI] by newline and adding indentation"
+    split_s = s.split("\n")
+    split_out = []
+    for sp in split_s:  # loop on query lines
+        if re.search(r"\[CI\]", sp):
+            indentation = re.search(r"\/\*", sp).start() + 3
+            sp_indent = re.sub(r"\[CI\]", "\n" + " " * indentation, sp)
+            split_out.append(sp_indent)
+        else:
+            split_out.append(sp)
+    s = "\n".join(split_out)
+    return s
+
+# Cell
 def format_simple_sql(s, add_semicolon=True):
     """Format a simple SQL query without subqueries `s`.
     If `add_semicolon` is True, then add a semicolon at the end
@@ -365,6 +377,7 @@ def format_simple_sql(s, add_semicolon=True):
     s = re.sub(r"\[C\]", "", s)  # replace remaining [C]
     s = re.sub(r"\[CS\]", "\n", s)  # replace remaining [CS]
     s = re.sub(r"\s+\n", "\n", s)  # replace redundant whitespaces before newline
+    s = format_multiline_comments(s)  # format multline comments
     if add_semicolon:
         s = add_ending_semicolon(s)  # add ending semicolon if not there yet
     return s
