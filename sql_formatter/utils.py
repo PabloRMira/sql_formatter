@@ -41,6 +41,8 @@ def remove_whitespaces_comments(s):
     s = re.sub(r"[\r\t\f\v ]+\[C\]", "[C]", s)  # remove whitespaces before comment token [C]
     s = re.sub(r"\[CS\][\r\t\f\v ]+", "[CS]", s)  # remove whitespaces after comment token [CS]
     s = re.sub(r"[\r\t\f\v ]+\[CS\]", "[CS]", s)  # remove whitespaces before comment token [CS]
+    s = re.sub(r"\[CI\][\r\t\f\v ]+", "[CI]", s)  # remove whitespaces after comment token [CI]
+    s = re.sub(r"[\r\t\f\v ]+\[CI\]", "[CI]", s)  # remove whitespaces before comment token [CI]
     return s
 
 # Cell
@@ -57,7 +59,8 @@ def mark_comments(s):
     s = re.sub(r"(\/\*.*?\*\/)", r"\1[C]", s, flags=re.DOTALL)  # mark end of /* */ comments
     s = re.sub(r"(\n)\s*(--.*?)", r"\1[CS]\2", s, flags=re.DOTALL)  # mark start of comment line with --
     s = re.sub(r"(\n)\s*(\/\*.*\*\/)", r"\1[CS]\2", s)  # mark start of comment line with /*
-    s = re.sub(r"(\n)\s*(\/\*.*\*\/)", r"\1[CS]\2", s, flags=re.DOTALL)  # mark start of comment line with /*
+    s = re.sub(r"(\n)\s*(\/\*.*?\*\/)", r"\1[CS]\2", s, flags=re.DOTALL)  # mark start of comment line with /*
+    s = re.sub(r"(\/\*.*)(\n)(.*\*\/)", r"\1[CI]\3", s)  # replace intercomment new lines by [CI]
     return s
 
 # Cell
