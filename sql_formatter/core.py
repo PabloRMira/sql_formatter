@@ -45,47 +45,36 @@ def preformat_statements(s):
     uppercase them but not if they are inside a comment"""
     statements = MAIN_STATEMENTS
     s = clean_query(s)  # clean query and mark comments
-    # initialize container
-    split_select_out = []
-    # isolate SELECT statement
-    split_select = split_by_select_from(s)
-    split_c_out = []
-    for line in split_select:
-        split_c = re.split(r"((?:\[C\]|\[CS\]))", line)  # split by comment marker
-        split_c = [elem for elem in split_c if elem != ""]
-        split_cn_out = []
-        for uline in split_c:
-            split_cn = re.split("((?:--.*|\/\*.*\*\/))", uline)  # split by comment / no comment
-            split_cn = [elem for elem in split_cn if elem != ""]
-            for statement in statements:
-                if re.match("^select", line, flags=re.I):
-                    split_cn = [  # update list
-                        re.sub(rf"\s*\b({statement})\b", "\n" + statement.upper(), sline, flags=re.I)
-                        if not re.search("(?:--.*|\/\*.*\*\/)", sline) and statement == "select"
-                        else re.sub(rf"\b({statement})\b", statement.upper(), sline, flags=re.I)
-                        if not re.search("(?:--.*|\/\*.*\*\/)", sline)
-                        else sline
-                        for sline in split_cn
-                    ]
-                else:
-                    if re.match("^create", statement, flags=re.I):  # special case CREATE with AS capitalize as well
-                        split_cn = [  # update list
-                            re.sub(rf"\s*({statement} )(.*) as\b", lambda pat: "\n" + pat.group(1).upper() + pat.group(2) + " AS", sline, flags=re.I)
-                            if not re.search("(?:--.*|\/\*.*\*\/)", sline)
-                            else sline
-                            for sline in split_cn
-                        ]
-                    else:  # normal main statements
-                        split_cn = [  # update list
-                            re.sub(rf"\s*\b({statement})\b", "\n" + statement.upper(), sline, flags=re.I)
-                            if not re.search("(?:--.*|\/\*.*\*\/)", sline)
-                            else sline
-                            for sline in split_cn
-                        ]
-            split_cn_out.append("".join(split_cn))
-        split_c_out.append("".join(split_cn_out))
-    split_select_out.append("".join(split_c_out))
-    s = "".join(split_select_out)
+    split_s = split_comment_select(s)  # split by comment and non comment
+    for statement in statements:
+        if re.match("create", statement):  # special case CREATE with AS capitalize as well
+            split_s = [{
+                    "string": re.sub(rf"\s*({statement} )(.*) as\b",
+                                     lambda pat: "\n" + pat.group(1).upper() + pat.group(2) + " AS",
+                                     sdict["string"], flags=re.I
+                    ) if not sdict["comment"] else sdict["string"],
+                    "comment": sdict["comment"],
+                    "select": sdict["select"]
+                } for sdict in split_s]
+        else:  # normal main statements
+            split_s = [{
+                    "string": re.sub(rf"\s*\b({statement})\b",
+                                     "\n" + statement.upper(),
+                                     sdict["string"], flags=re.I
+                    ) if not sdict["comment"] and not sdict["select"]  # no comment, no select region
+                    else re.sub(rf"\s*\b({statement})\b",
+                                "\n" + statement.upper(),
+                                sdict["string"], flags=re.I
+                    ) if not sdict["comment"] and sdict["select"] and re.match("select", statement) # no comment, select region and select statement
+                    else re.sub(rf"\b({statement})\b",
+                                statement.upper(),
+                                sdict["string"], flags=re.I
+                    ) if not sdict["comment"] and sdict["select"] and not re.match("select", statement) # no comment, select region and no select statement
+                    else sdict["string"],
+                    "comment": sdict["comment"],
+                    "select": sdict["select"]
+                } for sdict in split_s]
+    s = "".join([sdict["string"] for sdict in split_s])
     s = remove_whitespaces_newline(s)  # remove whitespaces before and after newline
     return s
 
@@ -218,7 +207,7 @@ def lowercase_query(s):
 # Cell
 def format_partition_by(s, base_indentation):
     "Format PARTITION BY line in SELECT (DISTINCT)"
-    orderby_involved = bool(re.search("order by", s))
+    orderby_involved = bool(re.search("order by", s, flags=re.I))
     if orderby_involved:
         split_s = re.split("(partition by.*)(order by.*)", s, flags=re.I)  # split PARTITION BY
     else:
