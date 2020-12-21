@@ -9,11 +9,11 @@ from .utils import *
 def validate_semicolon(s):
     """Validate query `s` by looking for forgotten semicolon.
     The implication could be the keyword CREATE appearing twice"""
-    positions = identify_create(s)
+    positions = identify_create_table_view(s)
     if len(positions) > 1:
         validation = {
             "exit_code": 1,
-            "val_lines": find_line_number(s, positions),
+            "val_lines": positions,
             "total_lines": count_lines(s)
         }
     else:
