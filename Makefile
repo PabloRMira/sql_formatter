@@ -21,8 +21,9 @@ docs: $(SRC)
 test:
 	nbdev_test_nbs
 
-release: pypi
-	nbdev_conda_package
+release: make-git-release &&\
+	pypi &&\
+	make-changelog &&\
 	nbdev_bump_version
 
 pypi: dist
