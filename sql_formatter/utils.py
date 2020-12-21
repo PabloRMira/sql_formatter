@@ -5,7 +5,7 @@ __all__ = ['assert_and_print', 'remove_whitespaces_newline', 'remove_whitespaces
            'identify_in_sql', 'identify_newline_chars', 'replace_newline_chars', 'identify_select_from',
            'split_by_select_from', 'add_whitespaces_between_symbols', 'identify_end_of_fields',
            'add_newline_indentation', 'extract_outer_subquery', 'format_subquery', 'check_sql_query',
-           'check_skip_marker', 'identify_semicolon', 'split_by_semicolon', 'identify_create', 'count_lines',
+           'check_skip_marker', 'identify_semicolon', 'split_by_semicolon', 'identify_create_table_view', 'count_lines',
            'find_line_number']
 
 # Cell
@@ -455,9 +455,17 @@ def split_by_semicolon(s):
     return split_s
 
 # Cell
-def identify_create(s):
-    "Identify positions of CREATE keyword"
-    return identify_in_sql("create", s)
+def identify_create_table_view(s):
+    "Identify positions of CREATE .. TABLE / VIEW statements"
+    split_s = split_comment_non_comment(s)
+    s_without_comments = "".join([sd["string"] for sd in split_s if not sd["comment"]])
+    s_lines = s_without_comments.split("\n")
+    line_numbers = [
+        i + 1
+        for i, line in enumerate(s_lines)
+        if re.search("(?:create.*?table|create.*?view)", line, flags=re.I)
+    ]
+    return line_numbers
 
 # Cell
 def count_lines(s):
