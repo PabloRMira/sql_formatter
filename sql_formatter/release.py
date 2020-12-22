@@ -79,6 +79,8 @@ def make_git_release():
     # create release on GitHub
     subprocess.run(["gh", "release", "create", release_version,
                     "-n", report, "-t", f"Release version {release_version}"])
+    # download new tag from GitHub
+    subprocess.run(["git", "fetch"])
 
 # Cell
 def get_tags():

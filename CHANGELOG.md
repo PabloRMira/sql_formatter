@@ -1,4 +1,24 @@
-# Changelog
+# Release notes
+
+## 0.2.1
+
+### New features:
+* [FEA] Add CLI to handle git release and changelog creation programmatically via commit messages (#87)
+* [FEA] Add formatting for multiline comments (#86)
+* [FEA] Separate each ON join by newline (#80)
+
+### Bugfixes:
+* [FIX] Semicolon / CREATE validation fails (#85)
+* [FIX] Fields in ORDER BY in PARTITION BY with wrong indentation (#84)
+* [FIX] View name is wrongly written uppercase in CREATE OR REPLACE VIEW my_view AS (#79)
+
+### Documentation:
+* [DOC] Add docs for maintenance / refactoring (#89)
+* [DOC] Update README (#82)
+* [DOC] Add hint for contributors to install the package in editable mode for the CLI to incorporate changes in code basis (#81)
+
+### Refactoring / Maintenance:
+* [MNT] Refactor / Simplify code basis, remove deprecated functions, adjust docs (#90)
 
 ## 0.2.0
 
