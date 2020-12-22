@@ -26,7 +26,7 @@ def format_sql_commands(s):
     if sum([val_summary_semicolon, val_summary_balanced]) == 0:
         # format only SQL queries, let everything else unchanged
         formatted_split_s = [
-            "\n\n\n" + format_sql(sp, add_semicolon=False).strip()
+            "\n\n\n" + format_sql(sp).strip()
             if check_sql_query(sp) and not check_skip_marker(sp)
             else sp
             for sp in split_s
@@ -81,7 +81,7 @@ def format_sql_file(f):
         if "semicolon" in formatted_file.keys():
             print(
                 (
-                "Identified CREATE keyword more than twice within the same query " +
+                "[WARNING] Identified CREATE keyword more than twice within the same query " +
                 f"at lines {formatted_file['semicolon']['lines']}\n"
                 "You may have forgotten a semicolon (;) to delimit the queries"
                 )
@@ -89,7 +89,7 @@ def format_sql_file(f):
         if "unbalanced" in formatted_file.keys():
             print(
                 (
-                "Identified unbalanced parenthesis " +
+                "[WARNING] Identified unbalanced parenthesis " +
                 f"at lines {formatted_file['unbalanced']['lines']}\n"
                 "You should check your parenthesis"
                 )

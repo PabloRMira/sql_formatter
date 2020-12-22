@@ -138,15 +138,8 @@ nb_path: "nbs/01_format_file.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To simplify the problem, we assume for the moment the user is kind enough to separate every SQL statement by a semicolon (;)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Formatting-philosophy-of-SQL-files">Formatting philosophy of SQL files<a class="anchor-link" href="#Formatting-philosophy-of-SQL-files"> </a></h3><ul>
-<li>Every SQL-query is separated from above and below by two new lines</li>
+<li>Every SQL-query is separated from above by two new lines</li>
 <li>Every SQL-query is formatted via <a href="/sql_formatter/core.html#format_sql"><code>format_sql</code></a></li>
 </ul>
 
@@ -155,7 +148,7 @@ nb_path: "nbs/01_format_file.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Main-function-to-format-the-SQL-commands">Main function to format the SQL commands<a class="anchor-link" href="#Main-function-to-format-the-SQL-commands"> </a></h3><p>This function applies also basic validation and aborts formatting if the keyword <code>CREATE</code> appears at least twice in the same query, indicating the user that he / she may have forgotten a semicolon</p>
+<h3 id="Main-function-to-format-the-SQL-commands-in-a-file">Main function to format the SQL commands in a file<a class="anchor-link" href="#Main-function-to-format-the-SQL-commands-in-a-file"> </a></h3><p>This function applies also basic validation and aborts formatting if the statements <code>CREATE .. TABLE / VIEW</code> appear at least twice in the same query after splitting by semicolon, warning the user that she / he may have forgotten a semicolon</p>
 
 </div>
 </div>
@@ -852,10 +845,10 @@ ORDER BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmpneef6acm
-Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
+<pre>Something went wrong in file: /tmp/tmphbb1f_ie
+[WARNING] Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
-Aborting formatting for file /tmp/tmpneef6acm
+Aborting formatting for file /tmp/tmphbb1f_ie
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 qwer2, -- ;
@@ -916,10 +909,10 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmpl6a7uz34
-Identified unbalanced parenthesis at lines [[3], [8]]
+<pre>Something went wrong in file: /tmp/tmpcdovmxas
+[WARNING] Identified unbalanced parenthesis at lines [[3], [8]]
 You should check your parenthesis
-Aborting formatting for file /tmp/tmpl6a7uz34
+Aborting formatting for file /tmp/tmpcdovmxas
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 (qwer2, -- ;
@@ -980,12 +973,12 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmph5q5unov
-Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
+<pre>Something went wrong in file: /tmp/tmp80gehff3
+[WARNING] Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
-Identified unbalanced parenthesis at lines [[3, 8]]
+[WARNING] Identified unbalanced parenthesis at lines [[3, 8]]
 You should check your parenthesis
-Aborting formatting for file /tmp/tmph5q5unov
+Aborting formatting for file /tmp/tmp80gehff3
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 (qwer2, -- ;

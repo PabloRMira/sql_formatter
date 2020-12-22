@@ -2,7 +2,7 @@
 
 __all__ = ['MAIN_STATEMENTS', 'clean_query', 'preformat_statements', 'lowercase_query', 'format_partition_by',
            'format_select', 'format_from', 'format_join', 'format_on', 'format_where', 'format_statement_line',
-           'format_statements', 'add_ending_semicolon', 'format_multiline_comments', 'format_simple_sql', 'format_sql']
+           'format_statements', 'format_multiline_comments', 'format_simple_sql', 'format_sql']
 
 # Cell
 import re
@@ -10,8 +10,8 @@ from .utils import *
 
 # Cell
 MAIN_STATEMENTS = [
-    "create.*?table",  # regex for all variants: CREATE OR REPLACE TABLE, ...
-    "create.*?view",  # regex
+    "create.*?table",  # regex for all variants, e.g. CREATE OR REPLACE TABLE
+    "create.*?view",  # regex for all variants, e.g. CREATE OR REPLACE VIEW
     "select distinct",
     "select",
     "from",
@@ -32,10 +32,10 @@ MAIN_STATEMENTS = [
 def clean_query(s):
     "Remove redundant whitespaces and mark comments boundaries and remove newlines afterwards in query `s`"
     s = remove_redundant_whitespaces(s)  # remove too many whitespaces but no newlines
-    s = mark_comments(s)  # mark comments with special tokens [C] and [CS]
+    s = mark_comments(s)  # mark comments with special tokens [C], [CS] and [CI]
     s = replace_newline_chars(s)  # remove newlines but not in the comments
     s = remove_whitespaces_newline(s)  # remove whitespaces after and before newline
-    s = remove_whitespaces_comments(s)  # remove whitespaces after and before [C] and [CS]
+    s = remove_whitespaces_comments(s)  # remove whitespaces after and before [C], [CS] and [CI]
     s = remove_redundant_whitespaces(s)  # remove too many whitespaces but no newlines
     return s
 
@@ -344,14 +344,6 @@ def format_statements(s):
     return formatted_s
 
 # Cell
-def add_ending_semicolon(s):
-    "Add ending semicolon for SQL query `s`"
-    s = s.strip()
-    if re.match(r".*[^;]$", s, flags=re.DOTALL):
-        s = s + ";"
-    return s
-
-# Cell
 def format_multiline_comments(s):
     "Format multiline comments by replacing multiline comment [CI] by newline and adding indentation"
     split_s = s.split("\n")
@@ -367,10 +359,8 @@ def format_multiline_comments(s):
     return s
 
 # Cell
-def format_simple_sql(s, add_semicolon=True):
-    """Format a simple SQL query without subqueries `s`.
-    If `add_semicolon` is True, then add a semicolon at the end
-    """
+def format_simple_sql(s):
+    "Format a simple SQL query without subqueries `s`"
     s = lowercase_query(s)  # everything lowercased but not the comments
     s = preformat_statements(s)  # add breaklines for the main statements
     s = format_statements(s)  # format statements
@@ -378,14 +368,13 @@ def format_simple_sql(s, add_semicolon=True):
     s = re.sub(r"\[CS\]", "\n", s)  # replace remaining [CS]
     s = re.sub(r"\s+\n", "\n", s)  # replace redundant whitespaces before newline
     s = format_multiline_comments(s)  # format multline comments
-    if add_semicolon:
-        s = add_ending_semicolon(s)  # add ending semicolon if not there yet
+    s = s.strip()  # strip query
     return s
 
 # Cell
-def format_sql(s, add_semicolon=True):
-    "Format SQL query with subqueries. If `add_semicolon` is True then add a semicolon at the end"
-    s = format_simple_sql(s, add_semicolon)  # basic query formatting
+def format_sql(s):
+    "Format SQL query with subqueries `s`"
+    s = format_simple_sql(s)  # basic query formatting
     # get first outer subquery positions
     subquery_pos = extract_outer_subquery(s)
     # loop over subqueries

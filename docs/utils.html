@@ -53,7 +53,7 @@ nb_path: "nbs/02_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
+<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
 </blockquote>
 <p>Assert equality of <code>s_in</code> and <code>s_expected</code> and print the result of <code>s_in</code> if the assertion worked</p>
 
@@ -107,7 +107,7 @@ nb_path: "nbs/02_utils.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="String-formatting-functions">String formatting functions<a class="anchor-link" href="#String-formatting-functions"> </a></h3>
+<h3 id="Removing-redundant-whitespaces">Removing redundant whitespaces<a class="anchor-link" href="#Removing-redundant-whitespaces"> </a></h3>
 </div>
 </div>
 </div>
@@ -122,7 +122,7 @@ nb_path: "nbs/02_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_whitespaces_newline" class="doc_header"><code>remove_whitespaces_newline</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_newline</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_whitespaces_newline" class="doc_header"><code>remove_whitespaces_newline</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_newline</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Remove whitespaces before and after newline in <code>s</code></p>
 
@@ -191,7 +191,7 @@ group by asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_whitespaces_comments" class="doc_header"><code>remove_whitespaces_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_whitespaces_comments" class="doc_header"><code>remove_whitespaces_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Remove whitespaces before and after comment tokens in <code>s</code></p>
 
@@ -295,9 +295,9 @@ group by asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_redundant_whitespaces" class="doc_header"><code>remove_redundant_whitespaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_redundant_whitespaces</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_redundant_whitespaces" class="doc_header"><code>remove_redundant_whitespaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L47" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_redundant_whitespaces</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Strip and emove redundant (more than 2) whitespaces in <code>s</code> but no newlines in between</p>
+<p>Strip and remove redundant (more than 2) whitespaces in <code>s</code> but no newlines in between</p>
 
 </div>
 
@@ -403,8 +403,7 @@ some more
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Function to mark comments' boundaries</p>
-
+<h3 id="Add-missing-whitespaces-between-symbols">Add missing whitespaces between symbols<a class="anchor-link" href="#Add-missing-whitespaces-between-symbols"> </a></h3>
 </div>
 </div>
 </div>
@@ -419,7 +418,80 @@ some more
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mark_comments" class="doc_header"><code>mark_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L56" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mark_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L54" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Add whitespaces between symbols in line <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">add_whitespaces_between_symbols</span><span class="p">(</span>
+        <span class="s2">&quot;WHERE asdf= 1 and qwer=&gt;1 or blabla =&#39;asdf&#39;&quot;</span>
+    <span class="p">),</span> <span class="s2">&quot;WHERE asdf = 1 and qwer =&gt; 1 or blabla = &#39;asdf&#39;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>WHERE asdf = 1 and qwer =&gt; 1 or blabla = &#39;asdf&#39;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Mark-comments-with-special-tokens-[C]-(end-of-comment),-[CS]-(start-of-comment-in-new-line)-and-[CI]-(newline-in-multiline-comment)">Mark comments with special tokens <code>[C]</code> (end of comment), <code>[CS]</code> (start of comment in new line) and <code>[CI]</code> (newline in multiline comment)<a class="anchor-link" href="#Mark-comments-with-special-tokens-[C]-(end-of-comment),-[CS]-(start-of-comment-in-new-line)-and-[CI]-(newline-in-multiline-comment)"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="mark_comments" class="doc_header"><code>mark_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mark_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Mark end of comments -- and begin of comments /<em> </em>/ if they are in a new line with token [C]</p>
 
@@ -769,7 +841,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Split-query-into-comment-and-non-comment-components">Split query into comment and non-comment components<a class="anchor-link" href="#Split-query-into-comment-and-non-comment-components"> </a></h3>
+<h3 id="Get-positions-of-specific-keywords-in-query-ignoring-comments">Get positions of specific keywords in query ignoring comments<a class="anchor-link" href="#Get-positions-of-specific-keywords-in-query-ignoring-comments"> </a></h3>
 </div>
 </div>
 </div>
@@ -784,7 +856,51 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_comment_non_comment" class="doc_header"><code>split_comment_non_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment_non_comment</code>(<strong><code>s</code></strong>)</p>
+<h4 id="identify_in_sql" class="doc_header"><code>identify_in_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L73" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_in_sql</code>(<strong><code>kws</code></strong>, <strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Find positions of keywords <code>kws</code> (str or list) in string <code>s</code> ignoring comment and text in quotess</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Splitting-functions">Splitting functions<a class="anchor-link" href="#Splitting-functions"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Split-query-into-a-comment-and-a-non-comment-region">Split query into a comment and a non-comment region<a class="anchor-link" href="#Split-query-into-a-comment-and-a-non-comment-region"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="split_comment_non_comment" class="doc_header"><code>split_comment_non_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L167" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment_non_comment</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Split query into comment (True) and non-comment (False) components.</p>
 <p>Return a dict with keys "string" and "comment" in (True, False)</p>
@@ -854,7 +970,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Split-query-into-comment-vs-non-comment-and-select-vs-non-select">Split query into comment vs non-comment and select vs non-select<a class="anchor-link" href="#Split-query-into-comment-vs-non-comment-and-select-vs-non-select"> </a></h3>
+<h4 id="Split-query-into-the-combinations-comment,-non-comment,-select-and-non-select">Split query into the combinations comment, non-comment, select and non-select<a class="anchor-link" href="#Split-query-into-the-combinations-comment,-non-comment,-select-and-non-select"> </a></h4>
 </div>
 </div>
 </div>
@@ -869,10 +985,10 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_comment_select" class="doc_header"><code>split_comment_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L129" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment_select</code>(<strong><code>s</code></strong>)</p>
+<h4 id="split_comment_select" class="doc_header"><code>split_comment_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L229" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment_select</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Split query into comment (True) and non-comment (False) components.</p>
-<p>Return a dict with keys "string" and "comment" in (True, False)</p>
+<p>Split query into comment, non-comment, select and non-select components.</p>
+<p>Return a dict with keys "string", "comment" in (True, False) and "select" in (True, False)</p>
 
 </div>
 
@@ -941,7 +1057,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Get-positions-of-keywords-in-query-ignoring-comments">Get positions of keywords in query ignoring comments<a class="anchor-link" href="#Get-positions-of-keywords-in-query-ignoring-comments"> </a></h3>
+<h4 id="Split-individual-queries-based-on-semicolon">Split individual queries based on semicolon<a class="anchor-link" href="#Split-individual-queries-based-on-semicolon"> </a></h4>
 </div>
 </div>
 </div>
@@ -956,48 +1072,9 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_in_sql" class="doc_header"><code>identify_in_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L207" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_in_sql</code>(<strong><code>kws</code></strong>, <strong><code>s</code></strong>)</p>
+<h4 id="split_by_semicolon" class="doc_header"><code>split_by_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L307" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_by_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Find positions of keywords <code>kws</code> (str or list) in string <code>s</code> ignoring comment and text in quotess</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Function to identify newline characters \n but not in the comments</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_newline_chars" class="doc_header"><code>identify_newline_chars</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L301" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_newline_chars</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Identify positions of newline characters in <code>s</code> ignoring comments and text in quotes</p>
+<p>Split string <code>s</code> by semicolon but not between parenthesis or in comments</p>
 
 </div>
 
@@ -1024,10 +1101,27 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">identify_newline_chars</span><span class="p">(</span>
-        <span class="s2">&quot;select asdf,</span><span class="se">\n</span><span class="s2">qwer, /* some comment </span><span class="se">\n</span><span class="s2"> with multiple lines </span><span class="se">\n</span><span class="s2">*/[C], some_field from</span><span class="se">\n</span><span class="s2"> table&quot;</span>
+    <span class="n">split_by_semicolon</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">use database my_database; -- ; ; ;;</span>
+<span class="sd">use schema my_schema; /* -- ; */</span>
+
+<span class="sd">create or replace table my_table as</span>
+<span class="sd">select asdf, qwer, /* ;; -- ; */</span>
+<span class="sd">replace(&#39;&quot;&quot;;&#39;, &quot;&#39;;&#39;&quot;, asdf2) as asdf5</span>
+<span class="sd">qwer2 from -- ;</span>
+<span class="sd">table2;</span>
+
+<span class="sd">use schema_another_schema;</span>
+<span class="sd">&quot;&quot;&quot;</span>
     <span class="p">),</span>
-    <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">use database my_database&quot;</span><span class="p">,</span>
+        <span class="s2">&quot; -- ; ; ;;</span><span class="se">\n</span><span class="s2">use schema my_schema&quot;</span><span class="p">,</span>
+        <span class="sd">&quot;&quot;&quot; /* -- ; */\n\ncreate or replace table my_table as\nselect asdf, qwer, /* ;; -- ; */\nreplace(\&#39;&quot;&quot;;\&#39;, &quot;\&#39;;\&#39;&quot;, asdf2) as asdf5\nqwer2 from -- ;\ntable2&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">use schema_another_schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -1041,7 +1135,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[12, 80]
+<pre>[&#39;\nuse database my_database&#39;, &#39; -- ; ; ;;\nuse schema my_schema&#39;, &#39; /* -- ; */\n\ncreate or replace table my_table as\nselect asdf, qwer, /* ;; -- ; */\nreplace(\&#39;&#34;&#34;;\&#39;, &#34;\&#39;;\&#39;&#34;, asdf2) as asdf5\nqwer2 from -- ;\ntable2&#39;, &#39;\n\nuse schema_another_schema&#39;, &#39;\n&#39;]
 </pre>
 </div>
 </div>
@@ -1052,13 +1146,6 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Function to replace newline characters \n by whitespace but not in the comments</p>
-
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1070,7 +1157,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="replace_newline_chars" class="doc_header"><code>replace_newline_chars</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L306" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_newline_chars</code>(<strong><code>s</code></strong>)</p>
+<h4 id="replace_newline_chars" class="doc_header"><code>replace_newline_chars</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L325" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_newline_chars</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Replace newline characters in <code>s</code> by whitespace but not in the comments</p>
 
@@ -1131,428 +1218,6 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We need a function to identify the text between SELECT and FROM. Unfortunately, this cannot be accomplished via regex because the keywords SELECT and FROM may also be written within comments</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_select_from" class="doc_header"><code>identify_select_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L313" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_select_from</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Identify positions of SELECT and FROM in query <code>s</code> ignoring comments and text in quotes</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">identify_select_from</span><span class="p">(</span>
-        <span class="s2">&quot;create or Replace Table as SeLect asdf, qwer /* some comment SELECT */[C]fRom table1&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">73</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[27, 73]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">identify_select_from</span><span class="p">(</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">create table my_table </span>
-<span class="sd">as select asdf, </span>
-<span class="sd">qwer -- some comment[C][CS]/* some comment line with SELECT */[C]from table1 where asdf = 1</span>
-<span class="sd">&quot;&quot;&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">106</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[27, 106]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">identify_select_from</span><span class="p">(</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">create table my_table </span>
-<span class="sd">as select asdf</span>
-<span class="sd">from (select qwer -- some comment[C]</span>
-<span class="sd">from table1)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">76</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[27, 39, 45, 76]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Having identified the positions we now can also split the query by SELECT and FROM</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_by_select_from" class="doc_header"><code>split_by_select_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L318" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_by_select_from</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Split query <code>s</code> by statements SELECT and FROM</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">split_by_select_from</span><span class="p">(</span>
-        <span class="s2">&quot;create or Replace Table as SeLect asdf, qwer /* some comment SELECT */[C]fRom table1&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;create or Replace Table as &quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SeLect asdf, qwer /* some comment SELECT */[C]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fRom table1&quot;</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;create or Replace Table as &#39;, &#39;SeLect asdf, qwer /* some comment SELECT */[C]&#39;, &#39;fRom table1&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">split_by_select_from</span><span class="p">(</span>
-        <span class="s2">&quot;SeLect asdf, qwer /* some comment SELECT */[C]fRom table1&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;SeLect asdf, qwer /* some comment SELECT */[C]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fRom table1&quot;</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;SeLect asdf, qwer /* some comment SELECT */[C]&#39;, &#39;fRom table1&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">split_by_select_from</span><span class="p">(</span>
-        <span class="s2">&quot;SeLect asdf, substr(&#39;from&#39;, &#39;&#39;, qwer) as qwer5 /* some comment SELECT */[C]fRom table1&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;SeLect asdf, substr(&#39;from&#39;, &#39;&#39;, qwer) as qwer5 /* some comment SELECT */[C]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fRom table1&quot;</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#34;SeLect asdf, substr(&#39;from&#39;, &#39;&#39;, qwer) as qwer5 /* some comment SELECT */[C]&#34;, &#39;fRom table1&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">split_by_select_from</span><span class="p">(</span>
-        <span class="s2">&quot;create or Replace Table as SeLect asdf, qwer /* some comment SELECT */[C]fRom (select asdf from table1)&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;create or Replace Table as &quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SeLect asdf, qwer /* some comment SELECT */[C]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fRom (&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;select asdf &quot;</span><span class="p">,</span>
-        <span class="s2">&quot;from table1)&quot;</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;create or Replace Table as &#39;, &#39;SeLect asdf, qwer /* some comment SELECT */[C]&#39;, &#39;fRom (&#39;, &#39;select asdf &#39;, &#39;from table1)&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L331" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Add whitespaces between symbols in line <code>s</code></p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">add_whitespaces_between_symbols</span><span class="p">(</span>
-        <span class="s2">&quot;WHERE asdf= 1 and qwer=&gt;1 or blabla =&#39;asdf&#39;&quot;</span>
-    <span class="p">),</span> <span class="s2">&quot;WHERE asdf = 1 and qwer =&gt; 1 or blabla = &#39;asdf&#39;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>WHERE asdf = 1 and qwer =&gt; 1 or blabla = &#39;asdf&#39;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Function to identify end of fields in SELECT. Usually this is a comma but more generally specially when using functions this strategy does not work anymore. For the sake of explanation, consider for instance</p>
 <p><code>substr(asdf, 1, 2)</code></p>
 <p>In that case, we would like to not add a newline for each comma.</p>
@@ -1571,7 +1236,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_end_of_fields" class="doc_header"><code>identify_end_of_fields</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L339" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_end_of_fields</code>(<strong><code>s</code></strong>)</p>
+<h4 id="identify_end_of_fields" class="doc_header"><code>identify_end_of_fields</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L332" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_end_of_fields</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Identify end of fields in query <code>s</code></p>
 
@@ -1766,7 +1431,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_newline_indentation" class="doc_header"><code>add_newline_indentation</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L358" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_newline_indentation</code>(<strong><code>s</code></strong>, <strong><code>indentation</code></strong>)</p>
+<h4 id="add_newline_indentation" class="doc_header"><code>add_newline_indentation</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L351" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_newline_indentation</code>(<strong><code>s</code></strong>, <strong><code>indentation</code></strong>)</p>
 </blockquote>
 <p>Add newline and indentation for end of fields in query <code>s</code></p>
 
@@ -1924,7 +1589,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Helper-functions-to-handle-subqueries">Helper functions to handle subqueries<a class="anchor-link" href="#Helper-functions-to-handle-subqueries"> </a></h3>
+<h3 id="Handling-subqueries">Handling subqueries<a class="anchor-link" href="#Handling-subqueries"> </a></h3>
 </div>
 </div>
 </div>
@@ -1939,7 +1604,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L376" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
+<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L369" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Extract outer subquery in query <code>s</code></p>
 
@@ -1992,7 +1657,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L402" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
+<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L395" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
 </blockquote>
 <p>Format subquery in line <code>s</code> based on indentation on <code>previous_s</code></p>
 
@@ -2015,8 +1680,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Function to check whether string contains a query</p>
-
+<h3 id="Query-identification">Query identification<a class="anchor-link" href="#Query-identification"> </a></h3>
 </div>
 </div>
 </div>
@@ -2031,9 +1695,9 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="check_sql_query" class="doc_header"><code>check_sql_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L428" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_sql_query</code>(<strong><code>s</code></strong>)</p>
+<h4 id="check_sql_query" class="doc_header"><code>check_sql_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L421" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_sql_query</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Checks whether <code>s</code> is a SQL query</p>
+<p>Checks whether <code>s</code> is a SQL query based on match of CREATE TABLE / VIEW or SELECT</p>
 
 </div>
 
@@ -2196,8 +1860,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Marker to not format queries specified by the user</p>
-
+<h3 id="Marker-to-not-format-queries-specified-by-the-user">Marker to not format queries specified by the user<a class="anchor-link" href="#Marker-to-not-format-queries-specified-by-the-user"> </a></h3>
 </div>
 </div>
 </div>
@@ -2212,7 +1875,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="check_skip_marker" class="doc_header"><code>check_skip_marker</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L434" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_skip_marker</code>(<strong><code>s</code></strong>)</p>
+<h4 id="check_skip_marker" class="doc_header"><code>check_skip_marker</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L427" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_skip_marker</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Checks whether user set marker /<em>skip-formatter</em>/ to not format query</p>
 
@@ -2280,7 +1943,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Function to split by queries</p>
+<h4 id="Check-lines-were-CREATE-..-TABLE-/-VIEW-appear">Check lines were CREATE .. TABLE / VIEW appear<a class="anchor-link" href="#Check-lines-were-CREATE-..-TABLE-/-VIEW-appear"> </a></h4><p>This will be used for query split validation. After splitting by individual queries, if the statement CREATE .. TABLE / VIEW appears twice then the user most probably has forgotten a semicolon</p>
 
 </div>
 </div>
@@ -2296,177 +1959,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_semicolon" class="doc_header"><code>identify_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L439" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_semicolon</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">identify_semicolon</span><span class="p">(</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">use database my_database; -- ; ; ;;</span>
-<span class="sd">use schema my_schema; /* -- ; */</span>
-
-<span class="sd">create or replace table my_table as</span>
-<span class="sd">select asdf, qwer, /* ;; -- ; */</span>
-<span class="sd">replace(&#39;&quot;&quot;;&#39;, &quot;&#39;;&#39;&quot;, asdf2) as asdf5</span>
-<span class="sd">qwer2 from -- ;</span>
-<span class="sd">table2;</span>
-
-<span class="sd">use schema_another_schema;</span>
-<span class="sd">&quot;&quot;&quot;</span>   
-    <span class="p">),</span>
-    <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">228</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[25, 57, 200, 228]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_by_semicolon" class="doc_header"><code>split_by_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L443" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_by_semicolon</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Split string <code>s</code> by semicolon but not between parenthesis or in comments</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">split_by_semicolon</span><span class="p">(</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">use database my_database; -- ; ; ;;</span>
-<span class="sd">use schema my_schema; /* -- ; */</span>
-
-<span class="sd">create or replace table my_table as</span>
-<span class="sd">select asdf, qwer, /* ;; -- ; */</span>
-<span class="sd">replace(&#39;&quot;&quot;;&#39;, &quot;&#39;;&#39;&quot;, asdf2) as asdf5</span>
-<span class="sd">qwer2 from -- ;</span>
-<span class="sd">table2;</span>
-
-<span class="sd">use schema_another_schema;</span>
-<span class="sd">&quot;&quot;&quot;</span>
-    <span class="p">),</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">use database my_database&quot;</span><span class="p">,</span>
-        <span class="s2">&quot; -- ; ; ;;</span><span class="se">\n</span><span class="s2">use schema my_schema&quot;</span><span class="p">,</span>
-        <span class="sd">&quot;&quot;&quot; /* -- ; */\n\ncreate or replace table my_table as\nselect asdf, qwer, /* ;; -- ; */\nreplace(\&#39;&quot;&quot;;\&#39;, &quot;\&#39;;\&#39;&quot;, asdf2) as asdf5\nqwer2 from -- ;\ntable2&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">use schema_another_schema&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;\nuse database my_database&#39;, &#39; -- ; ; ;;\nuse schema my_schema&#39;, &#39; /* -- ; */\n\ncreate or replace table my_table as\nselect asdf, qwer, /* ;; -- ; */\nreplace(\&#39;&#34;&#34;;\&#39;, &#34;\&#39;;\&#39;&#34;, asdf2) as asdf5\nqwer2 from -- ;\ntable2&#39;, &#39;\n\nuse schema_another_schema&#39;, &#39;\n&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Function to identify CREATE keyword. This will be helpful to allow for basic validation. If the keyword CREATE appears twice in the query, then something went wrong. Most probably, semicolon was forgotten</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_create_table_view" class="doc_header"><code>identify_create_table_view</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L461" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_create_table_view</code>(<strong><code>s</code></strong>)</p>
+<h4 id="identify_create_table_view" class="doc_header"><code>identify_create_table_view</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L432" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_create_table_view</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Identify positions of CREATE .. TABLE / VIEW statements</p>
 
@@ -2541,7 +2034,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="count_lines" class="doc_header"><code>count_lines</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L474" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>count_lines</code>(<strong><code>s</code></strong>)</p>
+<h4 id="count_lines" class="doc_header"><code>count_lines</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L445" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>count_lines</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Count the number of lines in <code>s</code></p>
 
@@ -2616,7 +2109,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="find_line_number" class="doc_header"><code>find_line_number</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L479" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_line_number</code>(<strong><code>s</code></strong>, <strong><code>positions</code></strong>)</p>
+<h4 id="find_line_number" class="doc_header"><code>find_line_number</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L450" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_line_number</code>(<strong><code>s</code></strong>, <strong><code>positions</code></strong>)</p>
 </blockquote>
 <p>Find line number in <code>s</code> out of <code>positions</code></p>
 
