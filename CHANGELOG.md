@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.2.1
+## 0.3.1
 
 ### New features:
 * [FEA] Add CLI to handle git release and changelog creation programmatically via commit messages (#87)
