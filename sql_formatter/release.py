@@ -45,7 +45,7 @@ def changelog_report(report_title, from_tag=None, to="HEAD"):
     report_bugfixes = "### Bugfixes:\n{}".format("\n".join(bugfixes)) if len(bugfixes) > 0 else ""
     report_docs = "### Documentation:\n{}".format("\n".join(docs)) if len(docs) > 0 else ""
     report_features = "### New features:\n{}".format("\n".join(new_features)) if len(new_features) > 0 else ""
-    report_maintenance = "### Refactoring / Maintenance:\n{}".format("\n".join(new_features)) if len(maintenance) > 0 else ""
+    report_maintenance = "### Refactoring / Maintenance:\n{}".format("\n".join(maintenance)) if len(maintenance) > 0 else ""
     report_list = [report_title, report_features, report_bugfixes, report_docs, report_maintenance]
     report_list = [rep for rep in report_list if rep != ""]
     report = "\n\n".join(report_list)
