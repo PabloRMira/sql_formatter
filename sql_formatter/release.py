@@ -41,10 +41,12 @@ def changelog_report(report_title, from_tag=None, to="HEAD"):
     bugfixes = [f"* {msg}" for msg in commit_msgs if re.search("\[FIX\]", msg)]
     docs = [f"* {msg}" for msg in commit_msgs if re.search("\[DOC\]", msg)]
     new_features = [f"* {msg}" for msg in commit_msgs if re.search("\[FEA\]", msg)]
+    maintenance = [f"* {msg}" for msg in commit_msgs if re.search("\[MNT\]", msg)]
     report_bugfixes = "### Bugfixes:\n{}".format("\n".join(bugfixes)) if len(bugfixes) > 0 else ""
     report_docs = "### Documentation:\n{}".format("\n".join(docs)) if len(docs) > 0 else ""
     report_features = "### New features:\n{}".format("\n".join(new_features)) if len(new_features) > 0 else ""
-    report_list = [report_title, report_features, report_bugfixes, report_docs]
+    report_maintenance = "### Refactoring / Maintenance:\n{}".format("\n".join(new_features)) if len(maintenance) > 0 else ""
+    report_list = [report_title, report_features, report_bugfixes, report_docs, report_maintenance]
     report_list = [rep for rep in report_list if rep != ""]
     report = "\n\n".join(report_list)
     return report
@@ -89,7 +91,7 @@ def make_changelog():
     "Make changelog out of releases / git tags"
     project_path = str(Path(__file__).parent.parent)
     tags = get_tags()
-    changelog_title = "# Changelog"
+    changelog_title = "# Release notes"
     reports = []
     for from_tag, to in zip(tags[:-1], tags[1:]):
         reports.append(changelog_report(report_title=f"## {to}", from_tag=from_tag, to=to))
