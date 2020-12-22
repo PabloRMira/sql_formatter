@@ -246,7 +246,7 @@ def format_select(s):
         s = re.sub(r"([\w\d]+)(,+)(\s*)(\/\*.*\*\/)$", r"\1 \4", s, flags=re.I)
     s = add_whitespaces_between_symbols(s)  # add whitespaces between symbols
     # check whether there is a SELECT DISTINCT
-    indentation = 16 if re.search("^select distinct", s) else 7
+    indentation = 16 if re.search("^select distinct", s, flags=re.I) else 7
     s = add_newline_indentation(s, indentation=indentation)  # add newline after each comma (no comments) and indentation
     s = re.sub(r"\[C\]\[CS\]", "[C]", s)  # replace [C][CS] by [C]
     s = re.sub(r"\[C\]", "\n" + " " * indentation, s)  # replace [C] by newline
