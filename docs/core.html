@@ -124,7 +124,7 @@ nb_path: "nbs/00_core.ipynb"
 <span class="s2">   and b.qwer = 2</span>
 <span class="s2">   and a.asdf &lt;= 1 --comment that</span>
 <span class="s2">    or b.qwer &gt;= 5</span>
-<span class="s2">GROUP BY a.asdf;&quot;&quot;&quot;</span>
+<span class="s2">GROUP BY a.asdf&quot;&quot;&quot;</span>
 </pre></div>
 
     </div>
@@ -150,7 +150,7 @@ nb_path: "nbs/00_core.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Remark:For OVER we only capitalize without adding a newline</p>
+<blockquote><p>Remark:For OVER and PARTITION BY we only capitalize without adding a newline</p>
 </blockquote>
 
 </div>
@@ -158,9 +158,9 @@ nb_path: "nbs/00_core.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We need to remove newlines and multiple spaces because the may be arbitrary.</p>
-<p>Before removing newlines we also need to mark the end of coments because we would not know where they end</p>
-<p>We also mark the begin of comments /<em> </em>/ if they are in a newline</p>
+<p>We need to remove newlines and multiple spaces because they may be arbitrary.</p>
+<p>Before removing newlines we also need to mark the end of coments with the special token [C] because we would not know where they end</p>
+<p>We also mark the begin of comments /<em> </em>/ with the special token [CS] (comment start) if they start in a newline</p>
 
 </div>
 </div>
@@ -446,7 +446,7 @@ nb_path: "nbs/00_core.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next we would like to have each main statement (SELECT, FROM , ...) in a separate line and in uppercase, ignoring text in comments. Also for the special case with PARTITION BY in the SELECT statement we will not add a newline because the main statement in that case is SELECT and not PARTITION BY</p>
+<h3 id="Preformatting-queries">Preformatting queries<a class="anchor-link" href="#Preformatting-queries"> </a></h3><p>We would like to have each main statement (SELECT, FROM , ...) in a separate line and in uppercase, ignoring text in comments. This way we can then later format each query statement separately. Also for the special case with PARTITION BY in the SELECT statement we will not add a newline because the main statement in that case is SELECT and not PARTITION BY</p>
 
 </div>
 </div>
@@ -1070,8 +1070,7 @@ GROUP BY a.asdf
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We would like to have every non capital statement lower cased but let comments and quoted text untouched</p>
-
+<h3 id="Lowercasing-query">Lowercasing query<a class="anchor-link" href="#Lowercasing-query"> </a></h3>
 </div>
 </div>
 </div>
@@ -1336,7 +1335,7 @@ from table1 -- Some comment
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="PARTITION-BY">PARTITION BY<a class="anchor-link" href="#PARTITION-BY"> </a></h4><p>Within SELECT</p>
+<h4 id="PARTITION-BY">PARTITION BY<a class="anchor-link" href="#PARTITION-BY"> </a></h4><p>Helper function for format PARTITION BY Within SELECT</p>
 
 </div>
 </div>
@@ -2927,7 +2926,7 @@ from   table1
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Write-a-;-at-the-end-of-query">Write a ; at the end of query<a class="anchor-link" href="#Write-a-;-at-the-end-of-query"> </a></h3>
+<h3 id="Format-multiline-comments">Format multiline comments<a class="anchor-link" href="#Format-multiline-comments"> </a></h3>
 </div>
 </div>
 </div>
@@ -2942,173 +2941,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_ending_semicolon" class="doc_header"><code>add_ending_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L347" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_ending_semicolon</code>(<strong><code>s</code></strong>)</p>
-</blockquote>
-<p>Add ending semicolon for SQL query <code>s</code></p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Basic usage</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">add_ending_semicolon</span><span class="p">(</span><span class="s2">&quot;select asdf from table1&quot;</span><span class="p">),</span> 
-    <span class="s2">&quot;select asdf from table1;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>select asdf from table1;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Also works with multiple lines</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">add_ending_semicolon</span><span class="p">(</span><span class="s2">&quot;select asdf</span><span class="se">\n</span><span class="s2">from table1</span><span class="se">\n</span><span class="s2">where asdf = 1&quot;</span><span class="p">),</span> 
-    <span class="s2">&quot;select asdf</span><span class="se">\n</span><span class="s2">from table1</span><span class="se">\n</span><span class="s2">where asdf = 1;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>select asdf
-from table1
-where asdf = 1;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>It does not add another semicolon if there is already one there</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">add_ending_semicolon</span><span class="p">(</span><span class="s2">&quot;select asdf</span><span class="se">\n</span><span class="s2">from table1</span><span class="se">\n</span><span class="s2">where asdf = 1;&quot;</span><span class="p">),</span> 
-    <span class="s2">&quot;select asdf</span><span class="se">\n</span><span class="s2">from table1</span><span class="se">\n</span><span class="s2">where asdf = 1;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>select asdf
-from table1
-where asdf = 1;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Last but not least we need to format lines with multiline comments</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_multiline_comments" class="doc_header"><code>format_multiline_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L355" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_multiline_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_multiline_comments" class="doc_header"><code>format_multiline_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L347" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_multiline_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format multiline comments by replacing multiline comment [CI] by newline and adding indentation</p>
 
@@ -3131,7 +2964,7 @@ where asdf = 1;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Putting-everything-together">Putting everything together<a class="anchor-link" href="#Putting-everything-together"> </a></h2><p>to format a simple query without subqueries or <code>PARTITION BY</code></p>
+<h2 id="Putting-everything-together">Putting everything together<a class="anchor-link" href="#Putting-everything-together"> </a></h2><p>to format a simple query without subqueries</p>
 
 </div>
 </div>
@@ -3147,10 +2980,9 @@ where asdf = 1;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L370" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L362" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Format a simple SQL query without subqueries <code>s</code>.
-If <code>add_semicolon</code> is True, then add a semicolon at the end</p>
+<p>Format a simple SQL query without subqueries <code>s</code></p>
 
 </div>
 
@@ -3215,7 +3047,7 @@ WHERE  a.asdf = 1 -- comment this
    and b.qwer = 2
    and a.asdf &lt;= 1 --comment that
     or b.qwer &gt;= 5
-GROUP BY a.asdf;
+GROUP BY a.asdf
 </pre>
 </div>
 </div>
@@ -3248,7 +3080,7 @@ GROUP BY a.asdf;
 <span class="sd">SELECT car_id,</span>
 <span class="sd">       avg(price) as avg_price</span>
 <span class="sd">FROM   first_view</span>
-<span class="sd">GROUP BY car_id;</span>
+<span class="sd">GROUP BY car_id</span>
 <span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -3267,7 +3099,7 @@ GROUP BY a.asdf;
 SELECT car_id,
        avg(price) as avg_price
 FROM   first_view
-GROUP BY car_id;
+GROUP BY car_id
 </pre>
 </div>
 </div>
@@ -3344,7 +3176,7 @@ GROUP BY car_id;
 <span class="s2">               FROM   table2</span>
 <span class="s2">               WHERE  qwer2 = 1) as b</span>
 <span class="s2">        ON a.asdf = b.asdf</span>
-<span class="s2">WHERE  qwer1 &gt;= 0;</span>
+<span class="s2">WHERE  qwer1 &gt;= 0</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </pre></div>
 
@@ -3372,9 +3204,9 @@ GROUP BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L386" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>add_semicolon</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L375" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
-<p>Format SQL query with subqueries. If <code>add_semicolon</code> is True then add a semicolon at the end</p>
+<p>Format SQL query with subqueries <code>s</code></p>
 
 </div>
 
@@ -3428,7 +3260,7 @@ FROM   (SELECT asdf,
                FROM   table2
                WHERE  qwer2 = 1) as b
         ON a.asdf = b.asdf
-WHERE  qwer1 &gt;= 0;
+WHERE  qwer1 &gt;= 0
 </pre>
 </div>
 </div>
@@ -3492,7 +3324,7 @@ WHERE  a.asdf = 1 -- comment this
    and b.qwer = 2
    and a.asdf &lt;= 1 --comment that
     or b.qwer &gt;= 5
-GROUP BY a.asdf;
+GROUP BY a.asdf
 </pre>
 </div>
 </div>
@@ -3553,7 +3385,7 @@ GROUP BY a.asdf;
 <span class="s2">            INNER JOIN (SELECT asdf,</span>
 <span class="s2">                               qwer</span>
 <span class="s2">                        FROM   table3) as b</span>
-<span class="s2">                ON a.qwer = b.qwer);&quot;&quot;&quot;</span>
+<span class="s2">                ON a.qwer = b.qwer)&quot;&quot;&quot;</span>
 </pre></div>
 
     </div>
@@ -3598,7 +3430,7 @@ FROM   (SELECT a.asdf,
             INNER JOIN (SELECT asdf,
                                qwer
                         FROM   table3) as b
-                ON a.qwer = b.qwer);
+                ON a.qwer = b.qwer)
 </pre>
 </div>
 </div>
@@ -3659,7 +3491,7 @@ FROM   (SELECT a.asdf,
 <span class="s2">                        FROM   table1) as a</span>
 <span class="s2">                    RIGHT JOIN (SELECT qwer</span>
 <span class="s2">                                FROM   table2) as b</span>
-<span class="s2">                        ON a.asdf = b.asdf));&quot;&quot;&quot;</span>
+<span class="s2">                        ON a.asdf = b.asdf))&quot;&quot;&quot;</span>
 </pre></div>
 
     </div>
@@ -3701,7 +3533,7 @@ FROM   (SELECT asdf,
                         FROM   table1) as a
                     RIGHT JOIN (SELECT qwer
                                 FROM   table2) as b
-                        ON a.asdf = b.asdf));
+                        ON a.asdf = b.asdf))
 </pre>
 </div>
 </div>
@@ -3738,7 +3570,7 @@ FROM   (SELECT asdf,
 <span class="sd">       asdf,</span>
 <span class="sd">       asdf2</span>
 <span class="sd">FROM   table3</span>
-<span class="sd">WHERE  asdf2 &gt;= 2;</span>
+<span class="sd">WHERE  asdf2 &gt;= 2</span>
 <span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -3761,7 +3593,7 @@ SELECT qwer,
        asdf,
        asdf2
 FROM   table3
-WHERE  asdf2 &gt;= 2;
+WHERE  asdf2 &gt;= 2
 </pre>
 </div>
 </div>
