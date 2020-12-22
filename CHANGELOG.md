@@ -1,5 +1,11 @@
 # Release notes
 
+## 0.3.2
+
+### Bugfixes:
+* [FIX] comment marker [CI] failing sometimes (#97)
+* [FIX] SELECT DISTINCT fields not being formatted properly (#96)
+
 ## 0.3.1
 
 ### New features:
