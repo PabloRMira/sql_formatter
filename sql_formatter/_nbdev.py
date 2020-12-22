@@ -52,6 +52,7 @@ index = {"MAIN_STATEMENTS": "00_core.ipynb",
          "get_release_version": "04_release.ipynb",
          "changelog_report": "04_release.ipynb",
          "release_report": "04_release.ipynb",
+         "get_token": "04_release.ipynb",
          "make_git_release": "04_release.ipynb",
          "get_tags": "04_release.ipynb",
          "make_changelog": "04_release.ipynb"}
