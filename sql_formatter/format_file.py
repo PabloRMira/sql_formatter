@@ -23,7 +23,10 @@ def format_sql_commands(s):
     # validate balanced parenthesis
     validations_balanced = [validate_balanced_parenthesis(sp) for sp in split_s]
     val_summary_balanced = sum([val["exit_code"] for val in validations_balanced])
-    if sum([val_summary_semicolon, val_summary_balanced]) == 0:
+    # validate balanced case when ... end
+    val_case_end_balanced = [validate_case_when(sp) for sp in split_s]
+    val_summary_case = sum([val["exit_code"] for val in val_case_end_balanced])
+    if sum([val_summary_semicolon, val_summary_balanced, val_summary_case]) == 0:
         # format only SQL queries, let everything else unchanged
         formatted_split_s = [
             "\n\n\n" + format_sql(sp).strip()
@@ -56,8 +59,18 @@ def format_sql_commands(s):
                 for i, d in enumerate(validations_balanced)
                 if d["exit_code"] == 1
             ]
-            error_dict["unbalanced"] = {
+            error_dict["unbalanced_parenthesis"] = {
                 "error_code": 3,
+                "lines": file_lines
+            }
+        if val_summary_case > 0:
+            file_lines = [
+                [line + sum([sd["total_lines"] for sd in val_case_end_balanced[0:i]]) for line in d["val_lines"]]
+                for i, d in enumerate(val_case_end_balanced)
+                if d["exit_code"] == 1
+            ]
+            error_dict["unbalanced_case"] = {
+                "error_code": 4,
                 "lines": file_lines
             }
         return error_dict
@@ -86,16 +99,28 @@ def format_sql_file(f):
                 "You may have forgotten a semicolon (;) to delimit the queries"
                 )
             )
-        if "unbalanced" in formatted_file.keys():
+        if "unbalanced_parenthesis" in formatted_file.keys():
             print(
                 (
                 "[WARNING] Identified unbalanced parenthesis " +
-                f"at lines {formatted_file['unbalanced']['lines']}\n"
+                f"at lines {formatted_file['unbalanced_parenthesis']['lines']}\n"
                 "You should check your parenthesis"
+                )
+            )
+        if "unbalanced_case" in formatted_file.keys():
+            print(
+                (
+                "[WARNING] Identified unbalanced case when ... end " +
+                f"at lines {formatted_file['unbalanced_case']['lines']}\n"
+                "You should check for missing case or end keywords"
                 )
             )
         print(f"Aborting formatting for file {f}")
         exit_code = 2
+
+        print(f"Aborting formatting for file {f}")
+        exit_code = 2
+
     else:
         exit_code = 0 if sql_commands == formatted_file else 1
         # overwrite file
