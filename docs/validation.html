@@ -61,7 +61,7 @@ nb_path: "nbs/03_validation.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="validate_semicolon" class="doc_header"><code>validate_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/validation.py#L9" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validate_semicolon</code>(<strong><code>s</code></strong>)</p>
+<h4 id="validate_semicolon" class="doc_header"><code>validate_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/validation.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validate_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Validate query <code>s</code> by looking for forgotten semicolon.
 The implication could be the keyword CREATE appearing twice</p>
@@ -226,7 +226,7 @@ The implication could be the keyword CREATE appearing twice</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="validate_balanced_parenthesis" class="doc_header"><code>validate_balanced_parenthesis</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/validation.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validate_balanced_parenthesis</code>(<strong><code>s</code></strong>)</p>
+<h4 id="validate_balanced_parenthesis" class="doc_header"><code>validate_balanced_parenthesis</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/validation.py#L28" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validate_balanced_parenthesis</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Validate query <code>s</code> by looking for
 unbalanced parenthesis</p>
@@ -426,6 +426,210 @@ unbalanced parenthesis</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{&#39;exit_code&#39;: 0, &#39;total_lines&#39;: 0}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Unbalanced-case-...-end">Unbalanced <code>case</code> ... <code>end</code><a class="anchor-link" href="#Unbalanced-case-...-end"> </a></h3><p>Sometimes we may forget to write the end of a case statement</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="validate_case_when" class="doc_header"><code>validate_case_when</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/validation.py#L141" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validate_case_when</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Validate query <code>s</code> looking for unbalanced case ... end</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">validate_case_when</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">case when bla bla as asdf, -- some case when in comments</span>
+<span class="sd">qwer</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;val_lines&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;exit_code&#39;: 1, &#39;val_lines&#39;: [3], &#39;total_lines&#39;: 5}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">validate_case_when</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">case when bla bla end as asdf, -- some case when in comments</span>
+<span class="sd">qwer</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;exit_code&#39;: 0, &#39;total_lines&#39;: 5}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">validate_case_when</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">case when bla bla end as asdf, -- some case when in comments</span>
+<span class="sd">qwer,</span>
+<span class="sd">case when something else as qwer</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;val_lines&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;exit_code&#39;: 1, &#39;val_lines&#39;: [5], &#39;total_lines&#39;: 6}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">validate_case_when</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">when bla bla end as asdf, -- some case when in comments</span>
+<span class="sd">qwer</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;val_lines&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;exit_code&#39;: 1, &#39;val_lines&#39;: [3], &#39;total_lines&#39;: 5}
 </pre>
 </div>
 </div>
