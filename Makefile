@@ -21,7 +21,8 @@ docs: $(SRC)
 test:
 	nbdev_test_nbs
 
-release: make-git-release &&\
+release: prepush &&\
+	make-git-release &&\
 	pypi &&\
 	make-changelog &&\
 	nbdev_bump_version
