@@ -46,33 +46,33 @@ def preformat_statements(s):
     statements = MAIN_STATEMENTS
     s = clean_query(s)  # clean query and mark comments
     split_s = split_comment_select(s)  # split by comment and non comment
+    # compile regex before loop
+    create_re = re.compile("create", flags=re.I)
+    select_re = re.compile("select", flags=re.I)
     for statement in statements:
-        if re.match("create", statement):  # special case CREATE with AS capitalize as well
+        if create_re.match(statement):  # special case CREATE with AS capitalize as well
+            create_sub = re.compile(rf"\s*({statement} )(.*) as\b", flags=re.I)
             split_s = [{
-                    "string": re.sub(rf"\s*({statement} )(.*) as\b",
-                                     lambda pat: "\n" + pat.group(1).upper() + pat.group(2) + " AS",
-                                     sdict["string"], flags=re.I
+                "string": create_sub.sub(
+                    lambda pat: "\n" + pat.group(1).upper() + pat.group(2) + " AS",
+                    sdict["string"],
                     ) if not sdict["comment"] else sdict["string"],
                     "comment": sdict["comment"],
                     "select": sdict["select"]
                 } for sdict in split_s]
         else:  # normal main statements
+            non_select_region_re = re.compile(rf"\s*\b({statement})\b", flags=re.I)
+            select_region_statement_re = re.compile(rf"\b({statement})\b", flags=re.I)
             split_s = [{
-                    "string": re.sub(rf"\s*\b({statement})\b",
-                                     "\n" + statement.upper(),
-                                     sdict["string"], flags=re.I
-                    ) if not sdict["comment"] and not sdict["select"]  # no comment, no select region
-                    else re.sub(rf"\s*\b({statement})\b",
-                                "\n" + statement.upper(),
-                                sdict["string"], flags=re.I
-                    ) if not sdict["comment"] and sdict["select"] and re.match("select", statement) # no comment, select region and select statement
-                    else re.sub(rf"\b({statement})\b",
-                                statement.upper(),
-                                sdict["string"], flags=re.I
-                    ) if not sdict["comment"] and sdict["select"] and not re.match("select", statement) # no comment, select region and no select statement
+                "string": non_select_region_re.sub("\n" + statement.upper(), sdict["string"])
+                    if not sdict["comment"] and not sdict["select"]  # no comment, no select region
+                    else non_select_region_re.sub("\n" + statement.upper(), sdict["string"])
+                    if not sdict["comment"] and sdict["select"] and select_re.match(statement) # no comment, select region and select statement
+                    else select_region_statement_re.sub(statement.upper(), sdict["string"])
+                    if not sdict["comment"] and sdict["select"] and not select_re.match(statement) # no comment, select region and no select statement
                     else sdict["string"],
-                    "comment": sdict["comment"],
-                    "select": sdict["select"]
+                "comment": sdict["comment"],
+                "select": sdict["select"]
                 } for sdict in split_s]
     s = "".join([sdict["string"] for sdict in split_s])
     s = remove_whitespaces_newline(s)  # remove whitespaces before and after newline
@@ -251,16 +251,19 @@ def format_select(s):
     s = re.sub(r"\[C\]\[CS\]", "[C]", s)  # replace [C][CS] by [C]
     s = re.sub(r"\[C\]", "\n" + " " * indentation, s)  # replace [C] by newline
     s = re.sub(r"\[CS\]", "\n" + " " * indentation, s)  # replace [CS] by newline
-    s = re.sub(r"(then.*?) ((?:when|else).*?)", r"\1\n\2", s)  # add newline before when or else
+    s = re.sub(r"(then.*?) ((?:when|else).*?)", r"\1\n\2", s, flags=re.I)  # add newline before when or else
     split_s = s.split("\n")
     split_s_out = []
     case_extra_indentation = 0
+    # compile regex before loop
+    case_when_re = re.compile("case when", flags=re.I)
+    when_else_re = re.compile("^(?:when|else)", flags=re.I)
     for line in split_s:
         strip_line = line.strip()
-        case_when_search = re.search("case when", strip_line)
-        if bool(case_when_search):
+        case_when_search = case_when_re.search(strip_line)
+        if case_when_search:
             case_extra_indentation = case_when_search.start()
-        if re.match("^(?:when|else)", strip_line):
+        if when_else_re.match(strip_line):
             split_s_out.append(" " * (12 + case_extra_indentation) + strip_line)
         else:
             split_s_out.append(line)
@@ -269,10 +272,10 @@ def format_select(s):
     # format partition by
     begin_s = s[0:indentation]
     split_s = s[indentation:].split("\n" + (" " * indentation))
+    partition_by_re = re.compile("partition by", flags=re.I)
     split_s = [
         format_partition_by(line, base_indentation=indentation)
-        if re.search("partition by", line, flags=re.I)
-        else line
+        if partition_by_re.search(line) else line
         for line in split_s
     ]
     s = begin_s + ("\n" + (" " * indentation)).join(split_s)
@@ -392,5 +395,5 @@ def format_sql(s):
         # get first outer subquery positions
         subquery_pos = extract_outer_subquery(s)
     # remove whitespace between word and parenthesis
-    s = re.sub(r"\s\)", ")", s)
+    s = re.sub(r"\s*\)", ")", s)
     return s

@@ -11,17 +11,13 @@ def validate_semicolon(s):
     """Validate query `s` by looking for forgotten semicolon.
     The implication could be the keyword CREATE appearing twice"""
     positions = identify_create_table_view(s)
+    validation = {
+        "exit_code": 0,
+        "total_lines": count_lines(s)
+    }
     if len(positions) > 1:
-        validation = {
-            "exit_code": 1,
-            "val_lines": positions,
-            "total_lines": count_lines(s)
-        }
-    else:
-        validation = {
-            "exit_code": 0,
-            "total_lines": count_lines(s)
-        }
+        validation["exit_code"] = 1
+        validation["val_lines"] = positions
     return validation
 
 # Cell
@@ -159,6 +155,10 @@ def validate_case_when(s):
         # if end is missing, then end = -1 < case
         if case > end:
             val_positions.append((case, end))
+    validation = {
+        "exit_code": 0,
+        "total_lines": count_lines(s)
+    }
     if len(val_positions) > 0:
         # get line numbers
         val_lines = [
@@ -166,14 +166,6 @@ def validate_case_when(s):
             else find_line_number(s, [end])[0]
             for start, end in val_positions
         ]
-        validation = {
-            "exit_code": 1,
-            "val_lines": val_lines,
-            "total_lines": count_lines(s)
-        }
-    else:
-        validation = {
-            "exit_code": 0,
-            "total_lines": count_lines(s)
-        }
+        validation["exit_code"] = 1
+        validation["val_lines"] = val_lines
     return validation
