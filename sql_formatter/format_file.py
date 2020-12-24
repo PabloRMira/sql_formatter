@@ -27,17 +27,29 @@ def format_sql_commands(s):
     val_case_end_balanced = [validate_case_when(sp) for sp in split_s]
     val_summary_case = sum([val["exit_code"] for val in val_case_end_balanced])
     if sum([val_summary_semicolon, val_summary_balanced, val_summary_case]) == 0:
-        # format only SQL queries, let everything else unchanged
-        formatted_split_s = [
-            "\n\n\n" + format_sql(sp).strip()
-            if check_sql_query(sp) and not check_skip_marker(sp)
-            else sp
-            for sp in split_s
-        ]
+        split_comment_after_semicolon = re.compile("((?:\n|create|select))")
+        check_comment_after_semicolon = re.compile(r"[\r\t\f\v ]*(?:\/\*|--)")
+        split_s_out = []  # initialize container
+        for sp in split_s:  # split by semicolon
+            # take care of comment after semicolon
+            # split by first newline and format only the second item
+            if check_comment_after_semicolon.match(sp):
+                split_s2 = split_comment_after_semicolon.split(sp, maxsplit=1)
+            else:
+                split_s2 = [sp]
+            formatted_split_s2 = [
+                "\n\n\n" + format_sql(sp).strip()
+                if check_sql_query(sp) and not check_skip_marker(sp)
+                else sp
+                for sp in split_s2
+            ]
+            split_s_out.append("".join(formatted_split_s2))
         # join by semicolon
-        formatted_s = ";".join(formatted_split_s)
+        formatted_s = ";".join(split_s_out)
         # remove starting and ending newlines
         formatted_s = formatted_s.strip()
+        # remove more than 3 newlines
+        formatted_s = re.sub(r"\n{4,}", "\n\n\n", formatted_s)
         # add newline at the end of file
         formatted_s = formatted_s + "\n"
         return formatted_s
