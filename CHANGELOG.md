@@ -1,5 +1,17 @@
 # Release notes
 
+## 0.4.0
+
+### New features:
+* [FEA] Add validator for case when ... end (#102)
+
+### Bugfixes:
+* [FIX] case when wrongly formatted if comment after condition (#106)
+* [FIX] Formatting of comment after semicolon (#104)
+
+### Refactoring / Maintenance:
+* [MNT] Refactor code basis (#105)
+
 ## 0.3.2
 
 ### Bugfixes:
