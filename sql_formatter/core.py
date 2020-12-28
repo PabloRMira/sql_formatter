@@ -45,25 +45,27 @@ def preformat_statements(s):
     uppercase them but not if they are inside a comment"""
     statements = MAIN_STATEMENTS
     s = clean_query(s)  # clean query and mark comments
-    split_s = split_comment_select(s)  # split by comment and non comment
+    split_s = split_query(s)  # split by comment and non comment
+    split_s2 = [{k:v for k, v in d.items() if k != "quote"} for d in split_s]  # remove key "quote" because not needed
+    split_s3 = compress_dicts(split_s2, ["comment", "select"])
     # compile regex before loop
     create_re = re.compile("create", flags=re.I)
     select_re = re.compile("select", flags=re.I)
     for statement in statements:
         if create_re.match(statement):  # special case CREATE with AS capitalize as well
             create_sub = re.compile(rf"\s*({statement} )(.*) as\b", flags=re.I)
-            split_s = [{
+            split_s3 = [{
                 "string": create_sub.sub(
                     lambda pat: "\n" + pat.group(1).upper() + pat.group(2) + " AS",
                     sdict["string"],
                     ) if not sdict["comment"] else sdict["string"],
                     "comment": sdict["comment"],
                     "select": sdict["select"]
-                } for sdict in split_s]
+                } for sdict in split_s3]
         else:  # normal main statements
             non_select_region_re = re.compile(rf"\s*\b({statement})\b", flags=re.I)
             select_region_statement_re = re.compile(rf"\b({statement})\b", flags=re.I)
-            split_s = [{
+            split_s3 = [{
                 "string": non_select_region_re.sub("\n" + statement.upper(), sdict["string"])
                     if not sdict["comment"] and not sdict["select"]  # no comment, no select region
                     else non_select_region_re.sub("\n" + statement.upper(), sdict["string"])
@@ -73,135 +75,23 @@ def preformat_statements(s):
                     else sdict["string"],
                 "comment": sdict["comment"],
                 "select": sdict["select"]
-                } for sdict in split_s]
-    s = "".join([sdict["string"] for sdict in split_s])
+                } for sdict in split_s3]
+    s = "".join([sdict["string"] for sdict in split_s3])
+    s = s.strip()  # strip string
     s = remove_whitespaces_newline(s)  # remove whitespaces before and after newline
     return s
 
 # Cell
 def lowercase_query(s):
     "Lowercase query but let comments and text in quotes untouched"
-    k = 0  # indicator for position
-    comment_open1 = False # comment indicator for /* */ comments
-    comment_open2 = False  # comment indicator for -- comments
-    quote_open1 = False  # quote '
-    quote_open2 = False # quote "
-    split_s = []  # container for splitted string
-    for i, c in enumerate(s):
-        if (
-            s[i:i+2] == "/*" and
-            not comment_open1 and
-            not comment_open2 and
-            not quote_open1 and
-            not quote_open2
-        ):  # if there is an opening comment /*
-            split_s.append({
-                "string": s[k:i], # up to opening comment can be lowercased
-                "lowercase": True
-            })
-            k = i  # update string start
-            comment_open1 = True
-        elif (
-            s[i:i+2] == "*/" and
-            comment_open1 and
-            not comment_open2 and
-            not quote_open1 and
-            not quote_open2
-        ):  # if there is a closing comment */
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": False
-            })
-            k = i  # update string start
-            comment_open1 = False
-        elif (
-            s[i:i+2] == "--" and
-            not comment_open1 and
-            not comment_open2 and
-            not quote_open1 and
-            not quote_open2
-        ):  # if there is an opening comment --
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": True
-            })
-            k = i  # update string start
-            comment_open2 = True
-        elif (
-            c == "\n" and
-            not comment_open1 and
-            comment_open2 and
-            not quote_open1 and
-            not quote_open2
-        ):  # if the -- comment ends
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": False
-            })
-            k = i  # update string start
-            comment_open2 = False
-        elif (
-            c == "'" and
-            not comment_open1 and
-            not comment_open2 and
-            not quote_open1 and
-            not quote_open2
-        ):  # if opening quote '
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": True
-            })
-            k = i  # update string start
-            quote_open1 = True
-        elif (
-            c == "'" and
-            not comment_open1 and
-            not comment_open2 and
-            quote_open1 and
-            not quote_open2
-        ):  # if closing quote '
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": False
-            })
-            k = i  # update string start
-            quote_open1 = False
-        elif (
-            c == '"' and
-            not comment_open1 and
-            not comment_open2 and
-            not quote_open1 and
-            quote_open2
-        ):  # if opening quote "
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": True
-            })
-            k = i  # update string start
-            quote_open2 = True
-        elif (
-            c == '"' and
-            not comment_open1 and
-            not comment_open2 and
-            not quote_open1 and
-            quote_open2
-        ):  # if closing quote "
-            split_s.append({
-                "string": s[k:i],
-                "lowercase": False
-            })
-            k = i  # update string start
-            quote_open2 = False
-    split_s.append({
-        "string": s[k:],
-        "lowercase": True
-    })  # append remainder
-    # lowercase everything not in comments or in quotes
+    split_s = split_query(s)
     split_s = [
-        elem["string"].lower() if elem["lowercase"] else elem["string"]
-        for elem in split_s
+        d["string"]
+        if d["comment"] or d["quote"]
+        else d["string"].lower()
+        for d in split_s
     ]
-    s = "".join(split_s)
+    s = "".join([s for s in split_s])
     return s
 
 # Cell
@@ -232,76 +122,117 @@ def format_partition_by(s, base_indentation):
     return s
 
 # Cell
-def remove_wrong_end_comma(s):
-    "Remove mistakenly placed comma at the end of SELECT statement"
-    if re.search(r"[\w\d]+[,]+\s*$", s):
-        s = re.sub(r"([\w\d]+)(,+)(\s*)$", r"\1", s)
-    elif re.search(r"[\w\d]+[,]+\s*--[\w\d\s]*$", s, flags=re.I):
-        s = re.sub(r"([\w\d]+)(,+)(\s*)(--.*)$", r"\1 \4", s, flags=re.I)
-    elif re.search(r"[\w\d]+[,]+\s*\/\*.*\*\/$", s, flags=re.I):
-        s = re.sub(r"([\w\d]+)(,+)(\s*)(\/\*.*\*\/)$", r"\1 \4", s, flags=re.I)
-    return s
+def remove_wrong_end_comma(split_s):
+    """Remove mistakenly placed commas at the end of SELECT statement using `split_s` with keys
+    "string", "comment" and "quote"
+    """
+    reversed_split_s = split_s[::-1]  # reversed split_s
+    first_noncomment = True
+    # compile regex before loop
+    replace_comma_without_comment = re.compile(r"([\w\d]+)[,]+(\s*)$")
+    replace_comma_with_comment = re.compile(r"([\w\d]+)[,]+(\s*)$")
+    for i, d in enumerate(reversed_split_s):
+        s_aux = d["string"]
+        if not d["comment"] and not d["quote"] and d["string"] != "" and first_noncomment:
+            if i == 0:  # if end of select (no comment afterwards) remove whitespaces
+                s_aux = replace_comma_without_comment.sub(r"\1", s_aux)
+            else:  # if not end of select (because comment afterwards) do not remove whitespaces
+                s_aux = replace_comma_with_comment.sub(r"\1\2", s_aux)
+            first_noncomment = False
+        # remove whitespaces between newline symbols
+        s_aux = remove_whitespaces_newline(s_aux)
+        reversed_split_s[i]["string"] = s_aux
+    split_s_out = reversed_split_s[::-1]
+    return split_s_out
 
 # Cell
 def format_select(s):
     "Format SELECT statement line `s`"
     # remove [C] at end of SELECT
-    s = re.sub(r"\[C\]$", "", s) if re.search(r"\[C\]$", s) else s
+    s = re.sub(r"\[C\]$", "", s)
+    split_s = split_comment_quote(s)  # split by comment / non-comment, quote / non-quote
     # if comma is found at the end of select statement then remove comma
-    s = remove_wrong_end_comma(s)
-    s = add_whitespaces_between_symbols(s)  # add whitespaces between symbols
-    # check whether there is a SELECT DISTINCT
-    indentation = 16 if re.search("^select distinct", s, flags=re.I) else 7
-    # add newline after each comma (no comments) and indentation
+    split_s = remove_wrong_end_comma(split_s)
+    # check whether there is a SELECT DISTINCT in the code (not comments, not text in quotes)
+    s_code = "".join([d["string"] for d in split_s if not d["comment"] and not d["quote"]])
+    # save the correct indentation: 16 for select distinct, 7 for only select
+    indentation = 16 if re.search("^select distinct", s_code, flags=re.I) else 7
+    # get processed string so far
+    s = "".join([d["string"] for d in split_s])
+    # add newline after each comma and indentation
     s = add_newline_indentation(s, indentation=indentation)
-    s = re.sub(r"\[C\]\[CS\]", "[C]", s)  # replace [C][CS] by [C]
-    s = re.sub(r"\[C\]", "\n" + " " * indentation, s)  # replace [C] by newline
-    s = re.sub(r"\[CS\]", "\n" + " " * indentation, s)  # replace [CS] by newline
-    s = re.sub(r"(then.*?) ((?:when|else).*?)", r"\1\n\2", s, flags=re.I)  # add newline before when or else
-    split_s = s.split("\n")
-    split_s_out = []
-    case_extra_indentation = 0
-    case_ind = False  # indicator for case when ... end condition
+    # define regex
+    replace_c_cs = re.compile(r"\[C\]\[CS\]")
+    replace_c = re.compile(r"\[C\]")
+    replace_cs = re.compile(r"\[CS\]")
+    s = replace_c_cs.sub("[C]", s)  # replace [C][CS] by [C]
+    s = replace_c.sub("\n" + " " * indentation, s)  # replace [C] by newline
+    s = replace_cs.sub("\n" + " " * indentation, s)  # replace [CS] by newline
+    # split again
+    split_s = split_comment_quote(s)
     # compile regex before loop
+    when_else_newline = re.compile(r"(?<!case) ((?:when|else).*?)", flags=re.I)
     case_when_re = re.compile("case when", flags=re.I)
     when_else_re = re.compile("^(?:when|else)", flags=re.I)
     end_re = re.compile(r"\bend\b", flags=re.I)
-    for line in split_s:
-        strip_line = line.strip()
-        case_when_search = case_when_re.search(strip_line)
-        when_else_search = when_else_re.search(strip_line)
-        if case_when_search:
-            # get extra indentation if case when inside function, e.g. substr(case when ...)
-            case_extra_indentation = case_when_search.start()
-        elif end_re.search(strip_line):
-            # turn off case indicator if it ends
-            case_ind = False
-        if when_else_search:
-            # add additional indentation for every when + extra indentation if in function
-            # Remark: 5 = len("case ")
-            split_s_out.append(" " * (indentation + 5 + case_extra_indentation) + strip_line)
-        elif case_ind:
-            # add additional indentation for every condition inside when
-            # Remark 10 = len("case when ")
-            split_s_out.append(" " * (indentation + 10 + case_extra_indentation) + strip_line)
-        else:
-            # else (no case when: do nothing)
-            split_s_out.append(line)
-        if case_when_search:
-            # update case indicator if case when ... starts
-            case_ind = True
-    s = "\n".join(split_s_out)
-    s = s.strip()
-    # format partition by
-    begin_s = s[0:indentation]
-    split_s = s[indentation:].split("\n" + (" " * indentation))
-    partition_by_re = re.compile("partition by", flags=re.I)
-    split_s = [
-        format_partition_by(line, base_indentation=indentation)
-        if partition_by_re.search(line) else line
-        for line in split_s
-    ]
-    s = begin_s + ("\n" + (" " * indentation)).join(split_s)
+    for i, d in enumerate(split_s):
+        if d["comment"] or d["quote"]:
+            continue
+        # get string out of dictionary
+        s_aux = d["string"]
+        # add whitespaces between symbols = < >
+        s_aux = add_whitespaces_between_symbols(s_aux)
+        # add newline before when or else (but not if when is preceded by case)
+        s_aux = when_else_newline.sub(r"\n\1", s_aux)
+        # split by newline characters
+        split_aux = s_aux.split("\n")
+        # initialize auxiliary output
+        split_aux_out = []
+        # initialize additional indentation for case statements
+        case_extra_indentation = 0
+        case_ind = False  # indicator for case when ... end condition
+        for line in split_aux:
+            strip_line = line.lstrip()
+            case_when_search = case_when_re.search(strip_line)
+            when_else_search = when_else_re.search(strip_line)
+            if case_when_search:
+                # get extra indentation if case when inside function, e.g. substr(case when ...)
+                case_extra_indentation = case_when_search.start()
+            elif end_re.search(strip_line):
+                # turn off case indicator if it ends
+                case_ind = False
+            if when_else_search:
+                # add additional indentation for every when + extra indentation if in function
+                # Remark: 5 = len("case ")
+                split_aux_out.append(" " * (indentation + 5 + case_extra_indentation) + strip_line)
+            elif case_ind:
+                # add additional indentation for every condition inside when
+                # Remark 10 = len("case when ")
+                split_aux_out.append(" " * (indentation + 10 + case_extra_indentation) + strip_line)
+            else:
+                # else (no case when: do nothing)
+                split_aux_out.append(line)
+            if case_when_search:
+                # update case indicator if case when ... starts
+                case_ind = True
+        line = "\n".join(split_aux_out)
+        # remove too many new lines
+        line = re.sub("\n\s*\n", "\n", line)
+        split_s[i]["string"] = line
+
+#    s = "\n".join(split_s_out)
+#    s = s.strip()
+#    # format partition by
+#    begin_s = s[0:indentation]
+#    split_s = s[indentation:].split("\n" + (" " * indentation))
+#    partition_by_re = re.compile("partition by", flags=re.I)
+#    split_s = [
+#        format_partition_by(line, base_indentation=indentation)
+#        if partition_by_re.search(line) else line
+#        for line in split_s
+#    ]
+#    s = begin_s + ("\n" + (" " * indentation)).join(split_s)
+    s = "".join([d["string"] for d in split_s])
     return s
 
 # Cell
