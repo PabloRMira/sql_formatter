@@ -153,35 +153,34 @@ def format_select(s):
     split_s = split_comment_quote(s)  # split by comment / non-comment, quote / non-quote
     # if comma is found at the end of select statement then remove comma
     split_s = remove_wrong_end_comma(split_s)
+    # add whitespaces between symbols for code (=, < >)
+    for d in split_s:
+        if not d["comment"] and not d["quote"]:
+            d["string"] = add_whitespaces_between_symbols(d["string"])
     # check whether there is a SELECT DISTINCT in the code (not comments, not text in quotes)
     s_code = "".join([d["string"] for d in split_s if not d["comment"] and not d["quote"]])
     # save the correct indentation: 16 for select distinct, 7 for only select
     indentation = 16 if re.search("^select distinct", s_code, flags=re.I) else 7
-    # get processed string so far
-    s = "".join([d["string"] for d in split_s])
-    # add newline after each comma and indentation
-    s = add_newline_indentation(s, indentation=indentation)
-    # define regex
-    replace_c_cs = re.compile(r"\[C\]\[CS\]")
-    replace_c = re.compile(r"\[C\]")
-    replace_cs = re.compile(r"\[CS\]")
-    s = replace_c_cs.sub("[C]", s)  # replace [C][CS] by [C]
-    s = replace_c.sub("\n" + " " * indentation, s)  # replace [C] by newline
-    s = replace_cs.sub("\n" + " " * indentation, s)  # replace [CS] by newline
+    # get only comment / non-comment
+    split_comment = compress_dicts(split_s, ["comment"])
+    # add newline after each comma and indentation (this is robust against quotes by construction)
+    s = add_newline_indentation("".join([d["string"] for d in split_s if not d["comment"]]),
+                                indentation=indentation)
     # split again
     split_s = split_comment_quote(s)
+    # get only quote / non-quote
+    split_quote = compress_dicts([d for d in split_s if not d["comment"]], ["quote"])
     # compile regex before loop
     when_else_newline = re.compile(r"(?<!case) ((?:when|else).*?)", flags=re.I)
     case_when_re = re.compile("case when", flags=re.I)
     when_else_re = re.compile("^(?:when|else)", flags=re.I)
     end_re = re.compile(r"\bend\b", flags=re.I)
-    for i, d in enumerate(split_s):
-        if d["comment"] or d["quote"]:
+    # process case when
+    for i, d in enumerate(split_quote):
+        if d["quote"]:
             continue
         # get string out of dictionary
         s_aux = d["string"]
-        # add whitespaces between symbols = < >
-        s_aux = add_whitespaces_between_symbols(s_aux)
         # add newline before when or else (but not if when is preceded by case)
         s_aux = when_else_newline.sub(r"\n\1", s_aux)
         # split by newline characters
@@ -216,9 +215,17 @@ def format_select(s):
                 # update case indicator if case when ... starts
                 case_ind = True
         line = "\n".join(split_aux_out)
-        # remove too many new lines
-        line = re.sub("\n\s*\n", "\n", line)
-        split_s[i]["string"] = line
+        split_quote[i]["string"] = line
+    # get preprocessed text so far without comments
+    s = "".join([d["string"] for d in split_quote])
+    s = "\n".join([sp.rstrip() for sp in s.split("\n")]) # strip each line from the right
+    # get comments and preceding string (non-comment)
+    comment_dicts = []
+    for i, d in enumerate(split_comment):
+        if d["comment"]:
+            comment_dicts.append({"comment": d["string"], "preceding": split_comment[i-1]["string"]})
+    # assign comments to text
+    s = assign_comment(s, comment_dicts)
 
 #    s = "\n".join(split_s_out)
 #    s = s.strip()
@@ -232,7 +239,6 @@ def format_select(s):
 #        for line in split_s
 #    ]
 #    s = begin_s + ("\n" + (" " * indentation)).join(split_s)
-    s = "".join([d["string"] for d in split_s])
     return s
 
 # Cell

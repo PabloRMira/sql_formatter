@@ -9,6 +9,8 @@ __all__ = ['assert_and_print', 'compress_dicts', 'remove_whitespaces_newline', '
 
 # Cell
 import re
+from itertools import accumulate
+import operator
 
 # Cell
 def assert_and_print(s_in, s_expected):
@@ -29,6 +31,8 @@ def assert_and_print(s_in, s_expected):
 # Cell
 def compress_dicts(ld, keys):
     "Compress list of dicts `ld` with same `keys` concatenating key 'string'"
+    # make sure we only use the needed keys and not more
+    ld = [{k:v for k,v in d.items() if k in set(keys).union(["string"])} for d in ld]
     ld_out = [ld[0]]  # initialize output with reference dict = first element
     for d in ld[1:]:
         # reference comparison items
@@ -662,15 +666,17 @@ def assign_comment(fs, cds):
     replace_and_or = re.compile(r"(?:and|or)", flags=re.I)
     replace_c = re.compile(r"\[C\]")
     match_beginn_cs = re.compile(r"^\[CS\]")
+    replace_select = re.compile(r"select ", flags=re.I)
     # loop on comments to be assigned
     for d in cds:
         cp_list = [
             jaccard_distance(replace_and_or.sub("", s.strip()), d["preceding"])
-            for s in fsplit_s
+            for s in accumulate([s for s in fsplit_s], operator.add)
         ]
         # get line number with maximal jaccard distance (most similar)
         line_number = max(enumerate(cp_list), key=lambda x: x[1])[0]
-        indentation = len(fsplit_s[line_number]) - len(fsplit_s[line_number].lstrip())
+        line = fsplit_s[line_number]
+        indentation = len(line) - len(replace_select.sub("", line.lstrip()))
         # add comment to it and replace [C] by empty string and [CS] by newline + proper indentation
         whitespace = "" if match_beginn_cs.match(d["comment"]) else " "
         fsplit_s_out[line_number] += whitespace + re.sub(
