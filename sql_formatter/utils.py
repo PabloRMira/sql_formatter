@@ -2,10 +2,10 @@
 
 __all__ = ['assert_and_print', 'compress_dicts', 'remove_whitespaces_newline', 'remove_whitespaces_comments',
            'remove_redundant_whitespaces', 'add_whitespaces_between_symbols', 'mark_ci_comments', 'mark_comments',
-           'identify_in_sql', 'split_query', 'split_apply_concat', 'split_comment_quote', 'split_by_semicolon',
-           'replace_newline_chars', 'identify_end_of_fields', 'add_newline_indentation', 'extract_outer_subquery',
-           'format_subquery', 'check_sql_query', 'check_skip_marker', 'identify_create_table_view', 'count_lines',
-           'find_line_number', 'jaccard_distance', 'assign_comment']
+           'identify_in_sql', 'split_query', 'split_apply_concat', 'split_comment_quote', 'split_comment',
+           'split_by_semicolon', 'replace_newline_chars', 'identify_end_of_fields', 'add_newline_indentation',
+           'extract_outer_subquery', 'format_subquery', 'check_sql_query', 'check_skip_marker',
+           'identify_create_table_view', 'count_lines', 'find_line_number', 'jaccard_distance', 'assign_comment']
 
 # Cell
 import re
@@ -19,11 +19,21 @@ def assert_and_print(s_in, s_expected):
         assert s_in == s_expected
     except:
         print("Assertion failed\n")
-        print("Input:\n")
+        print("Observed:\n")
         print(s_in)
         print("\n")
         print("Expected:\n")
         print(s_expected)
+        for i in range(min(len(s_in), len(s_expected))):
+            if s_in[i] != s_expected[i]:
+                break
+        print(f"Exception found at position {i}:\n")
+        print("10-characters window:\n")
+        print("Observed:\n")
+        print(s_in[max(i-5, 0):i+5])
+        print("\n")
+        print("Expected:\n")
+        print(s_expected[max(i-5, 0):i+5])
         assert s_in == s_expected
     print(s_in)
     return None
@@ -31,6 +41,8 @@ def assert_and_print(s_in, s_expected):
 # Cell
 def compress_dicts(ld, keys):
     "Compress list of dicts `ld` with same `keys` concatenating key 'string'"
+    # make sure keys are a list
+    keys = [keys] if not isinstance(keys, list) and not isinstance(keys, tuple) else keys
     # make sure we only use the needed keys and not more
     ld = [{k:v for k,v in d.items() if k in set(keys).union(["string"])} for d in ld]
     ld_out = [ld[0]]  # initialize output with reference dict = first element
@@ -488,10 +500,16 @@ def split_apply_concat(s, f):
 def split_comment_quote(s):
     "Split query `s` into dictionaries with keys 'string', 'comment' and 'quote'"
     split_s = split_query(s)
-    # do not take the "select" key
-    split_s = [{k:v for k,v in d.items() if k in ("string", "comment", "quote")} for d in split_s]
     # compress all strings with same keys
     split_s = compress_dicts(split_s, keys=["comment", "quote"])
+    return split_s
+
+# Cell
+def split_comment(s):
+    "Split query `s` into dictionaries with keys 'string', 'comment'"
+    split_s = split_query(s)
+    # compress all strings with same keys
+    split_s = compress_dicts(split_s, keys=["comment"])
     return split_s
 
 # Cell
@@ -666,7 +684,7 @@ def assign_comment(fs, cds):
     replace_and_or = re.compile(r"(?:and|or)", flags=re.I)
     replace_c = re.compile(r"\[C\]")
     match_beginn_cs = re.compile(r"^\[CS\]")
-    replace_select = re.compile(r"select ", flags=re.I)
+    replace_select = re.compile(r"(?:select distinct |select )", flags=re.I)
     # loop on comments to be assigned
     for d in cds:
         cp_list = [
