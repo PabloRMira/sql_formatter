@@ -1363,7 +1363,7 @@ from table1 -- Some comment
     <span class="n">add_whitespaces_query</span><span class="p">(</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">create or replace table my_table as /* some comment 1=1, 1 =1 */</span>
-<span class="sd">select asdf, case when asdf= 1 then &#39;a&#39; else 0 end as qwerty</span>
+<span class="sd">select asdf, case when asdf= 1 then &#39;=&#39; else 0 end as qwerty</span>
 <span class="sd">from table1 as a</span>
 <span class="sd">left join table2 as b on a.asdf= b.asdf</span>
 <span class="sd">where asdf=1 and qwer =2</span>
@@ -1371,7 +1371,7 @@ from table1 -- Some comment
     <span class="p">),</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">create or replace table my_table as /* some comment 1=1, 1 =1 */</span>
-<span class="sd">select asdf, case when asdf = 1 then &#39;a&#39; else 0 end as qwerty</span>
+<span class="sd">select asdf, case when asdf = 1 then &#39;=&#39; else 0 end as qwerty</span>
 <span class="sd">from table1 as a</span>
 <span class="sd">left join table2 as b on a.asdf = b.asdf</span>
 <span class="sd">where asdf = 1 and qwer = 2</span>
@@ -1391,7 +1391,7 @@ from table1 -- Some comment
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 create or replace table my_table as /* some comment 1=1, 1 =1 */
-select asdf, case when asdf = 1 then &#39;a&#39; else 0 end as qwerty
+select asdf, case when asdf = 1 then &#39;=&#39; else 0 end as qwerty
 from table1 as a
 left join table2 as b on a.asdf = b.asdf
 where asdf = 1 and qwer = 2

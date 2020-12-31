@@ -332,14 +332,14 @@ def split_query(s):
             not quote_open2
         ):
             s_comp.append({
-                "string": s[start:i],
+                "string": s[start:i+1],
                 "comment": comment_region,
                 "quote": quote_region,
                 "select": select_region
             }) # before opening comment it was no comment
             quote_open1 = True
             quote_region = True
-            start = i
+            start = i+1
         elif (
             c == "'" and
             not comment_open1 and
@@ -348,14 +348,14 @@ def split_query(s):
             not quote_open2
         ):
             s_comp.append({
-                "string": s[start:i+1],
+                "string": s[start:i],
                 "comment": comment_region,
                 "quote": quote_region,
                 "select": select_region
             }) # before opening comment it was no comment
             quote_open1 = False
             quote_region = False
-            start = i + 1
+            start = i
         elif (
             c == '"' and
             not comment_open1 and
@@ -364,14 +364,14 @@ def split_query(s):
             not quote_open2
         ):
             s_comp.append({
-                "string": s[start:i],
+                "string": s[start:i + 1],
                 "comment": comment_region,
                 "quote": quote_region,
                 "select": select_region
             }) # before opening comment it was no comment
             quote_open2 = True
             quote_region = True
-            start = i
+            start = i + 1
         elif (
             c == '"' and
             not comment_open1 and
@@ -380,14 +380,14 @@ def split_query(s):
             quote_open2
         ):
             s_comp.append({
-                "string": s[start:i+1],
+                "string": s[start:i],
                 "comment": comment_region,
                 "quote": quote_region,
                 "select": select_region
             }) # before opening comment it was no comment
             quote_open2 = False
             quote_region = False
-            start = i+1
+            start = i
     s_comp.append({
         "string": s[start:],
         "comment": comment_region,

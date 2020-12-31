@@ -97,9 +97,9 @@ def lowercase_query(s):
 # Cell
 def add_whitespaces_query(s):
     "Add whitespaces between symbols (=!<>) for query `s` but not for comments"
-    split_s = split_comment(s)  # split by comment / non-comment, quote / non-quote
+    split_s = split_comment_quote(s)  # split by comment / non-comment, quote / non-quote
     for d in split_s:
-        if not d["comment"]:
+        if not d["comment"] and not d["quote"]:
             d["string"] = add_whitespaces_between_symbols(d["string"])
     s = "".join([d["string"] for d in split_s])
     return s
