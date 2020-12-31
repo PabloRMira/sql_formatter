@@ -176,51 +176,45 @@ def format_select(s):
     split_s = split_comment_quote(s)
     # get only quote / non-quote
     split_quote = compress_dicts([d for d in split_s if not d["comment"]], ["quote"])
-    # compile regex before loop
-    when_else_newline = re.compile(r"(?<!case) ((?:when|else).*?)", flags=re.I)
+    when_else_re = re.compile(r"(?<!case )((?:when|else).*?)", flags=re.I)
     case_when_re = re.compile("case when", flags=re.I)
-    when_else_re = re.compile("^(?:when|else)", flags=re.I)
     case_and_or = re.compile(r"\b((?:and|or))\b", flags=re.I)
+    case_end_re = re.compile(r"\bend\b", flags=re.I)
     # initialize additional indentation for case statements
     case_extra_indentation = 0
+    # initialize indicator for case when ... end
+    case_ind = False
     # process case when
-    for i, d in enumerate(split_quote):
+    for d in split_quote:
         if d["quote"]:
             continue
         # get string out of dictionary
         s_aux = d["string"]
         # add newline before when or else (but not if when is preceded by case)
-        s_aux = when_else_newline.sub(r"\n\1", s_aux)
+        s_aux = when_else_re.sub(r"\n\1", s_aux)
         # split by newline characters
         split_aux = s_aux.split("\n")
         # initialize auxiliary output
         split_aux_out = []
         for line in split_aux:
-            strip_line = line.lstrip()
+            strip_line = line.strip()
             case_when_search = case_when_re.search(strip_line)
-            when_else_search = when_else_re.search(strip_line)
             if case_when_search:
-                # get extra indentation if case when inside function, e.g. substr(case when ...)
-                case_extra_indentation = case_when_search.start()
-                line = case_and_or.sub(  # add newline for each and / or + indentation
+                case_ind = True # turn indicator on if case ... end begins
+                case_extra_indentation = case_when_search.start()  # get additional indentation if case inside function
+            if case_ind:
+                line = when_else_re.sub(  # add newline for each when / else (without case before)
+                    " " * (indentation + 5 + case_extra_indentation) + r"\1",
+                    line
+                )
+                line = case_and_or.sub(  # add newline for each and / or within case when + indentation
                     r"\1\n" + " " * (indentation + 9 + case_extra_indentation),
                     line
                 )
-                split_aux_out.append(line)
-            elif when_else_search:
-                # add additional indentation for every when + extra indentation if in function
-                # Remark: 5 = len("case ")
-                strip_line = case_and_or.sub(  # add newline for each and / or + indentation
-                    r"\1\n" + " " * (indentation + 10 + case_extra_indentation),
-                    strip_line
-                )
-                split_aux_out.append(" " * (indentation + 5 + case_extra_indentation) + strip_line)
-            else:
-                # else (no case when: do nothing)
-                split_aux_out.append(line)
-        line = "\n".join(split_aux_out)
-        split_quote[i]["string"] = line
-    # get preprocessed text so far without comments
+            if case_end_re.search(line):  # turn indicator off if case ... end ends
+                case_ind = False
+            split_aux_out.append(line)
+        d["string"] = "\n".join(split_aux_out)  # add formatted string back to dictionary
     s = "".join([d["string"] for d in split_quote])
     s = "\n".join([sp.rstrip() for sp in s.split("\n")]) # strip each line from the right
     # format PARTITION BY

@@ -136,8 +136,8 @@ def validate_balanced_parenthesis(s):
 # Cell
 def validate_case_when(s):
     "Validate query `s` looking for unbalanced case ... end"
-    case_pos = identify_in_sql("case", s)  # positions of case when
-    end_pos = identify_in_sql("end", s)  # positions of end keywords
+    case_pos = identify_in_sql("case ", s)  # positions of case when
+    end_pos = identify_in_sql(" end", s)  # positions of end keywords
     if len(case_pos) == len(end_pos):
         # build pairs
         case_end = [(case_pos[i], end_pos[i]) for i in range(len(case_pos))]
