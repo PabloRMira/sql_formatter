@@ -24,7 +24,7 @@ def format_sql_commands(s):
     validations_balanced = [validate_balanced_parenthesis(sp) for sp in split_s]
     val_summary_balanced = sum([val["exit_code"] for val in validations_balanced])
     # validate balanced case when ... end
-    val_case_end_balanced = [validate_case_when(sp) for sp in split_s]
+    val_case_end_balanced = [validate_case_when(sp) for sp in split_s if sp != ""]
     val_summary_case = sum([val["exit_code"] for val in val_case_end_balanced])
     if sum([val_summary_semicolon, val_summary_balanced, val_summary_case]) == 0:
         split_comment_after_semicolon = re.compile("((?:\n|create|select))")

@@ -640,6 +640,56 @@ unbalanced parenthesis</p>
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">validate_case_when</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">create or replace transient table my_table as /* some table */</span>
+<span class="sd">select asdf,</span>
+<span class="sd">qwer,</span>
+<span class="sd">case when asdf &gt;=1 </span>
+<span class="sd">and -- some comment</span>
+<span class="sd">asdf&lt;=10 and substr(qwer, 1, 2) = &#39;abc&#39; </span>
+<span class="sd">and -- some comment</span>
+<span class="sd">substr(qwer, 3, 2) = &#39;qwerty&#39; then 1 /* another comment */</span>
+<span class="sd">    else 0 end as case_field,</span>
+<span class="sd">substr(case when asdf=1 then &#39;a&#39; else &#39;b&#39; end, 1, 2) as end_file,</span>
+<span class="sd">asdf2,</span>
+<span class="sd">asdf3</span>
+<span class="sd">from table1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">),</span>
+    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;exit_code&#39;: 0, &#39;total_lines&#39;: 14}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
