@@ -401,11 +401,41 @@ From my_view;
 </ul>
 <p>To setup the development environment:</p>
 <ol>
-<li>Clone the project and navigate into the project with your terminal</li>
+<li>Fork this project repository, i.e., click on the "Fork" button on the right of the top of the repo page. This creates a copy of the project code on your GitHub user account.</li>
+<li>Clone your forked project from your GitHub account to your local disk and navigate into it:</li>
+</ol>
+<div class="highlight"><pre><span></span>git clone git@github.com:YourLogin/sql_formatter.git
+<span class="nb">cd</span> sql_formatter
+</pre></div>
+<ol>
+<li>Setup the <code>upstream</code> remote to be the original project repository (this one and not your forked one):</li>
+</ol>
+<div class="highlight"><pre><span></span>git remote add upstream https://github.com/PabloRMira/sql_formatter.git
+</pre></div>
+<ol>
+<li>Synchronize your master branch with the upstream branch:</li>
+</ol>
+<div class="highlight"><pre><span></span>git checkout master
+git pull upstream master
+</pre></div>
+<ol>
+<li>Create a new branch to hold your development changes:</li>
+</ol>
+<div class="highlight"><pre><span></span>git checkout -b my_feature_branch
+</pre></div>
+<ol>
 <li>Install our conda development environment running <code>conda env create -f environment.yml</code></li>
 <li>Activate the python environment using <code>conda activate sql-formatter-dev</code></li>
 <li>Run <code>nbdev_install_git_hooks</code></li>
 <li>Run <code>pip install -e .</code> to install the package in editable mode. This way the command line interface (CLI) <code>sql-formatter</code> will incorporate your changes in the python code</li>
+<li>When your change is ready commit it, and push it to your fork</li>
+</ol>
+
+<pre><code>git add modified_files
+git commit -m "some message"
+git push -u origin my_feature_brach</code></pre>
+<ol>
+<li>Follow <a href="https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork">these instructions</a> to create a pull request from your fork.</li>
 </ol>
 <h4 id="Development-Workflow">Development Workflow<a class="anchor-link" href="#Development-Workflow"> </a></h4><p>For development we follow these steps:</p>
 <ol>
