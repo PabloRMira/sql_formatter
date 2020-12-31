@@ -659,11 +659,13 @@ unbalanced parenthesis</p>
 <span class="sd">and -- some comment</span>
 <span class="sd">substr(qwer, 3, 2) = &#39;qwerty&#39; then 1 /* another comment */</span>
 <span class="sd">    else 0 end as case_field,</span>
-<span class="sd">asdf2</span>
+<span class="sd">substr(case when asdf=1 then &#39;a&#39; else &#39;b&#39; end, 1, 2) as end_file,</span>
+<span class="sd">asdf2,</span>
+<span class="sd">asdf3</span>
 <span class="sd">from table1</span>
 <span class="sd">&quot;&quot;&quot;</span>
     <span class="p">),</span>
-    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+    <span class="p">{</span><span class="s2">&quot;exit_code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -677,7 +679,7 @@ unbalanced parenthesis</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;exit_code&#39;: 0, &#39;total_lines&#39;: 12}
+<pre>{&#39;exit_code&#39;: 0, &#39;total_lines&#39;: 14}
 </pre>
 </div>
 </div>

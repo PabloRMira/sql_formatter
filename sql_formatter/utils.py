@@ -2,7 +2,7 @@
 
 __all__ = ['assert_and_print', 'compress_dicts', 'remove_whitespaces_newline', 'remove_whitespaces_comments',
            'remove_redundant_whitespaces', 'add_whitespaces_between_symbols', 'mark_ci_comments', 'mark_comments',
-           'identify_in_sql', 'split_query', 'split_apply_concat', 'split_comment_quote', 'split_comment',
+           'split_query', 'split_apply_concat', 'split_comment_quote', 'split_comment', 'identify_in_sql',
            'split_by_semicolon', 'replace_newline_chars', 'identify_end_of_fields', 'add_newline_indentation',
            'extract_outer_subquery', 'format_subquery', 'check_sql_query', 'check_skip_marker',
            'identify_create_table_view', 'count_lines', 'find_line_number', 'jaccard_distance', 'assign_comment']
@@ -191,100 +191,6 @@ def mark_comments(s):
     return s
 
 # Cell
-def identify_in_sql(kws, s):
-    "Find positions of keywords `kws` (str or list) in string `s` ignoring comment and text in quotess"
-    # container for positions
-    s = s.lower()  # lowercase string for searching purposes
-    positions = []
-    # counter for comments
-    k = 0  # 0 = no comment range
-    comment_open1 = False # comment indicator for /* */ comments
-    comment_open2 = False  # comment indicator for -- comments
-    quote_open1 = False  # quote '
-    quote_open2 = False # quote "
-    kws = [kws] if not isinstance(kws, list) else kws # put keyword into list if it is a string
-    for kw in kws:
-        kw_len = len(kw)  # length of searched keyword
-        # loop over character positions
-        for i, c in enumerate(s):
-            if s[i:i+kw_len] == kw and k == 0:
-                positions.append(i)
-            elif (
-                s[i:i+2] == "/*" and
-                not comment_open1 and
-                not comment_open2 and
-                not quote_open1 and
-                not quote_open2
-            ):  # if there is an opening comment /*
-                k += 1
-                comment_open1 = True
-            elif (
-                s[i:i+2] == "*/" and
-                comment_open1 and
-                not comment_open2 and
-                not quote_open1 and
-                not quote_open2
-            ):  # if there is a closing comment */
-                k -= 1
-                comment_open1 = False
-            elif (
-                s[i:i+2] == "--" and
-                not comment_open1 and
-                not comment_open2 and
-                not quote_open1 and
-                not quote_open2
-            ):  # if there is an opening comment --
-                k += 1
-                comment_open2 = True
-            elif (
-                (c == "\n" or s[i:i+3] == "[c]") and
-                not comment_open1 and
-                comment_open2 and
-                not quote_open1 and
-                not quote_open2
-            ):  # if the -- comment ends
-                k -= 1
-                comment_open2 = False
-            elif (
-                c == "'" and
-                not comment_open1 and
-                not comment_open2 and
-                not quote_open1 and
-                not quote_open2
-            ):  # if opening quote '
-                k += 1
-                quote_open1 = True
-            elif (
-                c == "'" and
-                not comment_open1 and
-                not comment_open2 and
-                quote_open1 and
-                not quote_open2
-            ):  # if opening quote '
-                k -= 1
-                quote_open1 = False
-            elif (
-                c == '"' and
-                not comment_open1 and
-                not comment_open2 and
-                not quote_open1 and
-                quote_open2
-            ):  # if opening quote '
-                k += 1
-                quote_open2 = True
-            elif (
-                c == '"' and
-                not comment_open1 and
-                not comment_open2 and
-                not quote_open1 and
-                quote_open2
-            ):  # if opening quote '
-                k -= 1
-                quote_open2 = False
-    positions = sorted(positions)  # sort positions before returning
-    return positions
-
-# Cell
 def split_query(s):
     """Split query into comment / non-comment, quote / non-quote, select / non-select
 
@@ -463,7 +369,7 @@ def split_query(s):
                 "quote": quote_region,
                 "select": select_region
             }) # before opening comment it was no comment
-            quote_open1 = True
+            quote_open2 = True
             quote_region = True
             start = i
         elif (
@@ -479,7 +385,7 @@ def split_query(s):
                 "quote": quote_region,
                 "select": select_region
             }) # before opening comment it was no comment
-            quote_open1 = False
+            quote_open2 = False
             quote_region = False
             start = i+1
     s_comp.append({
@@ -511,6 +417,26 @@ def split_comment(s):
     # compress all strings with same keys
     split_s = compress_dicts(split_s, keys=["comment"])
     return split_s
+
+# Cell
+def identify_in_sql(regex, s):
+    "Find positions of `regex` (str or list) in string `s` ignoring comment and text in quotes"
+    split_s = split_comment_quote(s)  # split by comment / non-comment and quote / non-quote
+    regex = [regex] if not isinstance(regex, list) else regex # put keyword into list if it is a string
+    positions = []  # define output container
+    cumul_len = 0  # cumulative length of string
+    for d in split_s:  # loop on dictionaries with strings
+        if not d["comment"] and not d["quote"]:  # only for non comments and non text in quotes
+            for reg in regex:  # loop on regex
+                aux_positions = [match.start() for match in re.finditer(reg, d["string"], flags=re.I)]
+                if len(aux_positions) > 0:  # if found some matches
+                    # add the cumulative length of the string for the actual position in the whole string
+                    aux_positions = [pos + cumul_len for pos in aux_positions]
+                    positions.extend(aux_positions)
+        # increase the cumulative length
+        cumul_len += len(d["string"])
+    positions = sorted(positions)  # sort positions before returning
+    return positions
 
 # Cell
 def split_by_semicolon(s):
