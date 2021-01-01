@@ -165,7 +165,7 @@ WHERE  a.asdf = 1 -- comment this
    and b.qwer = 2
    and a.asdf &lt;= 1 --comment that
     or b.qwer &gt;= 5
-GROUP BY a.asdf;
+GROUP BY a.asdf
 </pre>
 </div>
 </div>
@@ -224,7 +224,7 @@ FROM   (SELECT asdf,
                FROM   table2
                WHERE  qwer2 = 1) as b
         ON a.asdf = b.asdf
-WHERE  qwer1 &gt;= 0;
+WHERE  qwer1 &gt;= 0
 </pre>
 </div>
 </div>
@@ -275,7 +275,7 @@ FROM   (SELECT field1,
                        field3
                 FROM   table1
                 WHERE  a = 1
-                   and b &gt;= 100));
+                   and b &gt;= 100))
 </pre>
 </div>
 </div>
@@ -375,6 +375,79 @@ From my_view;
 <li>cannot parse your SQL queries into e.g. dictionaries</li>
 <li>cannot validate your SQL queries to be valid for the corresponding database system / provider</li>
 </ul>
+<p>Up to now it only formats queries of the form</p>
+<ul>
+<li><code>CREATE TABLE / VIEW ...</code></li>
+<li><code>SELECT ...</code></li>
+</ul>
+<p>Every other SQL commands will remain unformatted, e.g. <code>INSERT INTO</code> ...</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Formatting-Logic">Formatting Logic<a class="anchor-link" href="#Formatting-Logic"> </a></h2><p>The main goal of the <code>sql_formatter</code> is to enhance readability and quick understanding of SQL queries via proper formatting. We use <strong>indentation</strong> and <strong>lowercasing / uppercasing</strong> as means to arrange statements / clauses and parameters into context. By <strong>programmatically standardizing</strong> the way to write SQL queries we help the user understand its queries faster.</p>
+<p>As a by-product of using the <code>sql_formatter</code>, developer teams can focus on the query logic itself and save time by not incurring into styling decisions, this then begin accomplished by the <code>sql_formatter</code>. This is similar to the goal accomplished by the <a href="https://github.com/psf/black">black package</a> for the Python language, which was also an inspiration for the development of this package for SQL.</p>
+<p>We can summarize the main steps of the formatter as follows:</p>
+<ol>
+<li>Each query is separated from above by two newlines.</li>
+<li>Everything but <strong>main statements* / clauses</strong> is lowercased</li>
+</ol>
+<p>* Main statements:</p>
+<ul>
+<li>CREATE ... TABLE / VIEW table_name AS</li>
+<li>SELECT (DISTINCT)</li>
+<li>FROM</li>
+<li>(LEFT / INNER / RIGHT / OUTER) JOIN</li>
+<li>UNION</li>
+<li>ON</li>
+<li>WHERE</li>
+<li>GROUP BY</li>
+<li>ORDER BY</li>
+<li>OVER</li>
+<li>PARTITION BY</li>
+</ul>
+<ol>
+<li>Indentation is used to put parameters into context. Here an easy example:</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">field1</span><span class="p">,</span>
+       <span class="k">case</span> <span class="k">when</span> <span class="n">field2</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">and</span>
+                 <span class="n">field2</span> <span class="o">&lt;=</span> <span class="mi">10</span> <span class="k">and</span>
+                 <span class="n">field1</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span> <span class="k">then</span> <span class="mi">1</span>
+            <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">case_field</span><span class="p">,</span>
+       <span class="p">...</span>
+<span class="k">FROM</span>   <span class="n">table1</span>
+<span class="k">WHERE</span>  <span class="n">field1</span> <span class="o">=</span> <span class="mi">1</span>
+   <span class="k">and</span> <span class="n">field2</span> <span class="o">&lt;=</span> <span class="mi">2</span>
+    <span class="k">or</span> <span class="n">field3</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">field1</span>
+</pre></div>
+<blockquote><p>This is a very nice, easy example but things can become more complicated if comments come into play</p>
+</blockquote>
+<ol>
+<li><p>Subqueries are also properly indented, e.g.:```sqlSELECT a.field1,</p>
+
+<pre><code>a.field2,
+b.field3
+</code></pre>
+<p>FROM   (SELECT field1,</p>
+
+<pre><code>        field2
+ FROM   table1
+ WHERE  field1 = 1) as a
+</code></pre>
+<p>LEFT JOIN (SELECT field1,</p>
+
+<pre><code>               field3
+        FROM   table2) as b
+ ON a.field1 = b.field1:
+</code></pre>
+<p>```</p>
+</li>
+<li><p>Everything not being a query of the form <code>CREATE ... TABLE / VIEW</code> or <code>SELECT ...</code> is left unchanged</p>
+</li>
+</ol>
 
 </div>
 </div>
@@ -472,6 +545,7 @@ git push -u origin my_feature_brach</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Thank you very much to Jeremy Howard and all the <a href="https://github.com/fastai/nbdev">nbdev</a> team for enabling the <em>fast</em> and delightful development of this library via the <code>nbdev</code> framework.</p>
 <p>For more details on <code>nbdev</code>, see its official <a href="https://nbdev.fast.ai/tutorial.html">tutorial</a></p>
+<p>Thank you very much for the developers of the <a href="https://github.com/psf/black">black</a> package, which was also an inspiration for the development of this package</p>
 
 </div>
 </div>
