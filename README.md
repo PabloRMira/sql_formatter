@@ -243,11 +243,15 @@ FROM   table1
 WHERE  field1 = 1
    and field2 <= 2
     or field3 = 5
-ORDER BY field1
+ORDER BY field1;
 ```
+
 > This is a very nice, easy example but things can become more complicated if comments come into play
 
-4. Subqueries are also properly indented, e.g.:```sqlSELECT a.field1,
+4. Subqueries are also properly indented, e.g.
+
+```sql
+SELECT a.field1,
        a.field2,
        b.field3
 FROM   (SELECT field1,
@@ -257,7 +261,7 @@ FROM   (SELECT field1,
     LEFT JOIN (SELECT field1,
                       field3
                FROM   table2) as b
-        ON a.field1 = b.field1:
+        ON a.field1 = b.field1;
 ```
 
 5. Everything not being a query of the form `CREATE ... TABLE / VIEW` or `SELECT ...` is left unchanged

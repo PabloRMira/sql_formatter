@@ -421,32 +421,27 @@ From my_view;
 <span class="k">WHERE</span>  <span class="n">field1</span> <span class="o">=</span> <span class="mi">1</span>
    <span class="k">and</span> <span class="n">field2</span> <span class="o">&lt;=</span> <span class="mi">2</span>
     <span class="k">or</span> <span class="n">field3</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">field1</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">field1</span><span class="p">;</span>
 </pre></div>
 <blockquote><p>This is a very nice, easy example but things can become more complicated if comments come into play</p>
 </blockquote>
 <ol>
-<li><p>Subqueries are also properly indented, e.g.:```sqlSELECT a.field1,</p>
-
-<pre><code>a.field2,
-b.field3
-</code></pre>
-<p>FROM   (SELECT field1,</p>
-
-<pre><code>        field2
- FROM   table1
- WHERE  field1 = 1) as a
-</code></pre>
-<p>LEFT JOIN (SELECT field1,</p>
-
-<pre><code>               field3
-        FROM   table2) as b
- ON a.field1 = b.field1:
-</code></pre>
-<p>```</p>
-</li>
-<li><p>Everything not being a query of the form <code>CREATE ... TABLE / VIEW</code> or <code>SELECT ...</code> is left unchanged</p>
-</li>
+<li>Subqueries are also properly indented, e.g.</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span><span class="p">.</span><span class="n">field1</span><span class="p">,</span>
+       <span class="n">a</span><span class="p">.</span><span class="n">field2</span><span class="p">,</span>
+       <span class="n">b</span><span class="p">.</span><span class="n">field3</span>
+<span class="k">FROM</span>   <span class="p">(</span><span class="k">SELECT</span> <span class="n">field1</span><span class="p">,</span>
+               <span class="n">field2</span>
+        <span class="k">FROM</span>   <span class="n">table1</span>
+        <span class="k">WHERE</span>  <span class="n">field1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">field1</span><span class="p">,</span>
+                      <span class="n">field3</span>
+               <span class="k">FROM</span>   <span class="n">table2</span><span class="p">)</span> <span class="k">as</span> <span class="n">b</span>
+        <span class="k">ON</span> <span class="n">a</span><span class="p">.</span><span class="n">field1</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">field1</span><span class="p">;</span>
+</pre></div>
+<ol>
+<li>Everything not being a query of the form <code>CREATE ... TABLE / VIEW</code> or <code>SELECT ...</code> is left unchanged</li>
 </ol>
 
 </div>
