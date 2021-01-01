@@ -1,5 +1,15 @@
 # Release notes
 
+## 0.5.1
+
+### Bugfixes:
+* [FIX] Formatter adds whitespaces between symbols inside of quotes ([#121](https://github.com/PabloRMira/sql_formatter/pull/121))
+
+### Documentation:
+* [DOC] Add docs for versioning and changelog ([#125](https://github.com/PabloRMira/sql_formatter/pull/125))
+* [DOC] Add docs for formatting logic ([#123](https://github.com/PabloRMira/sql_formatter/pull/123))
+* [DOC] Correct docs for contributing: fork instead of branch ([#122](https://github.com/PabloRMira/sql_formatter/pull/122))
+
 ## 0.5.0
 
 ### New features:
