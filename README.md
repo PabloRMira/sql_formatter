@@ -86,7 +86,7 @@ print(format_sql(example_sql))
        and b.qwer = 2
        and a.asdf <= 1 --comment that
         or b.qwer >= 5
-    GROUP BY a.asdf;
+    GROUP BY a.asdf
 
 
 It can even deal with subqueries and it will correct my favourite simple careless mistake (comma at the end of SELECT statement before of FROM) for you on the flow :-)
@@ -116,7 +116,7 @@ where qwer1 >= 0
                    FROM   table2
                    WHERE  qwer2 = 1) as b
             ON a.asdf = b.asdf
-    WHERE  qwer1 >= 0;
+    WHERE  qwer1 >= 0
 
 
 The formatter is also robust against nested subqueries
@@ -138,7 +138,7 @@ field3 from table1 where a=1 and b>=100))
                            field3
                     FROM   table1
                     WHERE  a = 1
-                       and b >= 100));
+                       and b >= 100))
 
 
 If you do not want to get some query formatted in your SQL file then you can use the marker `/*skip-formatter*/` in your query to disable formatting for just the corresponding query
@@ -197,6 +197,70 @@ This package is just a SQL formatter and therefore
 
 * cannot parse your SQL queries into e.g. dictionaries
 * cannot validate your SQL queries to be valid for the corresponding database system / provider
+
+Up to now it only formats queries of the form
+
+* `CREATE TABLE / VIEW ...`
+* `SELECT ...`
+
+Every other SQL commands will remain unformatted, e.g. `INSERT INTO` ...
+
+## Formatting Logic
+
+The main goal of the `sql_formatter` is to enhance readability and quick understanding of SQL queries via proper formatting. We use **indentation** and **lowercasing / uppercasing** as means to arrange statements / clauses and parameters into context. By **programmatically standardizing** the way to write SQL queries we help the user understand its queries faster.
+
+As a by-product of using the `sql_formatter`, developer teams can focus on the query logic itself and save time by not incurring into styling decisions, this then begin accomplished by the `sql_formatter`. This is similar to the goal accomplished by the [black package](https://github.com/psf/black) for the Python language, which was also an inspiration for the development of this package for SQL. 
+
+We can summarize the main steps of the formatter as follows:
+
+1. Each query is separated from above by two newlines.
+2. Everything but **main statements\* / clauses** is lowercased
+
+\* Main statements:
+
+* CREATE ... TABLE / VIEW table_name AS
+* SELECT (DISTINCT)
+* FROM
+* (LEFT / INNER / RIGHT / OUTER) JOIN
+* UNION
+* ON
+* WHERE
+* GROUP BY
+* ORDER BY
+* OVER
+* PARTITION BY
+
+3. Indentation is used to put parameters into context. Here an easy example:
+
+```sql
+SELECT field1,
+       case when field2 > 1 and
+                 field2 <= 10 and
+                 field1 = 'a' then 1
+            else 0 end as case_field,
+       ...
+FROM   table1
+WHERE  field1 = 1
+   and field2 <= 2
+    or field3 = 5
+ORDER BY field1
+```
+> This is a very nice, easy example but things can become more complicated if comments come into play
+
+4. Subqueries are also properly indented, e.g.:```sqlSELECT a.field1,
+       a.field2,
+       b.field3
+FROM   (SELECT field1,
+               field2
+        FROM   table1
+        WHERE  field1 = 1) as a
+    LEFT JOIN (SELECT field1,
+                      field3
+               FROM   table2) as b
+        ON a.field1 = b.field1:
+```
+
+5. Everything not being a query of the form `CREATE ... TABLE / VIEW` or `SELECT ...` is left unchanged
 
 ## How to contribute
 
@@ -282,3 +346,5 @@ For development we follow these steps:
 Thank you very much to Jeremy Howard and all the [nbdev](https://github.com/fastai/nbdev) team for enabling the *fast* and delightful development of this library via the `nbdev` framework.
 
 For more details on `nbdev`, see its official [tutorial](https://nbdev.fast.ai/tutorial.html)
+
+Thank you very much for the developers of the [black](https://github.com/psf/black) package, which was also an inspiration for the development of this package
