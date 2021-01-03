@@ -24,16 +24,17 @@ def assert_and_print(s_in, s_expected):
         print("\n")
         print("Expected:\n")
         print(s_expected)
-        for i in range(min(len(s_in), len(s_expected))):
-            if s_in[i] != s_expected[i]:
-                break
-        print(f"Exception found at position {i}:\n")
-        print("10-characters window:\n")
-        print("Observed:\n")
-        print(s_in[max(i-5, 0):i+5])
-        print("\n")
-        print("Expected:\n")
-        print(s_expected[max(i-5, 0):i+5])
+        if isinstance(s_expected, str):
+            for i in range(min(len(s_in), len(s_expected))):
+                if s_in[i] != s_expected[i]:
+                    break
+            print(f"Exception found at position {i}:\n")
+            print("10-characters window:\n")
+            print("Observed:\n")
+            print(s_in[max(i-5, 0):i+5])
+            print("\n")
+            print("Expected:\n")
+            print(s_expected[max(i-5, 0):i+5])
         assert s_in == s_expected
     print(s_in)
     return None
@@ -607,10 +608,10 @@ def assign_comment(fs, cds):
     # define container for output
     fsplit_s_out = fsplit_s.copy()
     # compile regex before loop
-    replace_and_or = re.compile(r"(?:and|or)", flags=re.I)
+    replace_and_or = re.compile(r"\b(?:and|or)\b", flags=re.I)
     replace_c = re.compile(r"\[C\]")
     match_beginn_cs = re.compile(r"^\[CS\]")
-    replace_select = re.compile(r"(?:select distinct |select )", flags=re.I)
+    replace_select = re.compile(r"\b(?:select distinct |select )", flags=re.I)
     # loop on comments to be assigned
     for d in cds:
         cp_list = [
