@@ -1629,6 +1629,44 @@ where asdf = 1 and qwer = 2
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Helper-function-for-case-when">Helper function for <code>case when</code><a class="anchor-link" href="#Helper-function-for-case-when"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="format_case_when" class="doc_header"><code>format_case_when</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L159" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_case_when</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Format case when statement in line <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="SELECT">SELECT<a class="anchor-link" href="#SELECT"> </a></h3>
 </div>
 </div>
@@ -1644,7 +1682,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L159" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L183" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format SELECT statement line <code>s</code></p>
 
@@ -1779,65 +1817,9 @@ where asdf = 1 and qwer = 2
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Assertion failed
-
-Observed:
-
-select asdf, -- Some comment -- Another comment
-       asdforqwer
-
-
-Expected:
-
-select asdf, -- Some comment
+<pre>select asdf, -- Some comment
        asdforqwer -- Another comment
-Exception found at position 28:
-
-10-characters window:
-
-Observed:
-
-mment -- A
-
-
-Expected:
-
-mment
-    
 </pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">-----------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AssertionError</span>                        Traceback (most recent call last)
-<span class="ansi-green-fg">~/Dokumente/Python_Stuff/Projekte/sql_formatter/sql_formatter/utils.py</span> in <span class="ansi-cyan-fg">assert_and_print</span><span class="ansi-blue-fg">(s_in, s_expected)</span>
-<span class="ansi-green-intense-fg ansi-bold">     18</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 19</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">assert</span> s_in <span class="ansi-blue-fg">==</span> s_expected
-<span class="ansi-green-intense-fg ansi-bold">     20</span>     <span class="ansi-green-fg">except</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">AssertionError</span>: 
-
-During handling of the above exception, another exception occurred:
-
-<span class="ansi-red-fg">AssertionError</span>                        Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-70-57dc18c8340b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> select asdf<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">-</span><span class="ansi-blue-fg">-</span> Some comment
-<span class="ansi-green-intense-fg ansi-bold">      5</span>        asdforqwer <span class="ansi-blue-fg">-</span><span class="ansi-blue-fg">-</span> Another comment
-<span class="ansi-green-fg">----&gt; 6</span><span class="ansi-red-fg"> &#34;&#34;&#34;.strip()
-</span><span class="ansi-green-intense-fg ansi-bold">      7</span> )
-
-<span class="ansi-green-fg">~/Dokumente/Python_Stuff/Projekte/sql_formatter/sql_formatter/utils.py</span> in <span class="ansi-cyan-fg">assert_and_print</span><span class="ansi-blue-fg">(s_in, s_expected)</span>
-<span class="ansi-green-intense-fg ansi-bold">     35</span>         print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;Expected:\n&#34;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>         print<span class="ansi-blue-fg">(</span>s_expected<span class="ansi-blue-fg">[</span>max<span class="ansi-blue-fg">(</span>i<span class="ansi-blue-fg">-</span><span class="ansi-cyan-fg">5</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>i<span class="ansi-blue-fg">+</span><span class="ansi-cyan-fg">5</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 37</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">assert</span> s_in <span class="ansi-blue-fg">==</span> s_expected
-<span class="ansi-green-intense-fg ansi-bold">     38</span>     print<span class="ansi-blue-fg">(</span>s_in<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>     <span class="ansi-green-fg">return</span> <span class="ansi-green-fg">None</span>
-
-<span class="ansi-red-fg">AssertionError</span>: </pre>
 </div>
 </div>
 
@@ -2591,6 +2573,90 @@ During handling of the above exception, another exception occurred:
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1, substr(qwer, case when asdf = &#39;J&#39; then 1 else 0 end, 4) as qwer2, qwer3&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select qwer1,</span>
+<span class="sd">       substr(qwer, case when asdf = &#39;J&#39; then 1</span>
+<span class="sd">                         else 0 end, 4) as qwer2,</span>
+<span class="sd">       qwer3</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>    
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select qwer1,
+       substr(qwer, case when asdf = &#39;J&#39; then 1
+                         else 0 end, 4) as qwer2,
+       qwer3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span><span class="s2">&quot;select qwer1, substr(&#39;blabla&#39;, case when asdf = &#39;J&#39; then 1 else 0 end, 4) as qwer2, qwer3&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select qwer1,</span>
+<span class="sd">       substr(&#39;blabla&#39;, case when asdf = &#39;J&#39; then 1</span>
+<span class="sd">                             else 0 end, 4) as qwer2,</span>
+<span class="sd">       qwer3</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>    
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select qwer1,
+       substr(&#39;blabla&#39;, case when asdf = &#39;J&#39; then 1
+                             else 0 end, 4) as qwer2,
+       qwer3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With <code>SELECT DISTINCT</code></p>
@@ -2981,7 +3047,7 @@ During handling of the above exception, another exception occurred:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L240" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L230" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format FROM statement line <code>s</code></p>
 
@@ -3050,7 +3116,7 @@ During handling of the above exception, another exception occurred:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L251" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L241" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format JOIN statement line <code>s</code></p>
 
@@ -3119,7 +3185,7 @@ During handling of the above exception, another exception occurred:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L257" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L247" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format ON statement line <code>s</code></p>
 
@@ -3318,7 +3384,7 @@ During handling of the above exception, another exception occurred:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L283" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L273" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format WHERE statement line <code>s</code></p>
 
@@ -3467,7 +3533,7 @@ During handling of the above exception, another exception occurred:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L312" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L302" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statement line <code>s</code></p>
 
@@ -3611,7 +3677,7 @@ During handling of the above exception, another exception occurred:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L330" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L320" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format statements lines <code>s</code></p>
 
@@ -3689,7 +3755,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_multiline_comments" class="doc_header"><code>format_multiline_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L340" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_multiline_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_multiline_comments" class="doc_header"><code>format_multiline_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L330" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_multiline_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format multiline comments by replacing multiline comment [CI] by newline and adding indentation</p>
 
@@ -3728,7 +3794,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L355" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L345" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format a simple SQL query without subqueries <code>s</code></p>
 
@@ -3952,7 +4018,7 @@ GROUP BY car_id
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L369" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L359" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format SQL query with subqueries <code>s</code></p>
 
