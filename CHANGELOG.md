@@ -1,5 +1,14 @@
 # Release notes
 
+## 0.5.2
+
+### Bugfixes:
+* [FIX] case when wrongly formatted if case when at least in second argument and preceded by text in quotes ([#133](https://github.com/PabloRMira/sql_formatter/pull/133))
+* [FIX] comment assignment fails sometimes ([#130](https://github.com/PabloRMira/sql_formatter/pull/130))
+
+### Documentation:
+* [DOC] Fix wrong formatting in README ([#127](https://github.com/PabloRMira/sql_formatter/pull/127))
+
 ## 0.5.1
 
 ### Bugfixes:
