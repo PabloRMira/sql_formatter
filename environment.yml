@@ -9,5 +9,5 @@ dependencies:
   - pre-commit
   - pip
   - pip:
-      - nbdev
+      - nbdev==1.1.5
       - twine
