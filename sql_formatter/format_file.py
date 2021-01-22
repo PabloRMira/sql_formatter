@@ -29,8 +29,10 @@ def format_sql_commands(s):
     if sum([val_summary_semicolon, val_summary_balanced, val_summary_case]) == 0:
         split_comment_after_semicolon = re.compile("((?:\n|create|select))")
         check_comment_after_semicolon = re.compile(r"[\r\t\f\v ]*(?:\/\*|--)")
+        check_ending_semicolon = re.compile(r";\s*$")
         split_s_out = []  # initialize container
-        for sp in split_s:  # split by semicolon
+        last_i = len(split_s) - 1
+        for i, sp in enumerate(split_s):  # split by semicolon
             # take care of comment after semicolon
             # split by first newline and format only the second item
             if check_comment_after_semicolon.match(sp):
@@ -38,14 +40,24 @@ def format_sql_commands(s):
             else:
                 split_s2 = [sp]
             formatted_split_s2 = [
-                "\n\n\n" + format_sql(sp).strip()
+                "\n\n\n" + format_sql(sp, semicolon=True).strip()
                 if check_sql_query(sp) and not check_skip_marker(sp)
                 else sp
                 for sp in split_s2
             ]
-            split_s_out.append("".join(formatted_split_s2))
+            formatted_sp = "".join(formatted_split_s2)
+            if i != last_i:
+                split_c = split_comment(formatted_sp)
+                s_code = "".join([d["string"] for d in split_c if not d["comment"]])
+                formatted_sp = (
+                    formatted_sp
+                    if check_ending_semicolon.search(s_code)
+                    or formatted_sp == ""
+                    else formatted_sp + ";"
+                )
+            split_s_out.append("".join(formatted_sp))
         # join by semicolon
-        formatted_s = ";".join(split_s_out)
+        formatted_s = "".join(split_s_out)
         # remove starting and ending newlines
         formatted_s = formatted_s.strip()
         # remove more than 3 newlines
