@@ -38,3 +38,6 @@ clean:
 
 prepush:
 	nbdev_build_lib && nbdev_test_nbs && nbdev_build_docs
+
+update_master:
+	git checkout master && git pull
