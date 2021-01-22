@@ -3,7 +3,7 @@
 __all__ = ['MAIN_STATEMENTS', 'clean_query', 'preformat_statements', 'lowercase_query', 'add_whitespaces_query',
            'format_partition_by', 'remove_wrong_end_comma', 'format_case_when', 'format_select', 'format_from',
            'format_join', 'format_on', 'format_where', 'format_statement_line', 'format_statements',
-           'format_multiline_comments', 'format_simple_sql', 'format_sql']
+           'format_multiline_comments', 'add_semicolon', 'format_simple_sql', 'format_sql']
 
 # Cell
 import re
@@ -343,7 +343,20 @@ def format_multiline_comments(s):
     return s
 
 # Cell
-def format_simple_sql(s):
+def add_semicolon(s):
+    "Add a semicolon at the of query `s`"
+    split_s = s.split("\n")
+    last_line = split_s[-1]
+    split_c = split_comment(last_line)
+    if len(split_c) == 1:
+        split_s[-1] = last_line + ";"
+    else:
+        split_c[0]["string"] = re.sub("(.*[\w\d]+)(\s*)$", r"\1;\2", split_c[0]["string"])
+        split_s[-1] = "".join([d["string"] for d in split_c])
+    return "\n".join(split_s)
+
+# Cell
+def format_simple_sql(s, semicolon=False):
     "Format a simple SQL query without subqueries `s`"
     s = lowercase_query(s)  # everything lowercased but not the comments
     s = preformat_statements(s)  # add breaklines for the main statements
@@ -354,12 +367,14 @@ def format_simple_sql(s):
     s = re.sub(r"\s+\n", "\n", s)  # replace redundant whitespaces before newline
     s = format_multiline_comments(s)  # format multline comments
     s = s.strip()  # strip query
+    if semicolon:
+        s = add_semicolon(s)
     return s
 
 # Cell
-def format_sql(s):
+def format_sql(s, semicolon=False):
     "Format SQL query with subqueries `s`"
-    s = format_simple_sql(s)  # basic query formatting
+    s = format_simple_sql(s, semicolon=semicolon)  # basic query formatting
     # get first outer subquery positions
     subquery_pos = extract_outer_subquery(s)
     # loop over subqueries

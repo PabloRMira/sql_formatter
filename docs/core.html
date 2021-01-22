@@ -3820,6 +3820,185 @@ from   table1
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Add-semicolon-at-the-end-of-query">Add semicolon at the end of query<a class="anchor-link" href="#Add-semicolon-at-the-end-of-query"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="add_semicolon" class="doc_header"><code>add_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L346" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_semicolon</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Add a semicolon at the of query <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+<span class="n">add_semicolon</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">CREATE OR REPLACE TABLE my_table AS</span>
+<span class="s2">SELECT asdf,</span>
+<span class="s2">       qwer</span>
+<span class="s2">FROM   table1 /* something */</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE my_table AS</span>
+<span class="sd">SELECT asdf,</span>
+<span class="sd">       qwer</span>
+<span class="sd">FROM   table1; /* something */</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE my_table AS
+SELECT asdf,
+       qwer
+FROM   table1; /* something */
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+<span class="n">add_semicolon</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">CREATE OR REPLACE TABLE my_table AS</span>
+<span class="s2">SELECT asdf,</span>
+<span class="s2">       qwer</span>
+<span class="s2">FROM   table1 -- some thing</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE my_table AS</span>
+<span class="sd">SELECT asdf,</span>
+<span class="sd">       qwer</span>
+<span class="sd">FROM   table1; -- some thing</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE my_table AS
+SELECT asdf,
+       qwer
+FROM   table1; -- some thing
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+<span class="n">add_semicolon</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">CREATE OR REPLACE TABLE my_table AS</span>
+<span class="s2">SELECT asdf,</span>
+<span class="s2">       qwer</span>
+<span class="s2">FROM   table1</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE my_table AS</span>
+<span class="sd">SELECT asdf,</span>
+<span class="sd">       qwer</span>
+<span class="sd">FROM   table1;</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE my_table AS
+SELECT asdf,
+       qwer
+FROM   table1;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Putting-everything-together">Putting everything together<a class="anchor-link" href="#Putting-everything-together"> </a></h2><p>to format a simple query without subqueries</p>
 
 </div>
@@ -3836,7 +4015,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L346" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L359" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>semicolon</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Format a simple SQL query without subqueries <code>s</code></p>
 
@@ -4060,7 +4239,7 @@ GROUP BY car_id
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L360" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L375" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>semicolon</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Format SQL query with subqueries <code>s</code></p>
 
