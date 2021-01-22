@@ -53,7 +53,7 @@ nb_path: "nbs/02_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
+<h4 id="assert_and_print" class="doc_header"><code>assert_and_print</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assert_and_print</code>(<strong><code>s_in</code></strong>, <strong><code>s_expected</code></strong>)</p>
 </blockquote>
 <p>Assert equality of <code>s_in</code> and <code>s_expected</code> and print the result of <code>s_in</code> if the assertion worked</p>
 
@@ -122,7 +122,7 @@ nb_path: "nbs/02_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compress_dicts" class="doc_header"><code>compress_dicts</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L43" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compress_dicts</code>(<strong><code>ld</code></strong>, <strong><code>keys</code></strong>)</p>
+<h4 id="compress_dicts" class="doc_header"><code>compress_dicts</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compress_dicts</code>(<strong><code>ld</code></strong>, <strong><code>keys</code></strong>)</p>
 </blockquote>
 <p>Compress list of dicts <code>ld</code> with same <code>keys</code> concatenating key 'string'</p>
 
@@ -208,7 +208,7 @@ nb_path: "nbs/02_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_whitespaces_newline" class="doc_header"><code>remove_whitespaces_newline</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_newline</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_whitespaces_newline" class="doc_header"><code>remove_whitespaces_newline</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_newline</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Remove whitespaces before and after newline in <code>s</code></p>
 
@@ -277,7 +277,7 @@ group by asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_whitespaces_comments" class="doc_header"><code>remove_whitespaces_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L68" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_whitespaces_comments" class="doc_header"><code>remove_whitespaces_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L69" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Remove whitespaces before and after comment tokens in <code>s</code></p>
 
@@ -381,7 +381,7 @@ group by asdf
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_redundant_whitespaces" class="doc_header"><code>remove_redundant_whitespaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L79" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_redundant_whitespaces</code>(<strong><code>s</code></strong>)</p>
+<h4 id="remove_redundant_whitespaces" class="doc_header"><code>remove_redundant_whitespaces</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L80" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_redundant_whitespaces</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Strip and remove redundant (more than 2) whitespaces in <code>s</code> but no newlines in between</p>
 
@@ -487,6 +487,72 @@ some more
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="remove_whitespaces_parenthesis" class="doc_header"><code>remove_whitespaces_parenthesis</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_whitespaces_parenthesis</code>(<strong><code>s</code></strong>)</p>
+</blockquote>
+<p>Remove whitespaces between parenthesis in query <code>s</code></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">remove_whitespaces_parenthesis</span><span class="p">(</span><span class="s2">&quot;select asdf, substr( qwer, 1, 2 ) as qwerty&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;select asdf, substr(qwer, 1, 2) as qwerty&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf, substr(qwer, 1, 2) as qwerty
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Add-missing-whitespaces-between-symbols">Add missing whitespaces between symbols<a class="anchor-link" href="#Add-missing-whitespaces-between-symbols"> </a></h3>
@@ -504,7 +570,7 @@ some more
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L86" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_whitespaces_between_symbols" class="doc_header"><code>add_whitespaces_between_symbols</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L94" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_whitespaces_between_symbols</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Add whitespaces between symbols in line <code>s</code></p>
 
@@ -577,7 +643,7 @@ some more
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mark_ci_comments" class="doc_header"><code>mark_ci_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L94" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mark_ci_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="mark_ci_comments" class="doc_header"><code>mark_ci_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L102" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mark_ci_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Replace new lines in multiline comments by special token [CI]</p>
 
@@ -677,7 +743,7 @@ some more
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mark_comments" class="doc_header"><code>mark_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L184" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mark_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="mark_comments" class="doc_header"><code>mark_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L192" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mark_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Mark end of comments -- and begin of comments /<em> </em>/ if they are in a new line with token [C]</p>
 
@@ -1099,7 +1165,7 @@ case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_query" class="doc_header"><code>split_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L195" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_query</code>(<strong><code>s</code></strong>)</p>
+<h4 id="split_query" class="doc_header"><code>split_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L203" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_query</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Split query into comment / non-comment, quote / non-quote, select / non-select</p>
 <p>Return a dict with keys "string", "comment" in (True, False) "quote" in (True, False)
@@ -1190,7 +1256,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_apply_concat" class="doc_header"><code>split_apply_concat</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L402" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_apply_concat</code>(<strong><code>s</code></strong>, <strong><code>f</code></strong>)</p>
+<h4 id="split_apply_concat" class="doc_header"><code>split_apply_concat</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L410" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_apply_concat</code>(<strong><code>s</code></strong>, <strong><code>f</code></strong>)</p>
 </blockquote>
 <p>Split query <code>s</code>, apply function <code>f</code> and concatenate strings</p>
 
@@ -1264,7 +1330,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_comment_quote" class="doc_header"><code>split_comment_quote</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L407" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment_quote</code>(<strong><code>s</code></strong>)</p>
+<h4 id="split_comment_quote" class="doc_header"><code>split_comment_quote</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L415" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment_quote</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Split query <code>s</code> into dictionaries with keys 'string', 'comment' and 'quote'</p>
 
@@ -1392,7 +1458,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_comment" class="doc_header"><code>split_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L415" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment</code>(<strong><code>s</code></strong>)</p>
+<h4 id="split_comment" class="doc_header"><code>split_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L423" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_comment</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Split query <code>s</code> into dictionaries with keys 'string', 'comment'</p>
 
@@ -1476,7 +1542,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_in_sql" class="doc_header"><code>identify_in_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L423" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_in_sql</code>(<strong><code>regex</code></strong>, <strong><code>s</code></strong>)</p>
+<h4 id="identify_in_sql" class="doc_header"><code>identify_in_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L431" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_in_sql</code>(<strong><code>regex</code></strong>, <strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Find positions of <code>regex</code> (str or list) in string <code>s</code> ignoring comment and text in quotes</p>
 
@@ -1548,7 +1614,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="split_by_semicolon" class="doc_header"><code>split_by_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L443" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_by_semicolon</code>(<strong><code>s</code></strong>)</p>
+<h4 id="split_by_semicolon" class="doc_header"><code>split_by_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L451" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>split_by_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Split string <code>s</code> by semicolon but not between parenthesis or in comments</p>
 
@@ -1633,7 +1699,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="replace_newline_chars" class="doc_header"><code>replace_newline_chars</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L461" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_newline_chars</code>(<strong><code>s</code></strong>)</p>
+<h4 id="replace_newline_chars" class="doc_header"><code>replace_newline_chars</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L469" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_newline_chars</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Replace newline characters in <code>s</code> by whitespace but not in the comments</p>
 
@@ -1712,7 +1778,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_end_of_fields" class="doc_header"><code>identify_end_of_fields</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L468" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_end_of_fields</code>(<strong><code>s</code></strong>)</p>
+<h4 id="identify_end_of_fields" class="doc_header"><code>identify_end_of_fields</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L476" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_end_of_fields</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Identify end of fields in query <code>s</code></p>
 
@@ -1907,7 +1973,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_newline_indentation" class="doc_header"><code>add_newline_indentation</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L487" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_newline_indentation</code>(<strong><code>s</code></strong>, <strong><code>indentation</code></strong>)</p>
+<h4 id="add_newline_indentation" class="doc_header"><code>add_newline_indentation</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L495" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_newline_indentation</code>(<strong><code>s</code></strong>, <strong><code>indentation</code></strong>)</p>
 </blockquote>
 <p>Add newline and indentation for end of fields in query <code>s</code></p>
 
@@ -2080,7 +2146,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L505" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
+<h4 id="extract_outer_subquery" class="doc_header"><code>extract_outer_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L513" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>extract_outer_subquery</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Extract outer subquery in query <code>s</code></p>
 
@@ -2133,7 +2199,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L531" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
+<h4 id="format_subquery" class="doc_header"><code>format_subquery</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L539" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_subquery</code>(<strong><code>s</code></strong>, <strong><code>previous_s</code></strong>)</p>
 </blockquote>
 <p>Format subquery in line <code>s</code> based on indentation on <code>previous_s</code></p>
 
@@ -2171,7 +2237,7 @@ and "select" in (True, False)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="check_sql_query" class="doc_header"><code>check_sql_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L557" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_sql_query</code>(<strong><code>s</code></strong>)</p>
+<h4 id="check_sql_query" class="doc_header"><code>check_sql_query</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L565" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_sql_query</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Checks whether <code>s</code> is a SQL query based on match of CREATE TABLE / VIEW or SELECT ignoring comments and text
 in quotes</p>
@@ -2369,7 +2435,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="check_skip_marker" class="doc_header"><code>check_skip_marker</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L566" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_skip_marker</code>(<strong><code>s</code></strong>)</p>
+<h4 id="check_skip_marker" class="doc_header"><code>check_skip_marker</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L574" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>check_skip_marker</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Checks whether user set marker /<em>skip-formatter</em>/ to not format query</p>
 
@@ -2453,7 +2519,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identify_create_table_view" class="doc_header"><code>identify_create_table_view</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L571" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_create_table_view</code>(<strong><code>s</code></strong>)</p>
+<h4 id="identify_create_table_view" class="doc_header"><code>identify_create_table_view</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L579" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identify_create_table_view</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Identify positions of CREATE .. TABLE / VIEW statements</p>
 
@@ -2528,7 +2594,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="count_lines" class="doc_header"><code>count_lines</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L584" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>count_lines</code>(<strong><code>s</code></strong>)</p>
+<h4 id="count_lines" class="doc_header"><code>count_lines</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L592" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>count_lines</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Count the number of lines in <code>s</code></p>
 
@@ -2603,7 +2669,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="find_line_number" class="doc_header"><code>find_line_number</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L589" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_line_number</code>(<strong><code>s</code></strong>, <strong><code>positions</code></strong>)</p>
+<h4 id="find_line_number" class="doc_header"><code>find_line_number</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L597" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_line_number</code>(<strong><code>s</code></strong>, <strong><code>positions</code></strong>)</p>
 </blockquote>
 <p>Find line number in <code>s</code> out of <code>positions</code></p>
 
@@ -2678,7 +2744,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="jaccard_distance" class="doc_header"><code>jaccard_distance</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L594" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>jaccard_distance</code>(<strong><code>str1</code></strong>, <strong><code>str2</code></strong>)</p>
+<h4 id="jaccard_distance" class="doc_header"><code>jaccard_distance</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L602" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>jaccard_distance</code>(<strong><code>str1</code></strong>, <strong><code>str2</code></strong>)</p>
 </blockquote>
 <p>Calculate the Jaccard distance between two strings by word</p>
 
@@ -2710,7 +2776,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="assign_comment" class="doc_header"><code>assign_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L601" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assign_comment</code>(<strong><code>fs</code></strong>, <strong><code>cds</code></strong>)</p>
+<h4 id="assign_comment" class="doc_header"><code>assign_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L609" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assign_comment</code>(<strong><code>fs</code></strong>, <strong><code>cds</code></strong>)</p>
 </blockquote>
 <p>Assign comments in list of dictionaries <code>cds</code> to formatted string <code>fs</code> using Jaccard distance</p>
 <p>The comment dictionaries <code>cds</code> should contain the keys "comment" and "preceding" (string)</p>
