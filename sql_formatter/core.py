@@ -37,6 +37,7 @@ def clean_query(s):
     s = replace_newline_chars(s)  # remove newlines but not in the comments
     s = remove_whitespaces_newline(s)  # remove whitespaces after and before newline
     s = remove_whitespaces_comments(s)  # remove whitespaces after and before [C], [CS] and [CI]
+    s = remove_whitespaces_parenthesis(s)  # remove whitespaces between parenthesis
     s = remove_redundant_whitespaces(s)  # remove too many whitespaces but no newlines
     return s
 
