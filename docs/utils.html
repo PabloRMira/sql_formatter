@@ -2892,7 +2892,7 @@ in quotes</p>
 <span class="sd">       qwer, /* some comment */</span>
 <span class="sd">       case when asdf = 1 and -- comment there</span>
 <span class="sd">                 asdf = 2 then 2 -- comment here</span>
-<span class="sd">                 /* Whole line comment */</span>
+<span class="sd">            /* Whole line comment */</span>
 <span class="sd">            when asdf = 3 then 3 /* bla bla */</span>
 <span class="sd">            else 0 end as qwerty,</span>
 <span class="sd">       qwer2</span>
@@ -2914,7 +2914,7 @@ in quotes</p>
        qwer, /* some comment */
        case when asdf = 1 and -- comment there
                  asdf = 2 then 2 -- comment here
-                 /* Whole line comment */
+            /* Whole line comment */
             when asdf = 3 then 3 /* bla bla */
             else 0 end as qwerty,
        qwer2
@@ -2958,7 +2958,7 @@ in quotes</p>
 <span class="sd">       qwer, /* some comment */</span>
 <span class="sd">       case when asdf = 1 and -- comment there</span>
 <span class="sd">                 asdf = 2 then 2</span>
-<span class="sd">                 /* Whole line comment */</span>
+<span class="sd">            /* Whole line comment */</span>
 <span class="sd">            when asdf = 3 then 3 /* bla bla */</span>
 <span class="sd">            else 0 end as qwerty,</span>
 <span class="sd">       qwer2</span>
@@ -2980,7 +2980,7 @@ in quotes</p>
        qwer, /* some comment */
        case when asdf = 1 and -- comment there
                  asdf = 2 then 2
-                 /* Whole line comment */
+            /* Whole line comment */
             when asdf = 3 then 3 /* bla bla */
             else 0 end as qwerty,
        qwer2
@@ -3017,7 +3017,8 @@ in quotes</p>
             <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;/* some comment */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;qwer, &quot;</span><span class="p">},</span>
             <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;-- comment there[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;case when asdf = 1&quot;</span><span class="p">},</span>
             <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;[CS]/* Whole line comment */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;and asdf = 2&quot;</span><span class="p">},</span>
-            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;/* bla bla */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;then 2 when asdf = 3 then 3&quot;</span><span class="p">}</span>
+            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;/* bla bla */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;then 2 when asdf = 3 then 3&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;[CS]/* another whole line comment */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;else 0 end as qwerty,&quot;</span><span class="p">}</span>
         <span class="p">]</span>
     <span class="p">),</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -3026,9 +3027,10 @@ in quotes</p>
 <span class="sd">       qwer, /* some comment */</span>
 <span class="sd">       case when asdf = 1 and -- comment there</span>
 <span class="sd">                 asdf = 2 then 2</span>
-<span class="sd">                 /* Whole line comment */</span>
+<span class="sd">            /* Whole line comment */</span>
 <span class="sd">            when asdf = 3 then 3 /* bla bla */</span>
 <span class="sd">            else 0 end as qwerty,</span>
+<span class="sd">       /* another whole line comment */</span>
 <span class="sd">       qwer2</span>
 <span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 <span class="p">)</span>
@@ -3049,9 +3051,10 @@ in quotes</p>
        qwer, /* some comment */
        case when asdf = 1 and -- comment there
                  asdf = 2 then 2
-                 /* Whole line comment */
+            /* Whole line comment */
             when asdf = 3 then 3 /* bla bla */
             else 0 end as qwerty,
+       /* another whole line comment */
        qwer2
 </pre>
 </div>
@@ -3095,7 +3098,7 @@ in quotes</p>
 <span class="sd">                qwer, /* some comment */</span>
 <span class="sd">                case when asdf = 1 and -- comment there</span>
 <span class="sd">                          asdf = 2 then 2</span>
-<span class="sd">                          /* Whole line comment */</span>
+<span class="sd">                     /* Whole line comment */</span>
 <span class="sd">                     when asdf = 3 then 3 /* bla bla */</span>
 <span class="sd">                     else 0 end as qwerty,</span>
 <span class="sd">                qwer2</span>
@@ -3118,7 +3121,7 @@ in quotes</p>
                 qwer, /* some comment */
                 case when asdf = 1 and -- comment there
                           asdf = 2 then 2
-                          /* Whole line comment */
+                     /* Whole line comment */
                      when asdf = 3 then 3 /* bla bla */
                      else 0 end as qwerty,
                 qwer2

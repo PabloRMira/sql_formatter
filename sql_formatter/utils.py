@@ -611,8 +611,8 @@ def assign_comment(fs, cds):
 
     The comment dictionaries `cds` should contain the keys "comment" and "preceding" (string)
     """
-    # split by newline
     fsplit_s = fs.split("\n")
+    number_of_lines = len(fsplit_s)
     # define container for output
     fsplit_s_out = fsplit_s.copy()
     # compile regex before loop
@@ -629,7 +629,12 @@ def assign_comment(fs, cds):
         # get line number with maximal jaccard distance (most similar)
         line_number = max(enumerate(cp_list), key=lambda x: x[1])[0]
         line = fsplit_s[line_number]
-        indentation = len(line) - len(replace_select.sub("", line.lstrip()))
+        next_line = (
+            fsplit_s[line_number + 1]  # next line is relevant for indentation of whole line comments
+            if line_number < number_of_lines - 1
+            else fsplit_s[line_number]  # if there is no next line then take the current line
+        )
+        indentation = len(next_line) - len(replace_select.sub("", next_line.lstrip()))
         # add comment to it and replace [C] by empty string and [CS] by newline + proper indentation
         whitespace = "" if match_beginn_cs.match(d["comment"]) else " "
         fsplit_s_out[line_number] += whitespace + re.sub(
