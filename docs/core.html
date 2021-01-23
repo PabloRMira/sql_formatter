@@ -68,6 +68,7 @@ nb_path: "nbs/00_core.ipynb"
 <span class="s2">there */</span>
 <span class="s2">case when a.asdf= 1 then &#39;b&#39; /* here a case comment */</span>
 <span class="s2">when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment</span>
+<span class="s2">/* and here some inline comment */</span>
 <span class="s2">b.asdf2 frOm table1 as a leFt join </span>
 <span class="s2">table2 as b -- and here a comment</span>
 <span class="s2">    on a.asdf = b.asdf  /* joiN this way */</span>
@@ -113,6 +114,7 @@ nb_path: "nbs/00_core.ipynb"
 <span class="s2">       case when a.asdf = 1 then &#39;b&#39; /* here a case comment */</span>
 <span class="s2">            when b.qwer = 2 then &#39;c&#39;</span>
 <span class="s2">            else &#39;d&#39; end as new_field, -- Some comment</span>
+<span class="s2">       /* and here some inline comment */</span>
 <span class="s2">       b.asdf2</span>
 <span class="s2">FROM   table1 as a</span>
 <span class="s2">    LEFT JOIN table2 as b -- and here a comment</span>
@@ -475,7 +477,7 @@ nb_path: "nbs/00_core.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>create or replace table mytable as -- Mytable example[C][CS]/* multi line[CI]comment */[C]seLecT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf,[CS]/* some commenT[CI]there */[C]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[C]b.asdf2 frOm table1 as a leFt join table2 as b -- and here a comment[C]on a.asdf = b.asdf /* joiN this way */[C]inner join table3 as c on a.asdf=c.asdf and a.qwer= b.qwer whEre a.asdf= 1 -- comment this[C]anD b.qwer =2 and a.asdf&lt;=1 --comment that[C]or b.qwer&gt;=5 groUp by a.asdf
+<pre>create or replace table mytable as -- Mytable example[C][CS]/* multi line[CI]comment */[C]seLecT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf,[CS]/* some commenT[CI]there */[C]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[C][CS]/* and here some inline comment */[C]b.asdf2 frOm table1 as a leFt join table2 as b -- and here a comment[C]on a.asdf = b.asdf /* joiN this way */[C]inner join table3 as c on a.asdf=c.asdf and a.qwer= b.qwer whEre a.asdf= 1 -- comment this[C]anD b.qwer =2 and a.asdf&lt;=1 --comment that[C]or b.qwer&gt;=5 groUp by a.asdf
 </pre>
 </div>
 </div>
@@ -1080,7 +1082,7 @@ FROM table1
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>CREATE OR REPLACE TABLE mytable AS -- Mytable example[C][CS]/* multi line[CI]comment */[C]
-SELECT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf,[CS]/* some commenT[CI]there */[C]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[C]b.asdf2
+SELECT a.asdf, b.qwer, -- some comment here[C][CS]/* and here is a line comment inside select */[C]substr(c.asdf, 1, 2) as substr_asdf,[CS]/* some commenT[CI]there */[C]case when a.asdf= 1 then &#39;b&#39; /* here a case comment */[C]when b.qwer =2 then &#39;c&#39; else &#39;d&#39; end as new_field, -- Some comment[C][CS]/* and here some inline comment */[C]b.asdf2
 FROM table1 as a
 LEFT JOIN table2 as b -- and here a comment[C]
 ON a.asdf = b.asdf /* joiN this way */[C]
@@ -4071,6 +4073,7 @@ SELECT a.asdf,
        case when a.asdf = 1 then &#39;b&#39; /* here a case comment */
             when b.qwer = 2 then &#39;c&#39;
             else &#39;d&#39; end as new_field, -- Some comment
+       /* and here some inline comment */
        b.asdf2
 FROM   table1 as a
     LEFT JOIN table2 as b -- and here a comment
@@ -4348,6 +4351,7 @@ SELECT a.asdf,
        case when a.asdf = 1 then &#39;b&#39; /* here a case comment */
             when b.qwer = 2 then &#39;c&#39;
             else &#39;d&#39; end as new_field, -- Some comment
+       /* and here some inline comment */
        b.asdf2
 FROM   table1 as a
     LEFT JOIN table2 as b -- and here a comment
