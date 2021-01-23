@@ -601,8 +601,12 @@ def find_line_number(s, positions):
 # Cell
 def jaccard_distance(str1, str2):
     "Calculate the Jaccard distance between two strings by word"
-    set1 = set(str1.split())
-    set2 = set(str2.split())
+    split1 = re.split(r"(?:\s|,)", str1)
+    split1 = [sp for sp in split1 if sp != ""]
+    split2 = re.split(r"(?:\s|,)", str2)
+    split2 = [sp for sp in split2 if sp != ""]
+    set1 = set(split1)
+    set2 = set(split2)
     return float(len(set1 & set2) / len(set1 | set2))
 
 # Cell
@@ -621,9 +625,10 @@ def assign_comment(fs, cds):
     match_beginn_cs = re.compile(r"^\[CS\]")
     replace_select = re.compile(r"\b(?:select distinct |select )", flags=re.I)
     # loop on comments to be assigned
-    for d in cds:
+    for i, d in enumerate(cds):
+        cum_preceding = "".join([d["preceding"] for d in cds[0:i+1]])
         cp_list = [
-            jaccard_distance(replace_and_or.sub("", s.strip()), d["preceding"])
+            jaccard_distance(replace_and_or.sub("", s.strip()), cum_preceding)
             for s in accumulate([s for s in fsplit_s], operator.add)
         ]
         # get line number with maximal jaccard distance (most similar)

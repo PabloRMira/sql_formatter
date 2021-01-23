@@ -2776,7 +2776,7 @@ in quotes</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="assign_comment" class="doc_header"><code>assign_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L609" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assign_comment</code>(<strong><code>fs</code></strong>, <strong><code>cds</code></strong>)</p>
+<h4 id="assign_comment" class="doc_header"><code>assign_comment</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/utils.py#L613" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assign_comment</code>(<strong><code>fs</code></strong>, <strong><code>cds</code></strong>)</p>
 </blockquote>
 <p>Assign comments in list of dictionaries <code>cds</code> to formatted string <code>fs</code> using Jaccard distance</p>
 <p>The comment dictionaries <code>cds</code> should contain the keys "comment" and "preceding" (string)</p>
@@ -2818,8 +2818,8 @@ in quotes</p>
 <span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
         <span class="p">[</span>
             <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;/* some comment */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;select asdf, qwer, &quot;</span><span class="p">},</span>
-            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;-- comment there[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;case when asdf = 1&quot;</span><span class="p">},</span>
-            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;-- comment here[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;and asdf = 2&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;-- comment there[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;case when asdf = 1 &quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;-- comment here[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;and asdf = 2 &quot;</span><span class="p">},</span>
             <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;/* bla bla */[C]&quot;</span><span class="p">,</span> <span class="s2">&quot;preceding&quot;</span><span class="p">:</span> <span class="s2">&quot;then 2 when asdf = 3 then 3&quot;</span><span class="p">}</span>
         <span class="p">]</span>
     <span class="p">),</span>
