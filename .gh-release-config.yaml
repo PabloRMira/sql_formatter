@@ -1,0 +1,11 @@
+gh_categories:
+  - title: "### :tada: Bugfixes:"
+    keyword: "[FIX]"
+  - title: "### :rocket: New features:"
+    keyword: "[FEA]"
+  - title: "### :bulb: Documentation:"
+    keyword: "[DOC]"
+  - title: "### :hammer_and_wrench: Refactoring / Maintenance:"
+    keyword: "[MNT]"
+  - title: "### :bomb: Breaking changes:"
+    keyword: "[BRK]"

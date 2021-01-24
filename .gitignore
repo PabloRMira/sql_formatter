@@ -141,3 +141,7 @@ checklink/cookies.txt
 
 # GitHub token
 token
+
+.gh-credentials
+conda-recipe/*
+conda-bld/*
