@@ -4,7 +4,6 @@
     "core": "core.html",
     "format_file": "format_file.html",
     "utils": "utils.html",
-    "validation": "validation.html",
-    "release": "release.html"
+    "validation": "validation.html"
   }
 }
