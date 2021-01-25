@@ -946,11 +946,11 @@ ORDER BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmpop4zflz2
+<pre>Something went wrong in file: /tmp/tmpli8t_zsb
 [WARNING] Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
-Aborting formatting for file /tmp/tmpop4zflz2
-Aborting formatting for file /tmp/tmpop4zflz2
+Aborting formatting for file /tmp/tmpli8t_zsb
+Aborting formatting for file /tmp/tmpli8t_zsb
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 qwer2, -- ;
@@ -1011,11 +1011,11 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmp8t4q02ii
+<pre>Something went wrong in file: /tmp/tmpoq80h6xh
 [WARNING] Identified unbalanced parenthesis at lines [[3], [8]]
 You should check your parenthesis
-Aborting formatting for file /tmp/tmp8t4q02ii
-Aborting formatting for file /tmp/tmp8t4q02ii
+Aborting formatting for file /tmp/tmpoq80h6xh
+Aborting formatting for file /tmp/tmpoq80h6xh
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 (qwer2, -- ;
@@ -1076,13 +1076,13 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmp8ipv6ujr
+<pre>Something went wrong in file: /tmp/tmp_lub8e70
 [WARNING] Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
 [WARNING] Identified unbalanced parenthesis at lines [[3, 8]]
 You should check your parenthesis
-Aborting formatting for file /tmp/tmp8ipv6ujr
-Aborting formatting for file /tmp/tmp8ipv6ujr
+Aborting formatting for file /tmp/tmp_lub8e70
+Aborting formatting for file /tmp/tmp_lub8e70
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 (qwer2, -- ;
@@ -1105,8 +1105,7 @@ From my_table;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Function-to-format-many-SQL-files">Function to format many SQL files<a class="anchor-link" href="#Function-to-format-many-SQL-files"> </a></h3><p>With built-in CLI via <code>fastcore</code></p>
-
+<h3 id="Function-to-format-many-SQL-files">Function to format many SQL files<a class="anchor-link" href="#Function-to-format-many-SQL-files"> </a></h3>
 </div>
 </div>
 </div>
@@ -1121,7 +1120,7 @@ From my_table;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L156" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>:"(Relative) path to SQL files. You can also use wildcard using ".<em>sql"", <strong><code>recursive</code></strong>:"Should files also be searched in subfolders?"=</em><code>False</code>*)</p>
+<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L156" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>, <strong><code>recursive</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Format SQL <code>files</code></p>
 
@@ -1248,6 +1247,38 @@ ORDER BY car_id;
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="format_sql_files_cli" class="doc_header"><code>format_sql_files_cli</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L173" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files_cli</code>()</p>
+</blockquote>
+<p>Format SQL files</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
