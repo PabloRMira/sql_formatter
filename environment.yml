@@ -1,13 +1,14 @@
 name: sql-formatter-dev
 channels:
-  - conda-forge
   - defaults
+  - conda-forge
+  - fastai
+  - pablormira
 dependencies:
   - python=3.7
   - notebook
   - jupyter_contrib_nbextensions
-  - pre-commit
   - pip
-  - pip:
-      - nbdev==1.1.5
-      - twine
+  - nbdev=1.1.5
+  - twine
+  - easyrelease
