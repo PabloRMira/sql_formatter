@@ -7,7 +7,13 @@
 
 ## How to install
 
+Via pip
+
 `pip install sql-formatter`
+
+or via conda
+
+`conda install -c pablormira sql_formatter`
 
 ## How to use
 
