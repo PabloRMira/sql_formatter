@@ -5,12 +5,13 @@ __all__ = ['assert_and_print', 'compress_dicts', 'remove_whitespaces_newline', '
            'mark_ci_comments', 'mark_comments', 'split_query', 'split_apply_concat', 'split_comment_quote',
            'split_comment', 'identify_in_sql', 'split_by_semicolon', 'replace_newline_chars', 'identify_end_of_fields',
            'add_newline_indentation', 'extract_outer_subquery', 'format_subquery', 'check_sql_query',
-           'check_skip_marker', 'identify_create_table_view', 'count_lines', 'find_line_number', 'jaccard_distance',
+           'check_skip_marker', 'identify_create_table_view', 'count_lines', 'find_line_number', 'disimilarity',
            'assign_comment']
 
 # Cell
 import re
 from itertools import accumulate
+from collections import Counter
 import operator
 
 # Cell
@@ -599,15 +600,20 @@ def find_line_number(s, positions):
     return [s[0:pos].count("\n") + 1 for pos in positions]
 
 # Cell
-def jaccard_distance(str1, str2):
-    "Calculate the Jaccard distance between two strings by word"
+def disimilarity(str1, str2):
+    "Calculate disimilarity between two strings by word"
+    # split by space or comma
     split1 = re.split(r"(?:\s|,)", str1)
     split1 = [sp for sp in split1 if sp != ""]
     split2 = re.split(r"(?:\s|,)", str2)
     split2 = [sp for sp in split2 if sp != ""]
-    set1 = set(split1)
-    set2 = set(split2)
-    return float(len(set1 & set2) / len(set1 | set2))
+    count1 = Counter(split1)
+    count2 = Counter(split2)
+    all_words = set(list(count1.keys()) + list(count2.keys()))
+    disimilarity = 0
+    for w in all_words:
+        disimilarity += abs(count1[w] - count2[w])
+    return disimilarity
 
 # Cell
 def assign_comment(fs, cds):
@@ -628,11 +634,11 @@ def assign_comment(fs, cds):
     for i, d in enumerate(cds):
         cum_preceding = "".join([d["preceding"] for d in cds[0:i+1]])
         cp_list = [
-            jaccard_distance(replace_and_or.sub("", s.strip()), cum_preceding)
+            disimilarity(replace_and_or.sub("", s.strip()), cum_preceding)
             for s in accumulate([s for s in fsplit_s], operator.add)
         ]
         # get line number with maximal jaccard distance (most similar)
-        line_number = max(enumerate(cp_list), key=lambda x: x[1])[0]
+        line_number = min(enumerate(cp_list), key=lambda x: x[1])[0]
         line = fsplit_s[line_number]
         next_line = (
             fsplit_s[line_number + 1]  # next line is relevant for indentation of whole line comments
