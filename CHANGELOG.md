@@ -1,5 +1,19 @@
 # Release notes
 
+## 0.5.5
+
+### :hammer_and_wrench: Refactoring / Maintenance:
+* [MNT] Change set based jacard distance by word count based disimilarity measure to robustify comment assignment ([#145](https://github.com/PabloRMira/sql_formatter/pull/145))
+
+## 0.5.4
+
+### :bulb: Documentation:
+* [DOC] Add hint on how to install via conda
+
+### :hammer_and_wrench: Refactoring / Maintenance:
+* [MNT] remove fastcore dependency ([#144](https://github.com/PabloRMira/sql_formatter/pull/144))
+* [MNT] Remove deprecated CLIs
+
 ## 0.5.3
 
 ### :tada: Bugfixes:
