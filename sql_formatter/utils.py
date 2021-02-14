@@ -3,10 +3,10 @@
 __all__ = ['assert_and_print', 'compress_dicts', 'remove_whitespaces_newline', 'remove_whitespaces_comments',
            'remove_redundant_whitespaces', 'remove_whitespaces_parenthesis', 'add_whitespaces_between_symbols',
            'mark_ci_comments', 'mark_comments', 'split_query', 'split_apply_concat', 'split_comment_quote',
-           'split_comment', 'identify_in_sql', 'split_by_semicolon', 'replace_newline_chars', 'identify_end_of_fields',
-           'add_newline_indentation', 'extract_outer_subquery', 'format_subquery', 'check_sql_query',
-           'check_skip_marker', 'identify_create_table_view', 'count_lines', 'find_line_number', 'disimilarity',
-           'assign_comment']
+           'split_comment', 'identify_in_sql', 'split_by_semicolon', 'replace_newline_chars', 'sub_in_sql',
+           'add_whitespaces_after_comma', 'identify_end_of_fields', 'add_newline_indentation', 'extract_outer_subquery',
+           'format_subquery', 'check_sql_query', 'check_skip_marker', 'identify_create_table_view', 'count_lines',
+           'find_line_number', 'disimilarity', 'assign_comment']
 
 # Cell
 import re
@@ -472,6 +472,22 @@ def replace_newline_chars(s):
     positions = identify_in_sql("\n", s)
     clean_s = "".join([c if i not in positions else " " for i, c in enumerate(s)])
     return clean_s
+
+# Cell
+def sub_in_sql(regex, repl, s):
+    "Subsitute `regex` with `repl` in query `s` ignoring comments and text in quotes"
+    split_s = split_comment_quote(s)  # split by comment / non-comment and quote / non-quote
+    for d in split_s:  # loop on dictionaries with strings
+        if not d["comment"] and not d["quote"]:  # only for non comments and non text in quotes
+            d["string"] = re.sub(regex, repl, d["string"])
+    s = "".join(d["string"] for d in split_s)
+    return s
+
+# Cell
+def add_whitespaces_after_comma(s):
+    "Add whitespace after comma in query `s` if there is no whitespace"
+    s = sub_in_sql(r",([\w\d]+)", r", \1", s)
+    return s
 
 # Cell
 def identify_end_of_fields(s):
