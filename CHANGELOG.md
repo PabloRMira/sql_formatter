@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.5.6
+
+### :tada: Bugfixes:
+* [FIX] Formatter does not add space after comma ([#147](https://github.com/PabloRMira/sql_formatter/pull/147))
+
 ## 0.5.5
 
 ### :hammer_and_wrench: Refactoring / Maintenance:
