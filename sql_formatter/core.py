@@ -32,6 +32,7 @@ MAIN_STATEMENTS = [
 # Cell
 def clean_query(s):
     "Remove redundant whitespaces and mark comments boundaries and remove newlines afterwards in query `s`"
+    s = add_whitespaces_after_comma(s)  # add whitespaces after comma but no in comments or quotes
     s = remove_redundant_whitespaces(s)  # remove too many whitespaces but no newlines
     s = mark_comments(s)  # mark comments with special tokens [C], [CS] and [CI]
     s = replace_newline_chars(s)  # remove newlines but not in the comments
