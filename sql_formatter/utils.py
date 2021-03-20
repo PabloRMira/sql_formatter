@@ -496,16 +496,26 @@ def identify_end_of_fields(s):
     end_of_fields = []
     # counter for parenthesis and comments
     k = 0
+    quote_open1 = False
+    quote_open2 = False
     # loop over string characters
     for i, c in enumerate(s):
-        if c == "," and k == 0:  # field without parenthesis or after closing parenthesis
+        if c == "," and k == 0 and not quote_open1 and not quote_open2:  # field without parenthesis or after closing parenthesis
             after_c = s[i:i+6]
             if not bool(re.search(r"(?:--|\/\*|\[C\]|\[CS\])", after_c)):
                 end_of_fields.append(i)
-        elif c == "(" or s[i:i+2] in ("--" ,"/*"): # if there is an opening parenthesis or comment
+        elif (c == "(" or s[i:i+2] in ("--" ,"/*")) and not quote_open1 and not quote_open2: # if there is an opening parenthesis or comment
             k += 1
-        elif c == ")" or s[i:i+3] == "[C]":  # if there is a closing parenthesis or closing comment
+        elif (c == ")" or s[i:i+3] == "[C]") and not quote_open1 and not quote_open2:  # if there is a closing parenthesis or closing comment
             k -= 1
+        elif c == "'" and not quote_open1 and not quote_open2:
+            quote_open1 = True
+        elif c == "'" and quote_open1 and not quote_open2:
+            quote_open1 = False
+        elif c == '"' and not quote_open1 and not quote_open2:
+            quote_open2 = True
+        elif c == '"' and not quote_open1 and quote_open2:
+            quote_open2 = False
     return end_of_fields
 
 # Cell

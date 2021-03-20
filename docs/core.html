@@ -1711,6 +1711,210 @@ where asdf = 1 and qwer = 2
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Helper-function-to-reformat-too-long-lines-in-SELECT-statement">Helper function to reformat too long lines in SELECT statement<a class="anchor-link" href="#Helper-function-to-reformat-too-long-lines-in-SELECT-statement"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="reformat_too_long_line" class="doc_header"><code>reformat_too_long_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L185" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_too_long_line</code>(<strong><code>li</code></strong>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
+</blockquote>
+<p>Reformat too long line <code>li</code> if it is longer than <code>max_len</code> characters after stripping</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">reformat_too_long_line</span><span class="p">(</span>
+        <span class="s2">&quot;select concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2), substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2),</span>
+<span class="sd">              substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2),
+              substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">reformat_too_long_line</span><span class="p">(</span>
+        <span class="s2">&quot;       concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2), substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;       concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2),</span>
+<span class="sd">              substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>       concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2),
+              substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">reformat_too_long_line</span><span class="p">(</span>
+        <span class="s2">&quot;select case when asdf in (1234, 2345, 1234, 2354, 2345, 2352345, 245623462, 124123412, 124312341234) then 1&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select case when asdf in (1234,</span>
+<span class="sd">                          2345,</span>
+<span class="sd">                          1234,</span>
+<span class="sd">                          2354,</span>
+<span class="sd">                          2345,</span>
+<span class="sd">                          2352345,</span>
+<span class="sd">                          245623462,</span>
+<span class="sd">                          124123412,</span>
+<span class="sd">                          124312341234) then 1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select case when asdf in (1234,
+                          2345,
+                          1234,
+                          2354,
+                          2345,
+                          2352345,
+                          245623462,
+                          124123412,
+                          124312341234) then 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">reformat_too_long_line</span><span class="p">(</span><span class="s2">&quot;select asdf&quot;</span><span class="p">),</span>
+<span class="s2">&quot;select asdf&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="SELECT">SELECT<a class="anchor-link" href="#SELECT"> </a></h3>
 </div>
 </div>
@@ -1726,9 +1930,9 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L185" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_select" class="doc_header"><code>format_select</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L257" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_select</code>(<strong><code>s</code></strong>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
 </blockquote>
-<p>Format SELECT statement line <code>s</code></p>
+<p>Format SELECT statement line <code>s</code>. If line is longer than <code>max_len</code> then reformat line</p>
 
 </div>
 
@@ -3076,6 +3280,113 @@ where asdf = 1 and qwer = 2
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>With too long lines</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span>
+        <span class="s2">&quot;select asdf, concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2), substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">       concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2),</span>
+<span class="sd">              substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       concat(substr(concat(&#39;)0&#39;, substr(asdf, 1, 2)), -2, 2),
+              substr(concat(&#39;(0&#39;, substr(asdf, 3, 2)), -2, 2)) as qwer
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span>
+        <span class="s2">&quot;select asdf, case when asdf in (1231, 123123, 12312, 21412431234, 12341234123, 12341234, 12341234, 1234) then 1 else 0 end as qwer, asdf2&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">       case when asdf in (1231,</span>
+<span class="sd">                          123123,</span>
+<span class="sd">                          12312,</span>
+<span class="sd">                          21412431234,</span>
+<span class="sd">                          12341234123,</span>
+<span class="sd">                          12341234,</span>
+<span class="sd">                          12341234,</span>
+<span class="sd">                          1234) then 1</span>
+<span class="sd">            else 0 end as qwer,</span>
+<span class="sd">       asdf2</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       case when asdf in (1231,
+                          123123,
+                          12312,
+                          21412431234,
+                          12341234123,
+                          12341234,
+                          12341234,
+                          1234) then 1
+            else 0 end as qwer,
+       asdf2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="FROM">FROM<a class="anchor-link" href="#FROM"> </a></h3>
 </div>
 </div>
@@ -3091,7 +3402,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_from" class="doc_header"><code>format_from</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_from</code>(<strong><code>s</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Format FROM statement line <code>s</code></p>
 
@@ -3160,7 +3471,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L243" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_join" class="doc_header"><code>format_join</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L319" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_join</code>(<strong><code>s</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Format JOIN statement line <code>s</code></p>
 
@@ -3229,7 +3540,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L249" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_on" class="doc_header"><code>format_on</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L325" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_on</code>(<strong><code>s</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Format ON statement line <code>s</code></p>
 
@@ -3428,7 +3739,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L275" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_where" class="doc_header"><code>format_where</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L351" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_where</code>(<strong><code>s</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Format WHERE statement line <code>s</code></p>
 
@@ -3577,7 +3888,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L304" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statement_line" class="doc_header"><code>format_statement_line</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L380" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statement_line</code>(<strong><code>s</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Format statement line <code>s</code></p>
 
@@ -3721,7 +4032,7 @@ where asdf = 1 and qwer = 2
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L322" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_statements" class="doc_header"><code>format_statements</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L398" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_statements</code>(<strong><code>s</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Format statements lines <code>s</code></p>
 
@@ -3750,7 +4061,7 @@ where asdf = 1 and qwer = 2
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
-    <span class="n">format_statements</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer</span><span class="se">\n</span><span class="s2">from table1&quot;</span><span class="p">),</span>
+    <span class="n">format_statements</span><span class="p">(</span><span class="s2">&quot;select asdf, qwer</span><span class="se">\n</span><span class="s2">from table1&quot;</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">82</span><span class="p">),</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">select asdf,</span>
 <span class="sd">       qwer</span>
@@ -3799,7 +4110,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_multiline_comments" class="doc_header"><code>format_multiline_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L332" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_multiline_comments</code>(<strong><code>s</code></strong>)</p>
+<h4 id="format_multiline_comments" class="doc_header"><code>format_multiline_comments</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L408" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_multiline_comments</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Format multiline comments by replacing multiline comment [CI] by newline and adding indentation</p>
 
@@ -3837,7 +4148,7 @@ from   table1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="add_semicolon" class="doc_header"><code>add_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L347" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_semicolon</code>(<strong><code>s</code></strong>)</p>
+<h4 id="add_semicolon" class="doc_header"><code>add_semicolon</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L423" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_semicolon</code>(<strong><code>s</code></strong>)</p>
 </blockquote>
 <p>Add a semicolon at the of query <code>s</code></p>
 
@@ -4017,7 +4328,7 @@ FROM   table1;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L360" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>semicolon</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="format_simple_sql" class="doc_header"><code>format_simple_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L436" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_simple_sql</code>(<strong><code>s</code></strong>, <strong><code>semicolon</code></strong>=<em><code>False</code></em>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
 </blockquote>
 <p>Format a simple SQL query without subqueries <code>s</code></p>
 
@@ -4242,7 +4553,7 @@ GROUP BY car_id
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L376" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>semicolon</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="format_sql" class="doc_header"><code>format_sql</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/core.py#L452" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql</code>(<strong><code>s</code></strong>, <strong><code>semicolon</code></strong>=<em><code>False</code></em>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
 </blockquote>
 <p>Format SQL query with subqueries <code>s</code></p>
 
@@ -4742,6 +5053,81 @@ WHERE  asdf2 &gt;= 2
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>CREATE OR REPLACE TABLE asdf AS
 SELECT asdf,
+       qwer OVER (PARTITION BY asdf,
+                               qwer
+                  ORDER BY qwerty)
+FROM   table1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Too long lines query</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+<span class="n">format_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">create or replace table asdf as</span>
+<span class="s2">select asdf, </span>
+<span class="s2">case when asdf in (123412341234, 12341234123412, 123412341234, 512351235132, 123412341, 1234) then 1 else 0 end as qwerty,</span>
+<span class="s2">qwer over (</span>
+<span class="s2">partition by asdf, qwer order by qwerty</span>
+<span class="s2">)</span>
+<span class="s2">from table1</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CREATE OR REPLACE TABLE asdf AS</span>
+<span class="sd">SELECT asdf,</span>
+<span class="sd">       case when asdf in (123412341234,</span>
+<span class="sd">                          12341234123412,</span>
+<span class="sd">                          123412341234,</span>
+<span class="sd">                          512351235132,</span>
+<span class="sd">                          123412341,</span>
+<span class="sd">                          1234) then 1</span>
+<span class="sd">            else 0 end as qwerty,</span>
+<span class="sd">       qwer OVER (PARTITION BY asdf,</span>
+<span class="sd">                               qwer</span>
+<span class="sd">                  ORDER BY qwerty)</span>
+<span class="sd">FROM   table1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CREATE OR REPLACE TABLE asdf AS
+SELECT asdf,
+       case when asdf in (123412341234,
+                          12341234123412,
+                          123412341234,
+                          512351235132,
+                          123412341,
+                          1234) then 1
+            else 0 end as qwerty,
        qwer OVER (PARTITION BY asdf,
                                qwer
                   ORDER BY qwerty)
