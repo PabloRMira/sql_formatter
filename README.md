@@ -23,15 +23,24 @@ Format your SQL files via the command line
 
 You can also format all your SQL-files via
 
-`sql-formatter *.sql` in Unix
-
-or via
-
-`sql-formatter "*.sql"` in Windows
+`sql-formatter *.sql`
 
 To format all your SQL files recursively use
 
-`sql-formatter --recursive "*.sql"` in Unix and Windows
+`sql-formatter -r "*.sql"`
+
+### Controlling maximum length line via truncation
+
+The `sql_formatter` will try to truncate too long lines in the `SELECT` clause for either
+
+* Function with many arguments
+* `in` with many elements
+
+The default maximum line length is 82 after line stripping.
+
+You can control the maximum length line using e.g.
+
+`sql-formatter sql_file.sql --max-line-length=50`
 
 ### Usage with `pre-commit`
 
@@ -48,8 +57,22 @@ repos:
       language: system
       entry: sql-formatter
       files: \.sql$
-
 ```
+
+or
+
+```yaml
+repos:
+  - repo: local
+    hooks:
+    - id: sql_formatter
+      name: SQL formatter
+      language: system
+      entry: sql-formatter --max-line-length=50
+      files: \.sql$
+```
+
+for a custom maximum line length truncation of e.g. 50
 
 ### Usage in Python
 

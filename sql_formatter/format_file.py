@@ -13,8 +13,8 @@ from .utils import *
 from .validation import *
 
 # Cell
-def format_sql_commands(s):
-    "Format SQL commands in `s`"
+def format_sql_commands(s, max_len=82):
+    "Format SQL commands in `s`. If SELECT line is longer than `max_len` then reformat line"
     s = s.strip()  # strip file contents
     split_s = split_by_semicolon(s)  # split by query
     # validate semicolon
@@ -40,7 +40,7 @@ def format_sql_commands(s):
             else:
                 split_s2 = [sp]
             formatted_split_s2 = [
-                "\n\n\n" + format_sql(sp, semicolon=True).strip()
+                "\n\n\n" + format_sql(sp, semicolon=True, max_len=max_len).strip()
                 if check_sql_query(sp) and not check_skip_marker(sp)
                 else sp
                 for sp in split_s2
@@ -100,8 +100,9 @@ def format_sql_commands(s):
         return error_dict
 
 # Cell
-def format_sql_file(f):
+def format_sql_file(f, max_len=82):
     """Format file `f` with SQL commands and overwrite the file.
+    If SELECT line is longer than 82 characters then reformat line
 
     Return exit_code:
     * 0 = Everything already formatted
@@ -112,7 +113,7 @@ def format_sql_file(f):
     with open(f, "r") as file:
         sql_commands = file.read()
     # format SQL statements
-    formatted_file = format_sql_commands(sql_commands)
+    formatted_file = format_sql_commands(sql_commands, max_len=max_len)
     if isinstance(formatted_file, dict):
         print(f"Something went wrong in file: {f}")
         if "semicolon" in formatted_file.keys():
@@ -153,7 +154,7 @@ def format_sql_file(f):
     return exit_code
 
 # Cell
-def format_sql_files(files, recursive=False):
+def format_sql_files(files, recursive=False, max_len=82):
     "Format SQL `files`"
     exit_codes = []
     # if wildcard "*" is input then use it
@@ -163,7 +164,7 @@ def format_sql_files(files, recursive=False):
         else:
             files = glob(files[0])
     for file in files:
-        exit_codes.append(format_sql_file(file))
+        exit_codes.append(format_sql_file(file, max_len=max_len))
     if sum(exit_codes) == 0:
         print("Nothing to format, everything is fine!")
     else:
@@ -185,5 +186,12 @@ def format_sql_files_cli():
         help="Should files also be searched in subfolders?",
         action="store_true"
     )
+    parser.add_argument(
+        "-m",
+        "--max-line-length",
+        help="Maximum line length for trunction of SELECT fields",
+        type=int,
+        default=82
+    )
     args = parser.parse_args()
-    format_sql_files(files=args.files, recursive=args.recursive)
+    format_sql_files(files=args.files, recursive=args.recursive, max_len=args.max_line_length)
