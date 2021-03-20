@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.6.1
+
+### :tada: Bugfixes:
+* [FIX] Unbound error in reformat_too_long_line ([#150](https://github.com/PabloRMira/sql_formatter/pull/150))
+
 ## 0.6.0
 
 ### :rocket: New features:
