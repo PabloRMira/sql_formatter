@@ -5,7 +5,6 @@ __all__ = ['format_sql_commands', 'format_sql_file', 'format_sql_files', 'format
 # Cell
 import re
 import os
-import toml
 import tempfile
 import argparse
 from glob import glob
@@ -114,7 +113,7 @@ def format_sql_file(f, max_len=82):
     with open(f, "r") as file:
         sql_commands = file.read()
     # format SQL statements
-    formatted_file = format_sql_commands(sql_commands)
+    formatted_file = format_sql_commands(sql_commands, max_len=max_len)
     if isinstance(formatted_file, dict):
         print(f"Something went wrong in file: {f}")
         if "semicolon" in formatted_file.keys():
@@ -155,14 +154,9 @@ def format_sql_file(f, max_len=82):
     return exit_code
 
 # Cell
-def format_sql_files(files, recursive=False):
+def format_sql_files(files, recursive=False, max_len=82):
     "Format SQL `files`"
     exit_codes = []
-    max_len = 82 # default maximal length for SELECT line
-    # look for pyproject.toml to look for max_len parameter
-    if os.path.exists("pyproject.toml"):
-        cfg = toml.load("pyproject.toml")
-        max_len = cfg["sql_formatter"]["max_line_length"]
     # if wildcard "*" is input then use it
     if len(files) == 1 and re.search("\*", files[0]):
         if recursive:  # if recursive search
@@ -192,5 +186,12 @@ def format_sql_files_cli():
         help="Should files also be searched in subfolders?",
         action="store_true"
     )
+    parser.add_argument(
+        "-m",
+        "--max-line-length",
+        help="Maximum line length for trunction of SELECT fields",
+        type=int,
+        default=82
+    )
     args = parser.parse_args()
-    format_sql_files(files=args.files, recursive=args.recursive)
+    format_sql_files(files=args.files, recursive=args.recursive, max_len=args.max_line_length)

@@ -195,9 +195,9 @@ def reformat_too_long_line(li, max_len=82):
             quote_open2 = False # quote "
             first_append = True
             for i, s in enumerate(li):
-                if function_re.match(li[i-2:i]) and not quote_open1 and not quote_open2 and not in_function:
+                if function_re.match(li[i-1:i+1]) and not quote_open1 and not quote_open2 and not in_function:
                     in_function = True
-                    indentation = i
+                    indentation = i+1
                 elif s == "(" and not quote_open1 and not quote_open2 and in_function:
                     k += 1
                 elif s == ")" and not quote_open1 and not quote_open2 and in_function:
@@ -459,7 +459,7 @@ def format_simple_sql(s, semicolon=False, max_len=82):
 # Cell
 def format_sql(s, semicolon=False, max_len=82):
     "Format SQL query with subqueries `s`"
-    s = format_simple_sql(s, semicolon=semicolon, max_len=82)  # basic query formatting
+    s = format_simple_sql(s, semicolon=semicolon, max_len=max_len)  # basic query formatting
     # get first outer subquery positions
     subquery_pos = extract_outer_subquery(s)
     # loop over subqueries

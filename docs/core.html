@@ -1834,6 +1834,48 @@ where asdf = 1 and qwer = 2
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
     <span class="n">reformat_too_long_line</span><span class="p">(</span>
+        <span class="s2">&quot;            when concat(&#39;asdf&#39;, &#39;qwer&#39;, &#39;qwerqwerqwerqwerqwerqwerqwr&#39;, substr(concat(&#39;asdf&#39;, &#39;qwer&#39;), 1, 2)) then 2&quot;</span>
+    <span class="p">),</span>
+<span class="s2">&quot;            when concat(&#39;asdf&#39;,</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;                        &#39;qwer&#39;,</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;                        &#39;qwerqwerqwerqwerqwerqwerqwr&#39;,</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;                        substr(concat(&#39;asdf&#39;, &#39;qwer&#39;), 1, 2)) then 2&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>            when concat(&#39;asdf&#39;,
+                        &#39;qwer&#39;,
+                        &#39;qwerqwerqwerqwerqwerqwerqwr&#39;,
+                        substr(concat(&#39;asdf&#39;, &#39;qwer&#39;), 1, 2)) then 2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">reformat_too_long_line</span><span class="p">(</span>
         <span class="s2">&quot;select case when asdf in (1234, 2345, 1234, 2354, 2345, 2352345, 245623462, 124123412, 124312341234) then 1&quot;</span>
     <span class="p">),</span>
 <span class="sd">&quot;&quot;&quot;</span>

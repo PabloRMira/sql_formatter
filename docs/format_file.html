@@ -164,7 +164,7 @@ nb_path: "nbs/01_format_file.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_commands" class="doc_header"><code>format_sql_commands</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_commands</code>(<strong><code>s</code></strong>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
+<h4 id="format_sql_commands" class="doc_header"><code>format_sql_commands</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_commands</code>(<strong><code>s</code></strong>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
 </blockquote>
 <p>Format SQL commands in <code>s</code>. If SELECT line is longer than <code>max_len</code> then reformat line</p>
 
@@ -215,7 +215,8 @@ nb_path: "nbs/01_format_file.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>--- Views for some nice data mart ---
+<pre>82
+--- Views for some nice data mart ---
 use database my_database;
 use schema my_schema;
 
@@ -310,7 +311,8 @@ ORDER BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>use database my_database;
+<pre>82
+use database my_database;
 
 /*skip-formatter*/
 create Or replace View my_view aS
@@ -367,7 +369,8 @@ GROUP BY asdf;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE my_table AS
+<pre>82
+CREATE OR REPLACE TABLE my_table AS
 SELECT asdf,
        qwer
 FROM   table2
@@ -417,7 +420,8 @@ GROUP BY asdf;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE my_table AS
+<pre>82
+CREATE OR REPLACE TABLE my_table AS
 SELECT asdf,
        qwer
 FROM   table2
@@ -480,7 +484,8 @@ GROUP BY asdf; -- some comment
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE TABLE my_table AS
+<pre>82
+CREATE TABLE my_table AS
 SELECT asdf,
        qwer, /* ; */
        qwer2, -- ;
@@ -549,7 +554,8 @@ FROM   my_table; /* Another comment */
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TRANSIENT TABLE my_table AS
+<pre>82
+CREATE OR REPLACE TRANSIENT TABLE my_table AS
 SELECT asdf,
        qwer, /* ; */
        qwer2, -- ;
@@ -620,7 +626,8 @@ FROM   my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;semicolon&#39;: {&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 7)]}}
+<pre>82
+{&#39;semicolon&#39;: {&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 7)]}}
 </pre>
 </div>
 </div>
@@ -674,7 +681,8 @@ FROM   my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;unbalanced_parenthesis&#39;: {&#39;error_code&#39;: 3, &#39;lines&#39;: [[3, 4], [9]]}}
+<pre>82
+{&#39;unbalanced_parenthesis&#39;: {&#39;error_code&#39;: 3, &#39;lines&#39;: [[3, 4], [9]]}}
 </pre>
 </div>
 </div>
@@ -731,7 +739,8 @@ FROM   my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;semicolon&#39;: {&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 8)]}, &#39;unbalanced_parenthesis&#39;: {&#39;error_code&#39;: 3, &#39;lines&#39;: [[3, 4, 9]]}}
+<pre>82
+{&#39;semicolon&#39;: {&#39;error_code&#39;: 2, &#39;lines&#39;: [(1, 8)]}, &#39;unbalanced_parenthesis&#39;: {&#39;error_code&#39;: 3, &#39;lines&#39;: [[3, 4, 9]]}}
 </pre>
 </div>
 </div>
@@ -782,7 +791,8 @@ FROM   my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;unbalanced_case&#39;: {&#39;error_code&#39;: 4, &#39;lines&#39;: [[3]]}}
+<pre>82
+{&#39;unbalanced_case&#39;: {&#39;error_code&#39;: 4, &#39;lines&#39;: [[3]]}}
 </pre>
 </div>
 </div>
@@ -810,7 +820,7 @@ FROM   my_table;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L104" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
+<h4 id="format_sql_file" class="doc_header"><code>format_sql_file</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L103" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_file</code>(<strong><code>f</code></strong>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
 </blockquote>
 <p>Format file <code>f</code> with SQL commands and overwrite the file.
 If SELECT line is longer than 82 characters then reformat line</p>
@@ -866,7 +876,8 @@ If SELECT line is longer than 82 characters then reformat line</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>--- Views for some nice data mart ---
+<pre>82
+--- Views for some nice data mart ---
 use database my_database;
 use schema my_schema;
 
@@ -947,11 +958,12 @@ ORDER BY car_id;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmp0iwoln5s
+<pre>82
+Something went wrong in file: /tmp/tmp2qgedw93
 [WARNING] Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
-Aborting formatting for file /tmp/tmp0iwoln5s
-Aborting formatting for file /tmp/tmp0iwoln5s
+Aborting formatting for file /tmp/tmp2qgedw93
+Aborting formatting for file /tmp/tmp2qgedw93
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 qwer2, -- ;
@@ -1012,11 +1024,12 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmpsw7wy995
+<pre>82
+Something went wrong in file: /tmp/tmp5rkzfb24
 [WARNING] Identified unbalanced parenthesis at lines [[3], [8]]
 You should check your parenthesis
-Aborting formatting for file /tmp/tmpsw7wy995
-Aborting formatting for file /tmp/tmpsw7wy995
+Aborting formatting for file /tmp/tmp5rkzfb24
+Aborting formatting for file /tmp/tmp5rkzfb24
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 (qwer2, -- ;
@@ -1077,13 +1090,14 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Something went wrong in file: /tmp/tmp0ai6vh94
+<pre>82
+Something went wrong in file: /tmp/tmpzf3rofts
 [WARNING] Identified CREATE keyword more than twice within the same query at lines [(1, 7)]
 You may have forgotten a semicolon (;) to delimit the queries
 [WARNING] Identified unbalanced parenthesis at lines [[3, 8]]
 You should check your parenthesis
-Aborting formatting for file /tmp/tmp0ai6vh94
-Aborting formatting for file /tmp/tmp0ai6vh94
+Aborting formatting for file /tmp/tmpzf3rofts
+Aborting formatting for file /tmp/tmpzf3rofts
 create or replace transient table my_table As
 select asdf, Qwer, /* ; */
 (qwer2, -- ;
@@ -1121,7 +1135,7 @@ From my_table;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L158" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>, <strong><code>recursive</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="format_sql_files" class="doc_header"><code>format_sql_files</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L157" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files</code>(<strong><code>files</code></strong>, <strong><code>recursive</code></strong>=<em><code>False</code></em>, <strong><code>max_len</code></strong>=<em><code>82</code></em>)</p>
 </blockquote>
 <p>Format SQL <code>files</code></p>
 
@@ -1179,7 +1193,9 @@ From my_table;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>All specified files were formatted!
+<pre>82
+82
+All specified files were formatted!
 --- Views for some nice data mart ---
 use database my_database;
 use schema my_schema;
@@ -1263,7 +1279,7 @@ ORDER BY car_id;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="format_sql_files_cli" class="doc_header"><code>format_sql_files_cli</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L180" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files_cli</code>()</p>
+<h4 id="format_sql_files_cli" class="doc_header"><code>format_sql_files_cli</code><a href="https://github.com/PabloRMira/sql_formatter/tree/master/sql_formatter/format_file.py#L174" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>format_sql_files_cli</code>()</p>
 </blockquote>
 <p>Format SQL files</p>
 
