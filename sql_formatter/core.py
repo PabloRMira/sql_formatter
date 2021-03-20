@@ -219,6 +219,10 @@ def reformat_too_long_line(li, max_len=82):
                     quote_open2 = True
                 elif s == '"' and not quote_open1 and quote_open2:
                     quote_open2 = False
+            out_list.append(li[j:].strip())
+            if len(out_list) > 1:
+                join_str = "\n" + " " * indentation
+                li = join_str.join(out_list)
         elif "in (" in li:
             out_list = []
             in_in = False
@@ -255,10 +259,10 @@ def reformat_too_long_line(li, max_len=82):
                     quote_open2 = True
                 elif s == '"' and not quote_open1 and quote_open2:
                     quote_open2 = False
-        out_list.append(li[j:].strip())
-        if len(out_list) > 1:
-            join_str = "\n" + " " * indentation
-            li = join_str.join(out_list)
+            out_list.append(li[j:].strip())
+            if len(out_list) > 1:
+                join_str = "\n" + " " * indentation
+                li = join_str.join(out_list)
     return li
 
 # Cell
