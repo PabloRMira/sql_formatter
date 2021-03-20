@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.6.0
+
+### :rocket: New features:
+* [FEA] Add newline and indentation for too long lines ([#148](https://github.com/PabloRMira/sql_formatter/pull/148))
+
 ## 0.5.6
 
 ### :tada: Bugfixes:
