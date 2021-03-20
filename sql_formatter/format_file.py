@@ -5,6 +5,7 @@ __all__ = ['format_sql_commands', 'format_sql_file', 'format_sql_files', 'format
 # Cell
 import re
 import os
+import toml
 import tempfile
 import argparse
 from glob import glob
