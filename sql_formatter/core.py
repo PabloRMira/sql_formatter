@@ -226,6 +226,7 @@ def reformat_too_long_line(li, max_len=82):
             quote_open1 = False  # quote '
             quote_open2 = False # quote "
             first_append = True
+            lcol = 0  # line code column
             for i, s in enumerate(li):
                 if "in (" in li[i-4:i] and not quote_open1 and not quote_open2 and not in_in:
                     in_in = True
@@ -233,12 +234,19 @@ def reformat_too_long_line(li, max_len=82):
                 elif s == ")" and not quote_open1 and not quote_open2 and in_in:
                     in_in = False
                 elif s == "," and in_in and not quote_open1 and not quote_open2:
+                    line_chunk = li[j:i+1]
+                    lcol = len(line_chunk.strip()) + indentation
                     if first_append:
-                        out_list.append(li[j:i+1].rstrip())
-                        first_append = False
+                        lcol = len(line_chunk.strip())
+                        if lcol >= max_len:
+                            out_list.append(line_chunk.rstrip())
+                            first_append = False
+                            j = i + 1
                     else:
-                        out_list.append(li[j:i+1].strip())
-                    j = i + 1
+                        lcol = len(line_chunk.strip()) + indentation
+                        if lcol >= max_len:
+                            out_list.append(line_chunk.strip())
+                            j = i + 1
                 elif s == "'" and not quote_open1 and not quote_open2:
                     quote_open1 = True
                 elif s == "'" and quote_open1 and not quote_open2:
