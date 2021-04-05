@@ -240,7 +240,27 @@ def split_query(s):
             start = i
             select_region = False # after from ends the select region
         elif (
-            (s[i:i+2] == "/*" or s[i:i+4] == "[CS]") and
+            s[i:i+4] == "[CS]" and
+            not comment_open1 and
+            not comment_open2 and
+            not quote_open1 and
+            not quote_open2
+        ):  # if there is an opening full line comment
+            k += 1
+            s_comp.append({
+                "string": s[start:i],
+                "comment": comment_region,
+                "quote": quote_region,
+                "select": select_region
+            })
+            start = i
+            comment_region = True
+            if s[i:i+6] == "[CS]/*":
+                comment_open1 = True
+            else:
+                comment_open2 = True
+        elif (
+            s[i:i+2] == "/*" and
             not comment_open1 and
             not comment_open2 and
             not quote_open1 and
