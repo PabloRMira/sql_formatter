@@ -145,3 +145,5 @@ token
 .gh-credentials
 conda-recipe/*
 conda-bld/*
+
+test_sql/
