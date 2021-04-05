@@ -232,9 +232,9 @@ def reformat_too_long_line(li, max_len=82):
             first_append = True
             lcol = 0  # line code column
             for i, s in enumerate(li):
-                if "in (" in li[i-4:i] and not quote_open1 and not quote_open2 and not in_in:
+                if "in (" in li[i-3:i+1] and not quote_open1 and not quote_open2 and not in_in:
                     in_in = True
-                    indentation = i
+                    indentation = i + 1
                 elif s == ")" and not quote_open1 and not quote_open2 and in_in:
                     in_in = False
                 elif s == "," and in_in and not quote_open1 and not quote_open2:

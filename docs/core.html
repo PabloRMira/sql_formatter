@@ -2006,6 +2006,53 @@ where asdf = 1 and qwer = 2
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">reformat_too_long_line</span><span class="p">(</span>
+        <span class="s2">&quot;select case when asdf in (&#39;1234&#39;, &#39;2345&#39;, &#39;1234&#39;, &#39;2354&#39;, &#39;2345&#39;, &#39;2352345&#39;, &#39;245623462&#39;, &#39;124123412&#39;, &#39;124312341234&#39;) then 1&quot;</span><span class="p">,</span>
+        <span class="n">max_len</span><span class="o">=</span><span class="mi">40</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select case when asdf in (&#39;1234&#39;, &#39;2345&#39;,</span>
+<span class="sd">                          &#39;1234&#39;, &#39;2354&#39;,</span>
+<span class="sd">                          &#39;2345&#39;, &#39;2352345&#39;,</span>
+<span class="sd">                          &#39;245623462&#39;, &#39;124123412&#39;,</span>
+<span class="sd">                          &#39;124312341234&#39;) then 1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select case when asdf in (&#39;1234&#39;, &#39;2345&#39;,
+                          &#39;1234&#39;, &#39;2354&#39;,
+                          &#39;2345&#39;, &#39;2352345&#39;,
+                          &#39;245623462&#39;, &#39;124123412&#39;,
+                          &#39;124312341234&#39;) then 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
     <span class="n">reformat_too_long_line</span><span class="p">(</span><span class="s2">&quot;select asdf&quot;</span><span class="p">),</span>
 <span class="s2">&quot;select asdf&quot;</span>
 <span class="p">)</span>
@@ -3577,6 +3624,59 @@ where asdf = 1 and qwer = 2
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Long line with <code>in (...)</code> and quotes</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_select</span><span class="p">(</span>
+        <span class="s2">&quot;select asdf, case when asdf in (&#39;1231&#39;, &#39;123123&#39;, &#39;12312&#39;, &#39;21412431234&#39;, &#39;12341234123&#39;, &#39;12341234&#39;, &#39;12341234&#39;, &#39;1234&#39;) then 1 else 0 end as qwer, asdf2&quot;</span>
+    <span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select asdf,</span>
+<span class="sd">       case when asdf in (&#39;1231&#39;, &#39;123123&#39;, &#39;12312&#39;, &#39;21412431234&#39;, &#39;12341234123&#39;, &#39;12341234&#39;,</span>
+<span class="sd">                          &#39;12341234&#39;, &#39;1234&#39;) then 1</span>
+<span class="sd">            else 0 end as qwer,</span>
+<span class="sd">       asdf2</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>select asdf,
+       case when asdf in (&#39;1231&#39;, &#39;123123&#39;, &#39;12312&#39;, &#39;21412431234&#39;, &#39;12341234123&#39;, &#39;12341234&#39;,
+                          &#39;12341234&#39;, &#39;1234&#39;) then 1
+            else 0 end as qwer,
+       asdf2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="FROM">FROM<a class="anchor-link" href="#FROM"> </a></h3>
 </div>
 </div>
@@ -3624,20 +3724,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>from   table1
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3693,20 +3779,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>    inner join table1
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3770,20 +3842,6 @@ where asdf = 1 and qwer = 2
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>        on a.asdf = b.asdf /* some comment */
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -3804,21 +3862,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>        on a.asdf = b.asdf and
-           a.qwer = b.qwer
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3843,22 +3886,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>        on a.asdf = b.asdf and
-           a.qwer = b.qwer or
-           a.qwer2 = b.qwer2
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3890,22 +3917,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>        on a.asdf = b.asdf and -- some comment
-           a.qwer = b.qwer or /* another comment */
-           a.qwer2 = b.qwer2
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3968,22 +3979,6 @@ where asdf = 1 and qwer = 2
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>WHERE  asdf = 1
-   and qwer = 1
-    or blabla = &#39;asdf&#39;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4005,22 +4000,6 @@ where asdf = 1 and qwer = 2
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>WHERE  asdf = 1 -- and some comment
-   and qwer = 1
-    or blabla = &#39;asdf&#39;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4039,22 +4018,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>WHERE  asdf = 1 -- and some comment
-   and qwer = 1
-    or blabla = &#39;asdf&#39;
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4118,21 +4081,6 @@ where asdf = 1 and qwer = 2
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>select asdf,
-       qwer
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4150,20 +4098,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>    left join table1 as abc
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4188,23 +4122,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>where  asdf = 1
-   and qwer = &#39;things&#39;
-   and blabla = 0
-    or stuff = -1
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4261,22 +4178,6 @@ where asdf = 1 and qwer = 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>select asdf,
-       qwer
-from   table1
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4386,23 +4287,6 @@ from   table1
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE my_table AS
-SELECT asdf,
-       qwer
-FROM   table1; /* something */
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4433,23 +4317,6 @@ FROM   table1; /* something */
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE my_table AS
-SELECT asdf,
-       qwer
-FROM   table1; -- some thing
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4477,23 +4344,6 @@ FROM   table1; -- some thing
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE my_table AS
-SELECT asdf,
-       qwer
-FROM   table1;
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4556,45 +4406,6 @@ FROM   table1;
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE mytable AS -- Mytable example
-/* multi line
-   comment */
-SELECT a.asdf,
-       -- some line comment
-       b.qwer, -- some comment here
-       /* and here is a line comment inside select */
-       substr(c.asdf, 1, 2) as substr_asdf,
-       /* some commenT
-          there */
-       case when a.asdf = 1 then &#39;b&#39; /* here a case comment */
-            when b.qwer = 2 then &#39;c&#39;
-            else &#39;d&#39; end as new_field, -- Some comment
-       /* and here some inline comment */
-       b.asdf2
-FROM   table1 as a
-    LEFT JOIN table2 as b -- and here a comment
-        ON a.asdf = b.asdf /* joiN this way */
-    INNER JOIN table3 as c
-        ON a.asdf = c.asdf and
-           a.qwer = b.qwer
-WHERE  a.asdf = 1 -- comment this
-   and b.qwer = 2
-   and a.asdf &lt;= 1 --comment that
-    or b.qwer &gt;= 5
-GROUP BY a.asdf
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4626,24 +4437,6 @@ GROUP BY a.asdf
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE first_table AS -- my first table
-SELECT car_id,
-       avg(price) as avg_price
-FROM   first_view
-GROUP BY car_id
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4782,32 +4575,6 @@ GROUP BY car_id
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf,
-       cast(qwer as numeric), -- some comment
-       substr(qwer1, 3, 2) as substr_qwer /* some field */
-FROM   (SELECT asdf,
-               qwer /* some nice field */
-        FROM   table1
-        WHERE  asdf = 1) as a
-    LEFT JOIN (SELECT asdf,
-                      qwer2
-               FROM   table2
-               WHERE  qwer2 = 1) as b
-        ON a.asdf = b.asdf
-WHERE  qwer1 &gt;= 0
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -4832,45 +4599,6 @@ WHERE  qwer1 &gt;= 0
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE mytable AS -- Mytable example
-/* multi line
-   comment */
-SELECT a.asdf,
-       -- some line comment
-       b.qwer, -- some comment here
-       /* and here is a line comment inside select */
-       substr(c.asdf, 1, 2) as substr_asdf,
-       /* some commenT
-          there */
-       case when a.asdf = 1 then &#39;b&#39; /* here a case comment */
-            when b.qwer = 2 then &#39;c&#39;
-            else &#39;d&#39; end as new_field, -- Some comment
-       /* and here some inline comment */
-       b.asdf2
-FROM   table1 as a
-    LEFT JOIN table2 as b -- and here a comment
-        ON a.asdf = b.asdf /* joiN this way */
-    INNER JOIN table3 as c
-        ON a.asdf = c.asdf and
-           a.qwer = b.qwer
-WHERE  a.asdf = 1 -- comment this
-   and b.qwer = 2
-   and a.asdf &lt;= 1 --comment that
-    or b.qwer &gt;= 5
-GROUP BY a.asdf
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4954,32 +4682,6 @@ GROUP BY a.asdf
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf,
-       qwer
-FROM   (SELECT a.asdf,
-               lead(a.substr_qwer) OVER (PARTITION BY a.asdf,
-                                                      asdf2
-                                         ORDER BY qwer) as lead_qwerty
-        FROM   (SELECT asdf,
-                       substr(qwer, 3, 2) as substr_qwer
-                FROM   table2) as a
-            INNER JOIN (SELECT asdf,
-                               qwer
-                        FROM   table3) as b
-                ON a.qwer = b.qwer)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -5013,24 +4715,6 @@ FROM   (SELECT a.asdf,
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf,
-       qwer
-FROM   (SELECT DISTINCT asdf,
-                        qwer
-        FROM   table1)
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -5114,29 +4798,6 @@ FROM   (SELECT DISTINCT asdf,
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf
-FROM   (SELECT asdf,
-               qwer /* some comment */
-        FROM   (SELECT a.asdf,
-                       b.qwer --some comment
-                FROM   (SELECT asdf
-                        FROM   table1) as a
-                    RIGHT JOIN (SELECT qwer
-                                FROM   table2) as b
-                        ON a.asdf = b.asdf))
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -5172,28 +4833,6 @@ FROM   (SELECT asdf,
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>SELECT asdf,
-       qwer
-FROM   table1
-UNION
-SELECT qwer,
-       asdf,
-       asdf2
-FROM   table3
-WHERE  asdf2 &gt;= 2
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -5234,25 +4873,6 @@ WHERE  asdf2 &gt;= 2
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE asdf AS
-SELECT asdf,
-       qwer OVER (PARTITION BY asdf,
-                               qwer
-                  ORDER BY qwerty)
-FROM   table1
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -5298,28 +4918,6 @@ FROM   table1
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CREATE OR REPLACE TABLE asdf AS
-SELECT asdf,
-       case when asdf in (123412341234, 12341234123412, 123412341234, 512351235132, 123412341,
-                          1234) then 1
-            else 0 end as qwerty,
-       qwer OVER (PARTITION BY asdf,
-                               qwer
-                  ORDER BY qwerty)
-FROM   table1
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
