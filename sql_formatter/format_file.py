@@ -8,6 +8,7 @@ import os
 import tempfile
 import argparse
 from glob import glob
+import sql_formatter
 from .core import *
 from .utils import *
 from .validation import *
@@ -192,6 +193,12 @@ def format_sql_files_cli():
         help="Maximum line length for trunction of SELECT fields",
         type=int,
         default=82
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"sql_formatter version {sql_formatter.__version__}"
     )
     args = parser.parse_args()
     format_sql_files(files=args.files, recursive=args.recursive, max_len=args.max_line_length)
