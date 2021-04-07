@@ -3,7 +3,12 @@
 ## 0.6.1
 
 ### :tada: Bugfixes:
+* [FIX] reformating of long lines with in (...) not working ([#154](https://github.com/PabloRMira/sql_formatter/pull/154))
+* [FIX] line comments with -- cancel further formatting ([#152](https://github.com/PabloRMira/sql_formatter/pull/152))
 * [FIX] Unbound error in reformat_too_long_line ([#150](https://github.com/PabloRMira/sql_formatter/pull/150))
+
+### :hammer_and_wrench: Refactoring / Maintenance:
+* [MNT] Add a --version (-v) flag to the CLI ([#157](https://github.com/PabloRMira/sql_formatter/pull/157))
 
 ## 0.6.0
 
