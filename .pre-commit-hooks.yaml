@@ -1,0 +1,6 @@
+- id: sql_formatter
+  name: SQL formatter
+  entry: sql-formatter
+  language: python
+  types: [file, sql]
+  require_serial: true
