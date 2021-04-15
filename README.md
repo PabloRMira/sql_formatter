@@ -50,16 +50,6 @@ To add `sql-formatter` as a hook to your `pre-commit` configuration to format yo
 
 ```yaml
 repos:
-  - repo: https://github.com/PabloRMira/sql_formatter
-    rev: master
-    hooks:
-    - id: sql_formatter
-```
-
-If you want to install `sql-formatter` locally and use that instead of using `pre-commit`'s default environment, set `repo: local` in your `.pre-commit-config.yaml` file:
-
-```yaml
-repos:
   - repo: local
     hooks:
     - id: sql_formatter
