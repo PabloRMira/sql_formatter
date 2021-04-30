@@ -218,9 +218,11 @@ def split_query(s):
     comment_region = False # start with non-quote
     s_comp = []  # container for string components
     start = 0
+    select_re = re.compile(r"^[\n\s\]\(]*\bselect\b\s$")
+    from_re = re.compile(r"^[\n\s\]]\bfrom\b\s$")
     # loop over character positions
     for i, c in enumerate(s):
-        if s_low[i:i+6] == "select" and k == 0:  # k = 0 -> no comment
+        if select_re.match(s_low[max(i-1, 0):i+7]) and k == 0:  # k = 0 -> no comment
             s_comp.append({
                 "string": s[start:i],
                 "comment": comment_region,
@@ -229,7 +231,7 @@ def split_query(s):
             })
             start = i
             select_region = True # after select starts the select region
-        elif s_low[i:i+4] == "from" and k == 0:
+        elif from_re.match(s_low[max(i-1, 0):i+5]) and k == 0:
             select_open = False
             s_comp.append({
                 "string": s[start:i],

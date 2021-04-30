@@ -51,8 +51,8 @@ def preformat_statements(s):
     split_s = split_query(s)  # split by comment and non comment
     split_s = compress_dicts(split_s, ["comment", "select"])
     # compile regex before loop
-    create_re = re.compile("create", flags=re.I)
-    select_re = re.compile("select", flags=re.I)
+    create_re = re.compile(r"\bcreate\b", flags=re.I)
+    select_re = re.compile(r"\bselect\b", flags=re.I)
     for statement in statements:
         if create_re.match(statement):  # special case CREATE with AS capitalize as well
             create_sub = re.compile(rf"\s*({statement} )(.*) as\b", flags=re.I)
