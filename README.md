@@ -88,7 +88,7 @@ for a custom maximum line length truncation of e.g. 50
 
 To exemplify the formatting let's say you have a SQL query like this
 
-```
+```python
 example_sql = """
 create or replace table mytable as -- mytable example
 seLecT a.asdf, b.qwer, -- some comment here
@@ -107,7 +107,7 @@ groUp by a.asdf
 
 Then you can use this package to format it so that it is better readable
 
-```
+```python
 from sql_formatter.core import format_sql
 print(format_sql(example_sql))
 ```
@@ -131,7 +131,7 @@ print(format_sql(example_sql))
 
 It can even deal with subqueries and it will correct my favourite simple careless mistake (comma at the end of SELECT statement before of FROM) for you on the flow :-)
 
-```
+```python
 print(format_sql("""
 select asdf, cast(qwer as numeric), -- some comment
 qwer1
@@ -161,7 +161,7 @@ where qwer1 >= 0
 
 The formatter is also robust against nested subqueries
 
-```
+```python
 print(format_sql("""
 select field1, field2 from (select field1, 
 field2 from (select field1, field2, 
@@ -183,7 +183,7 @@ field3 from table1 where a=1 and b>=100))
 
 If you do not want to get some query formatted in your SQL file then you can use the marker `/*skip-formatter*/` in your query to disable formatting for just the corresponding query
 
-```
+```python
 from sql_formatter.format_file import format_sql_commands
 print(format_sql_commands(
 """
@@ -322,82 +322,7 @@ You can follow the changes introduced by each version in our [CHANGELOG](https:/
 
 ## How to contribute
 
-You can contribute to this project:
-
-* writing issues
-* contributing to the code basis
-
-### Writing issues
-
-If you find some bug or you think some new feature could improve the package, please write an issue going to [New Issue](https://github.com/PabloRMira/sql_formatter/issues/new/choose) and follow the instructions under the corresponding template
-
-### Contributing to the code basis
-
-We follow the [nbdev](https://github.com/fastai/nbdev) framework for the literate programming development of this project. So if you want to contribute, please familiarize first with this framework. Specially, we write our code, tests and documentation at the same time in jupyter notebooks.
-
-If you have not heard about `nbdev` yet and / or find the idea weird to develop in notebooks as it was the case for me, please watch the following youtube video first: [I like notebooks](https://www.youtube.com/watch?v=9Q6sLbz37gk) by Jeremy Howard, the creator of this wonderful framework. 
-
-#### Setup the development environment
-Prerequisites to setup the development environment:
-* conda
-
-To setup the development environment:
-1. Fork this project repository, i.e., click on the "Fork" button on the right of the top of the repo page. This creates a copy of the project code on your GitHub user account.
-2. Clone your forked project from your GitHub account to your local disk and navigate into it:
-
-```bash
-git clone git@github.com:YourLogin/sql_formatter.git
-cd sql_formatter
-```
-
-3. Setup the `upstream` remote to be the original project repository (this one and not your forked one):
-
-```bash
-git remote add upstream https://github.com/PabloRMira/sql_formatter.git
-```
-
-4. Synchronize your master branch with the upstream branch:
-
-```bash
-git checkout master
-git pull upstream master
-```
-
-5. Create a new branch to hold your development changes:
-
-```bash
-git checkout -b my_feature_branch
-```
-
-6. Install our conda development environment running `conda env create -f environment.yml`
-7. Activate the python environment using `conda activate sql-formatter-dev`
-8. Run `nbdev_install_git_hooks`
-9. Run `pip install -e .` to install the package in editable mode. This way the command line interface (CLI) `sql-formatter` will incorporate your changes in the python code
-10. When your change is ready commit it, and push it to your fork
-
-```
-git add modified_files
-git commit -m "some message"
-git push -u origin my_feature_brach
-```
-
-11. Follow [these instructions](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) to create a pull request from your fork.
-
-#### Development Workflow
-
-For development we follow these steps:
-1. Pick an existing issue and write in the comments you would like to fix it
-  * If your idea is not documented in an issue yet, please write first an issue
-2. Create a branch from `master` and implement your idea
-3. Before pushing your solution run first `make prepush` to make sure everything is allright to merge, specially our tests
-4. Make a pull request for your solution
-  * The pull request title should be meaningful, something like "[PREFIX] Title of the issue you fixed". Please try to use some of the following prefixes: 
-    * [FIX] for bugfixes
-    * [FEA] for new features
-    * [DOC] for documentation
-    * [MNT] for maintenance
-
-> Only pull requests / commits using the aforementioned prefixes will be added to the changelog / release notes
+See [CONTRIBUTING](https://github.com/PabloRMira/sql_formatter/blob/master/CONTRIBUTING.md)
 
 ## Acknowledgements
 

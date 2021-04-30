@@ -1,33 +1,78 @@
 # How to contribute
 
-## How to get started
+You can contribute to this project:
 
-Before anything else, please install the git hooks that run automatic scripts during each commit and merge to strip the notebooks of superfluous metadata (and avoid merge conflicts). After cloning the repository, run the following command inside it:
+* writing issues
+* contributing to the code basis
+
+## Writing issues
+
+If you find some bug or you think some new feature could improve the package, please write an issue going to [New Issue](https://github.com/PabloRMira/sql_formatter/issues/new/choose) and follow the instructions under the corresponding template
+
+## Contributing to the code basis
+
+We follow the [nbdev](https://github.com/fastai/nbdev) framework for the literate programming development of this project. So if you want to contribute, please familiarize first with this framework. Specially, we write our code, tests and documentation at the same time in jupyter notebooks.
+
+If you have not heard about `nbdev` yet and / or find the idea weird to develop in notebooks as it was the case for me, please watch the following youtube video first: [I like notebooks](https://www.youtube.com/watch?v=9Q6sLbz37gk) by Jeremy Howard, the creator of this wonderful framework. 
+
+### Setup the development environment
+Prerequisites to setup the development environment:
+* conda
+
+To setup the development environment:
+1. Fork this project repository, i.e., click on the "Fork" button on the right of the top of the repo page. This creates a copy of the project code on your GitHub user account.
+2. Clone your forked project from your GitHub account to your local disk and navigate into it:
+
+```bash
+git clone git@github.com:YourLogin/sql_formatter.git
+cd sql_formatter
 ```
-nbdev_install_git_hooks
+
+3. Setup the `upstream` remote to be the original project repository (this one and not your forked one):
+
+```bash
+git remote add upstream https://github.com/PabloRMira/sql_formatter.git
 ```
 
-## Did you find a bug?
+4. Synchronize your master branch with the upstream branch:
 
-* Ensure the bug was not already reported by searching on GitHub under Issues.
-* If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, and a code sample or an executable test case demonstrating the expected behavior that is not occurring.
-* Be sure to add the complete error messages.
+```bash
+git checkout master
+git pull upstream master
+```
 
-#### Did you write a patch that fixes a bug?
+5. Create a new branch to hold your development changes:
 
-* Open a new GitHub pull request with the patch.
-* Ensure that your PR includes a test that fails without your patch, and pass with it.
-* Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
+```bash
+git checkout -b my_feature_branch
+```
 
-## PR submission guidelines
+6. Install our conda development environment running `conda env create -f environment.yml`
+7. Activate the python environment using `conda activate sql-formatter-dev`
+8. Run `nbdev_install_git_hooks`
+9. Run `pip install -e .` to install the package in editable mode. This way the command line interface (CLI) `sql-formatter` will incorporate your changes in the python code
+10. When your change is ready commit it, and push it to your fork
 
-* Keep each PR focused. While it's more convenient, do not combine several unrelated fixes together. Create as many branches as needing to keep each PR focused.
-* Do not mix style changes/fixes with "functional" changes. It's very difficult to review such PRs and it most likely get rejected.
-* Do not add/remove vertical whitespace. Preserve the original style of the file you edit as much as you can.
-* Do not turn an already submitted PR into your development playground. If after you submitted PR, you discovered that more work is needed - close the PR, do the required work and then submit a new PR. Otherwise each of your commits requires attention from maintainers of the project.
-* If, however, you submitted a PR and received a request for changes, you should proceed with commits inside that PR, so that the maintainer can see the incremental fixes and won't need to review the whole PR again. In the exception case where you realize it'll take many many commits to complete the requests, then it's probably best to close the PR, do the work and then submit it again. Use common sense where you'd choose one way over another.
+```
+git add modified_files
+git commit -m "some message"
+git push -u origin my_feature_brach
+```
 
-## Do you want to contribute to the documentation?
+11. Follow [these instructions](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) to create a pull request from your fork.
 
-* Docs are automatically created from the notebooks in the nbs folder.
+### Development Workflow
 
+For development we follow these steps:
+1. Pick an existing issue and write in the comments you would like to fix it
+  * If your idea is not documented in an issue yet, please write first an issue
+2. Create a branch from `master` and implement your idea
+3. Before pushing your solution run first `make prepush` to make sure everything is allright to merge, specially our tests
+4. Make a pull request for your solution
+  * The pull request title should be meaningful, something like "[PREFIX] Title of the issue you fixed". Please try to use some of the following prefixes: 
+    * [FIX] for bugfixes
+    * [FEA] for new features
+    * [DOC] for documentation
+    * [MNT] for maintenance
+
+> Only pull requests / commits using the aforementioned prefixes will be added to the changelog / release notes
