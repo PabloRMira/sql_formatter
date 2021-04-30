@@ -4,6 +4,7 @@
     "core": "core.html",
     "format_file": "format_file.html",
     "utils": "utils.html",
-    "validation": "validation.html"
+    "validation": "validation.html",
+    "Additional tests": "additional_tests.html"
   }
 }

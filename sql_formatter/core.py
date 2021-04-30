@@ -366,8 +366,8 @@ def format_where(s, **kwargs):
     # split by comment / non comment, quote / non-quote
     split_s = split_comment_quote(s)
     # define regex before loop
-    indent_and = re.compile(r"\s*(and)\b", flags=re.I)
-    indent_or = re.compile(r"\s*(or)\b", flags=re.I)
+    indent_and = re.compile(r"\s*\b(and)\b", flags=re.I)
+    indent_or = re.compile(r"\s*\b(or)\b", flags=re.I)
     for d in split_s:
         if not d["comment"] and not d["quote"]:
             s_aux = d["string"]

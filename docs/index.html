@@ -84,6 +84,13 @@ nb_path: "nbs/index.ipynb"
 <p><a href="https://pre-commit.com">pre-commit</a> is a nice development tool to automatize the binding of pre-commit hooks. After installation and configuration <code>pre-commit</code> will run your hooks before you commit any change.</p>
 <p>To add <code>sql-formatter</code> as a hook to your <code>pre-commit</code> configuration to format your SQL files before commit, just add the following lines to your <code>.pre-commit-config.yaml</code>:</p>
 <div class="highlight"><pre><span></span><span class="nt">repos</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">repo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/PabloRMira/sql_formatter</span>
+    <span class="nt">rev</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+    <span class="nt">hooks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sql_formatter</span>
+</pre></div>
+<p>If you want to install <code>sql-formatter</code> locally and use that instead of using <code>pre-commit</code>'s default environment, set <code>repo: local</code> in your <code>.pre-commit-config.yaml</code> file:</p>
+<div class="highlight"><pre><span></span><span class="nt">repos</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">repo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
     <span class="nt">hooks</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sql_formatter</span>
