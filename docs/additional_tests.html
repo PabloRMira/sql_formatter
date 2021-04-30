@@ -122,6 +122,107 @@ WHERE  brand = &#39;my_brand&#39;
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">format_sql</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;SELECT var </span>
+<span class="sd">    FROM table_selection as a </span>
+<span class="sd">    LEFT JOIN table2 as b ON a.id = b.id </span>
+<span class="sd">    LEFT JOIN table3 as c ON a.id = c.id </span>
+<span class="sd">    ORDER BY 1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="p">),</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SELECT var</span>
+<span class="sd">FROM   table_selection as a</span>
+<span class="sd">    LEFT JOIN table2 as b</span>
+<span class="sd">        ON a.id = b.id</span>
+<span class="sd">    LEFT JOIN table3 as c</span>
+<span class="sd">        ON a.id = c.id</span>
+<span class="sd">ORDER BY 1</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SELECT var
+FROM   table_selection as a
+    LEFT JOIN table2 as b
+        ON a.id = b.id
+    LEFT JOIN table3 as c
+        ON a.id = c.id
+ORDER BY 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="utils">utils<a class="anchor-link" href="#utils"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="split_query">split_query<a class="anchor-link" href="#split_query"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">assert_and_print</span><span class="p">(</span>
+    <span class="n">split_query</span><span class="p">(</span><span class="s2">&quot;select var from table_selection&quot;</span><span class="p">),</span>
+    <span class="p">[{</span><span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="s2">&quot;select var &quot;</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;quote&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;select&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> 
+     <span class="p">{</span><span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="s2">&quot;from table_selection&quot;</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;quote&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;select&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}]</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[{&#39;string&#39;: &#39;select var &#39;, &#39;comment&#39;: False, &#39;quote&#39;: False, &#39;select&#39;: True}, {&#39;string&#39;: &#39;from table_selection&#39;, &#39;comment&#39;: False, &#39;quote&#39;: False, &#39;select&#39;: False}]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
