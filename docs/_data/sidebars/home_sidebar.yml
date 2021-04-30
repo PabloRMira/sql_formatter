@@ -21,6 +21,9 @@ entries:
     - output: web,pdf
       title: validation
       url: validation.html
+    - output: web,pdf
+      title: Additional tests
+      url: additional_tests.html
     output: web
     title: sql_formatter
   output: web
