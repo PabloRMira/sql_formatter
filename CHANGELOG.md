@@ -1,5 +1,15 @@
 # Release notes
 
+## 0.6.2
+
+### :tada: Bugfixes:
+* [FIX] Table names that include the substring select in them break subsequent formatting ([#167](https://github.com/PabloRMira/sql_formatter/pull/167))
+* [FIX] Variable names ending with `and` get split in WHERE statements ([#165](https://github.com/PabloRMira/sql_formatter/pull/165))
+
+### :hammer_and_wrench: Refactoring / Maintenance:
+* [MNT] Update contributing guidelines ([#164](https://github.com/PabloRMira/sql_formatter/pull/164))
+* [MNT] Add .pre-commit-hooks.yaml ([#159](https://github.com/PabloRMira/sql_formatter/pull/159))
+
 ## 0.6.1
 
 ### :tada: Bugfixes:
